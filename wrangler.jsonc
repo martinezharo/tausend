@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tausend",
+  "compatibility_date": "2026-07-28",
+
+  // Cloudflare Builds runs Wrangler from the repository root, while the
+  // static SvelteKit output is generated inside apps/web.
+  "assets": {
+    "directory": "./apps/web/build",
+    "not_found_handling": "404-page"
+  }
+}
