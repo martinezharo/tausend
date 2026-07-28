@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tausend",
+  "compatibility_date": "2026-07-28",
+
+  // Fully static build from adapter-static: no Worker script, only assets.
+  // `404-page` makes Cloudflare serve the SvelteKit fallback for unknown
+  // paths, which is what `fallback: '404.html'` in svelte.config.js produces.
+  "assets": {
+    "directory": "./build",
+    "not_found_handling": "404-page"
+  }
+}

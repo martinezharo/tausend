@@ -13,9 +13,13 @@
     "build": "pnpm run data && pnpm --filter @tausend/web build",
     "preview": "pnpm --filter @tausend/web preview",
     "check": "pnpm --filter @tausend/web check",
+    "deploy": "wrangler deploy --config apps/web/wrangler.jsonc",
     "test": "pnpm --filter @tausend/engine test",
     "data": "node data/scripts/build-course.mjs de",
     "data:sources": "bash data/scripts/fetch-sources.sh",
     "data:audio": "node data/scripts/fetch-audio.mjs de"
+  },
+  "devDependencies": {
+    "wrangler": "^4.114.0"
   }
 }
