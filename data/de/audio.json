@@ -1,0 +1,1936 @@
+{
+  "language": "de",
+  "generatedAt": "2026-07-28T15:48:55.063Z",
+  "note": "Human pronunciation recordings from Wikimedia Commons, loudness-normalised and transcoded to AAC. Every entry keeps its author and licence: attribution is a condition of use, not a courtesy.",
+  "source": "Wikimedia Commons",
+  "clips": {
+    "der": {
+      "file": "der.m4a",
+      "lemma": "der",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-der.ogg"
+    },
+    "ich": {
+      "file": "ich.m4a",
+      "lemma": "ich",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-ich.ogg"
+    },
+    "sein": {
+      "file": "sein.m4a",
+      "lemma": "sein",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sein.ogg"
+    },
+    "sie": {
+      "file": "sie.m4a",
+      "lemma": "sie",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sie.ogg"
+    },
+    "du": {
+      "file": "du.m4a",
+      "lemma": "du",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-du.ogg"
+    },
+    "haben": {
+      "file": "haben.m4a",
+      "lemma": "haben",
+      "author": "Leni Berlin",
+      "licence": "CC BY-SA 2.5",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:De-haben.ogg"
+    },
+    "ein": {
+      "file": "ein.m4a",
+      "lemma": "ein",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-ein.ogg"
+    },
+    "nicht": {
+      "file": "nicht.m4a",
+      "lemma": "nicht",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-nicht.ogg"
+    },
+    "wir": {
+      "file": "wir.m4a",
+      "lemma": "wir",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wir.ogg"
+    },
+    "und": {
+      "file": "und.m4a",
+      "lemma": "und",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-und.ogg"
+    },
+    "er": {
+      "file": "er.m4a",
+      "lemma": "er",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-er.ogg"
+    },
+    "es": {
+      "file": "es.m4a",
+      "lemma": "es",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-es.ogg"
+    },
+    "was": {
+      "file": "was.m4a",
+      "lemma": "was",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-was.ogg"
+    },
+    "hier": {
+      "file": "hier.m4a",
+      "lemma": "hier",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-hier.ogg"
+    },
+    "mein": {
+      "file": "mein.m4a",
+      "lemma": "mein",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-mein.ogg"
+    },
+    "in": {
+      "file": "in.m4a",
+      "lemma": "in",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-in.ogg"
+    },
+    "zu": {
+      "file": "zu.m4a",
+      "lemma": "zu",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-zu.ogg"
+    },
+    "koennen": {
+      "file": "koennen.m4a",
+      "lemma": "können",
+      "author": "Bleibein",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-k%C3%B6nnen.ogg"
+    },
+    "helfen": {
+      "file": "helfen.m4a",
+      "lemma": "helfen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-helfen.ogg"
+    },
+    "wollen": {
+      "file": "wollen.m4a",
+      "lemma": "wollen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wollen.ogg"
+    },
+    "gut": {
+      "file": "gut.m4a",
+      "lemma": "gut",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-gut.ogg"
+    },
+    "werden": {
+      "file": "werden.m4a",
+      "lemma": "werden",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-werden.ogg"
+    },
+    "frage": {
+      "file": "frage.m4a",
+      "lemma": "Frage",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Frage.ogg"
+    },
+    "an": {
+      "file": "an.m4a",
+      "lemma": "an",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-an.ogg"
+    },
+    "kein": {
+      "file": "kein.m4a",
+      "lemma": "kein",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-kein.ogg"
+    },
+    "kommen": {
+      "file": "kommen.m4a",
+      "lemma": "kommen",
+      "author": "User:Tosca",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-kommen.ogg"
+    },
+    "heute": {
+      "file": "heute.m4a",
+      "lemma": "heute",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-heute.ogg"
+    },
+    "wissen": {
+      "file": "wissen.m4a",
+      "lemma": "wissen",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wissen.ogg"
+    },
+    "dass": {
+      "file": "dass.m4a",
+      "lemma": "dass",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-dass.ogg"
+    },
+    "gehen": {
+      "file": "gehen.m4a",
+      "lemma": "gehen",
+      "author": "Hschier",
+      "licence": "CC BY 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-gehen.ogg"
+    },
+    "wenn": {
+      "file": "wenn.m4a",
+      "lemma": "wenn",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wenn.ogg"
+    },
+    "zeit": {
+      "file": "zeit.m4a",
+      "lemma": "Zeit",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Zeit.ogg"
+    },
+    "viel": {
+      "file": "viel.m4a",
+      "lemma": "viel",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-viel.ogg"
+    },
+    "sehr": {
+      "file": "sehr.m4a",
+      "lemma": "sehr",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sehr.ogg"
+    },
+    "wie": {
+      "file": "wie.m4a",
+      "lemma": "wie",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wie.ogg"
+    },
+    "geld": {
+      "file": "geld.m4a",
+      "lemma": "Geld",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Geld.ogg"
+    },
+    "brauchen": {
+      "file": "brauchen.m4a",
+      "lemma": "brauchen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-brauchen.ogg"
+    },
+    "aber": {
+      "file": "aber.m4a",
+      "lemma": "aber",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-aber.ogg"
+    },
+    "frau": {
+      "file": "frau.m4a",
+      "lemma": "Frau",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Frau.ogg"
+    },
+    "lesen": {
+      "file": "lesen.m4a",
+      "lemma": "lesen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-lesen.ogg"
+    },
+    "kaffee": {
+      "file": "kaffee.m4a",
+      "lemma": "Kaffee",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Kaffee.ogg"
+    },
+    "mit": {
+      "file": "mit.m4a",
+      "lemma": "mit",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-mit.ogg"
+    },
+    "buch": {
+      "file": "buch.m4a",
+      "lemma": "Buch",
+      "author": "User:Tosca",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Buch.ogg"
+    },
+    "schon": {
+      "file": "schon.m4a",
+      "lemma": "schon",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-schon.ogg"
+    },
+    "trinken": {
+      "file": "trinken.m4a",
+      "lemma": "trinken",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-trinken.ogg"
+    },
+    "ja": {
+      "file": "ja.m4a",
+      "lemma": "ja",
+      "author": "MiER",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-ja.ogg"
+    },
+    "wo": {
+      "file": "wo.m4a",
+      "lemma": "wo",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wo.ogg"
+    },
+    "sagen": {
+      "file": "sagen.m4a",
+      "lemma": "sagen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sagen.ogg"
+    },
+    "nichts": {
+      "file": "nichts.m4a",
+      "lemma": "nichts",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-nichts.ogg"
+    },
+    "mann": {
+      "file": "mann.m4a",
+      "lemma": "Mann",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Mann.ogg"
+    },
+    "gern": {
+      "file": "gern.m4a",
+      "lemma": "gern",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-gern.ogg"
+    },
+    "vater": {
+      "file": "vater.m4a",
+      "lemma": "Vater",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Vater.ogg"
+    },
+    "auf": {
+      "file": "auf.m4a",
+      "lemma": "auf",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-auf.ogg"
+    },
+    "wetter": {
+      "file": "wetter.m4a",
+      "lemma": "Wetter",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Wetter.ogg"
+    },
+    "schoen": {
+      "file": "schoen.m4a",
+      "lemma": "schön",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sch%C3%B6n.ogg"
+    },
+    "sehen": {
+      "file": "sehen.m4a",
+      "lemma": "sehen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sehen.ogg"
+    },
+    "dieser": {
+      "file": "dieser.m4a",
+      "lemma": "dieser",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-dieser.ogg"
+    },
+    "fuer": {
+      "file": "fuer.m4a",
+      "lemma": "für",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-f%C3%BCr.ogg"
+    },
+    "etwas": {
+      "file": "etwas.m4a",
+      "lemma": "etwas",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-etwas.ogg"
+    },
+    "muessen": {
+      "file": "muessen.m4a",
+      "lemma": "müssen",
+      "author": "myself",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-m%C3%BCssen.ogg"
+    },
+    "jetzt": {
+      "file": "jetzt.m4a",
+      "lemma": "jetzt",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-jetzt.ogg"
+    },
+    "also": {
+      "file": "also.m4a",
+      "lemma": "also",
+      "author": "Katrin Boxberger, Bernadette Perrin-Riou",
+      "licence": "CC BY 3.0 us",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/us/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:De-also.ogg"
+    },
+    "verstehen": {
+      "file": "verstehen.m4a",
+      "lemma": "verstehen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-verstehen.ogg"
+    },
+    "so": {
+      "file": "so.m4a",
+      "lemma": "so",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-so.ogg"
+    },
+    "von": {
+      "file": "von.m4a",
+      "lemma": "von",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-von.ogg"
+    },
+    "freund": {
+      "file": "freund.m4a",
+      "lemma": "Freund",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Freund.ogg"
+    },
+    "richtig": {
+      "file": "richtig.m4a",
+      "lemma": "richtig",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-richtig.ogg"
+    },
+    "muede": {
+      "file": "muede.m4a",
+      "lemma": "müde",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-m%C3%BCde.ogg"
+    },
+    "alt": {
+      "file": "alt.m4a",
+      "lemma": "alt",
+      "author": "Oceancetaceen Alice Chodura",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-alt.ogg"
+    },
+    "warum": {
+      "file": "warum.m4a",
+      "lemma": "warum",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-warum.ogg"
+    },
+    "haus": {
+      "file": "haus.m4a",
+      "lemma": "Haus",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Haus.ogg"
+    },
+    "weil": {
+      "file": "weil.m4a",
+      "lemma": "weil",
+      "author": "Katrin Boxberger, Bernadette Perrin-Riou",
+      "licence": "CC BY 3.0 us",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/us/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:De-weil.ogg"
+    },
+    "ob": {
+      "file": "ob.m4a",
+      "lemma": "ob",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-ob.ogg"
+    },
+    "bekommen": {
+      "file": "bekommen.m4a",
+      "lemma": "bekommen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-bekommen.ogg"
+    },
+    "geben": {
+      "file": "geben.m4a",
+      "lemma": "geben",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-geben.ogg"
+    },
+    "wasser": {
+      "file": "wasser.m4a",
+      "lemma": "Wasser",
+      "author": "Tosca",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Wasser.ogg"
+    },
+    "kind": {
+      "file": "kind.m4a",
+      "lemma": "Kind",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Kind.ogg"
+    },
+    "schlafen": {
+      "file": "schlafen.m4a",
+      "lemma": "schlafen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-schlafen.ogg"
+    },
+    "wann": {
+      "file": "wann.m4a",
+      "lemma": "wann",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wann.ogg"
+    },
+    "aufstehen": {
+      "file": "aufstehen.m4a",
+      "lemma": "aufstehen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-aufstehen.ogg"
+    },
+    "wohnen": {
+      "file": "wohnen.m4a",
+      "lemma": "wohnen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wohnen.ogg"
+    },
+    "film": {
+      "file": "film.m4a",
+      "lemma": "Film",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Film.ogg"
+    },
+    "machen": {
+      "file": "machen.m4a",
+      "lemma": "machen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-machen.ogg"
+    },
+    "morgen": {
+      "file": "morgen.m4a",
+      "lemma": "morgen",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-morgen.ogg"
+    },
+    "oder": {
+      "file": "oder.m4a",
+      "lemma": "oder",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-oder.ogg"
+    },
+    "anrufen": {
+      "file": "anrufen.m4a",
+      "lemma": "anrufen",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-anrufen.ogg"
+    },
+    "kalt": {
+      "file": "kalt.m4a",
+      "lemma": "kalt",
+      "author": "User:Tosca",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-kalt.ogg"
+    },
+    "antwort": {
+      "file": "antwort.m4a",
+      "lemma": "Antwort",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Antwort.ogg"
+    },
+    "aussehen": {
+      "file": "aussehen.m4a",
+      "lemma": "aussehen",
+      "author": "myself",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-aussehen.ogg"
+    },
+    "rat": {
+      "file": "rat.m4a",
+      "lemma": "Rat",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Rat.ogg"
+    },
+    "gift": {
+      "file": "gift.m4a",
+      "lemma": "Gift",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Gift.ogg"
+    },
+    "stadt": {
+      "file": "stadt.m4a",
+      "lemma": "Stadt",
+      "author": "T.Voekler",
+      "licence": "Public domain",
+      "licenceUrl": null,
+      "source": "https://commons.wikimedia.org/wiki/File:De-Stadt.ogg"
+    },
+    "gross": {
+      "file": "gross.m4a",
+      "lemma": "groß",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-gro%C3%9F.ogg"
+    },
+    "kennen": {
+      "file": "kennen.m4a",
+      "lemma": "kennen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-kennen.ogg"
+    },
+    "dein": {
+      "file": "dein.m4a",
+      "lemma": "dein",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-dein.ogg"
+    },
+    "name": {
+      "file": "name.m4a",
+      "lemma": "Name",
+      "author": "T.Voekler",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Name.ogg"
+    },
+    "alle": {
+      "file": "alle.m4a",
+      "lemma": "alle",
+      "author": "Reinsberg",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-alle.ogg"
+    },
+    "nach": {
+      "file": "nach.m4a",
+      "lemma": "nach",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-nach.ogg"
+    },
+    "fahren": {
+      "file": "fahren.m4a",
+      "lemma": "fahren",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-fahren.ogg"
+    },
+    "auto": {
+      "file": "auto.m4a",
+      "lemma": "Auto",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Auto.ogg"
+    },
+    "nein": {
+      "file": "nein.m4a",
+      "lemma": "nein",
+      "author": "Lars Engelmann",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-nein.ogg"
+    },
+    "um": {
+      "file": "um.m4a",
+      "lemma": "um",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-um.ogg"
+    },
+    "tag": {
+      "file": "tag.m4a",
+      "lemma": "Tag",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Tag.ogg"
+    },
+    "lang": {
+      "file": "lang.m4a",
+      "lemma": "lang",
+      "author": "Bleibein",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-lang.ogg"
+    },
+    "aus": {
+      "file": "aus.m4a",
+      "lemma": "aus",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-aus.ogg"
+    },
+    "familie": {
+      "file": "familie.m4a",
+      "lemma": "Familie",
+      "author": "T.Voekler",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Familie.ogg"
+    },
+    "noch": {
+      "file": "noch.m4a",
+      "lemma": "noch",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-noch.ogg"
+    },
+    "da": {
+      "file": "da.m4a",
+      "lemma": "da",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-da.ogg"
+    },
+    "nur": {
+      "file": "nur.m4a",
+      "lemma": "nur",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-nur.ogg"
+    },
+    "abend": {
+      "file": "abend.m4a",
+      "lemma": "Abend",
+      "author": "Arnim Faryn",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Abend.ogg"
+    },
+    "wieder": {
+      "file": "wieder.m4a",
+      "lemma": "wieder",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wieder.ogg"
+    },
+    "essen-noun": {
+      "file": "essen-noun.m4a",
+      "lemma": "Essen",
+      "author": "Achim Raschka (talk)",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Essen.ogg"
+    },
+    "mensch": {
+      "file": "mensch.m4a",
+      "lemma": "Mensch",
+      "author": "No machine-readable author provided. Cyrotux assumed (based on copyright claims).",
+      "licence": "CC BY-SA 2.5",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Mensch.ogg"
+    },
+    "bitte": {
+      "file": "bitte.m4a",
+      "lemma": "bitte",
+      "author": "Bleibein",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-bitte.ogg"
+    },
+    "moegen": {
+      "file": "moegen.m4a",
+      "lemma": "mögen",
+      "author": "Leni Berlin",
+      "licence": "CC BY-SA 2.5",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:De-m%C3%B6gen.ogg"
+    },
+    "sich": {
+      "file": "sich.m4a",
+      "lemma": "sich",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sich.ogg"
+    },
+    "zwei": {
+      "file": "zwei.m4a",
+      "lemma": "zwei",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-zwei.ogg"
+    },
+    "kaufen": {
+      "file": "kaufen.m4a",
+      "lemma": "kaufen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-kaufen.ogg"
+    },
+    "neu": {
+      "file": "neu.m4a",
+      "lemma": "neu",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-neu.ogg"
+    },
+    "hund": {
+      "file": "hund.m4a",
+      "lemma": "Hund",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Hund.ogg"
+    },
+    "klein": {
+      "file": "klein.m4a",
+      "lemma": "klein",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-klein.ogg"
+    },
+    "leben": {
+      "file": "leben.m4a",
+      "lemma": "leben",
+      "author": "User:Tosca",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-leben.ogg"
+    },
+    "zimmer": {
+      "file": "zimmer.m4a",
+      "lemma": "Zimmer",
+      "author": "Alexandra Poelzlbauers, Vion Nicolas",
+      "licence": "CC BY 2.0 fr",
+      "licenceUrl": "https://creativecommons.org/licenses/by/2.0/fr/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:De-at-Zimmer.ogg"
+    },
+    "uhr": {
+      "file": "uhr.m4a",
+      "lemma": "Uhr",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Uhr.ogg"
+    },
+    "sechs": {
+      "file": "sechs.m4a",
+      "lemma": "sechs",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sechs.ogg"
+    },
+    "immer": {
+      "file": "immer.m4a",
+      "lemma": "immer",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-immer.ogg"
+    },
+    "arbeit": {
+      "file": "arbeit.m4a",
+      "lemma": "Arbeit",
+      "author": "Kampy",
+      "licence": "CC BY 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Arbeit.ogg"
+    },
+    "sieben": {
+      "file": "sieben.m4a",
+      "lemma": "sieben",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sieben.ogg"
+    },
+    "jeder": {
+      "file": "jeder.m4a",
+      "lemma": "jeder",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-jeder.ogg"
+    },
+    "morgen-noun": {
+      "file": "morgen-noun.m4a",
+      "lemma": "Morgen",
+      "author": "Unknown",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Morgen.ogg"
+    },
+    "anders": {
+      "file": "anders.m4a",
+      "lemma": "anders",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-anders.ogg"
+    },
+    "einkaufen": {
+      "file": "einkaufen.m4a",
+      "lemma": "einkaufen",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-einkaufen.ogg"
+    },
+    "sprechen": {
+      "file": "sprechen.m4a",
+      "lemma": "sprechen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sprechen.ogg"
+    },
+    "deutsch": {
+      "file": "deutsch.m4a",
+      "lemma": "Deutsch",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Deutsch.ogg"
+    },
+    "langsam": {
+      "file": "langsam.m4a",
+      "lemma": "langsam",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-langsam.ogg"
+    },
+    "denken": {
+      "file": "denken.m4a",
+      "lemma": "denken",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-denken.ogg"
+    },
+    "oft": {
+      "file": "oft.m4a",
+      "lemma": "oft",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-oft.ogg"
+    },
+    "lernen": {
+      "file": "lernen.m4a",
+      "lemma": "lernen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-lernen.ogg"
+    },
+    "tisch": {
+      "file": "tisch.m4a",
+      "lemma": "Tisch",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Tisch.ogg"
+    },
+    "katze": {
+      "file": "katze.m4a",
+      "lemma": "Katze",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Katze.ogg"
+    },
+    "dann": {
+      "file": "dann.m4a",
+      "lemma": "dann",
+      "author": "Katrin Boxberger, Bernadette Perrin-Riou",
+      "licence": "CC BY 3.0 us",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/us/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:De-dann.ogg"
+    },
+    "arbeiten": {
+      "file": "arbeiten.m4a",
+      "lemma": "arbeiten",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-arbeiten.ogg"
+    },
+    "mutter": {
+      "file": "mutter.m4a",
+      "lemma": "Mutter",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Mutter.ogg"
+    },
+    "gestern": {
+      "file": "gestern.m4a",
+      "lemma": "gestern",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-gestern.ogg"
+    },
+    "sollen": {
+      "file": "sollen.m4a",
+      "lemma": "sollen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sollen.ogg"
+    },
+    "auch": {
+      "file": "auch.m4a",
+      "lemma": "auch",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-auch.ogg"
+    },
+    "zusammen": {
+      "file": "zusammen.m4a",
+      "lemma": "zusammen",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-zusammen.ogg"
+    },
+    "bleiben": {
+      "file": "bleiben.m4a",
+      "lemma": "bleiben",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-bleiben.ogg"
+    },
+    "essen": {
+      "file": "essen.m4a",
+      "lemma": "essen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-essen.ogg"
+    },
+    "als": {
+      "file": "als.m4a",
+      "lemma": "als",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-als.ogg"
+    },
+    "glauben": {
+      "file": "glauben.m4a",
+      "lemma": "glauben",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-glauben.ogg"
+    },
+    "gluecklich": {
+      "file": "gluecklich.m4a",
+      "lemma": "glücklich",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-gl%C3%BCcklich.ogg"
+    },
+    "einfach": {
+      "file": "einfach.m4a",
+      "lemma": "einfach",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-einfach.ogg"
+    },
+    "problem": {
+      "file": "problem.m4a",
+      "lemma": "Problem",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Problem.ogg"
+    },
+    "unter": {
+      "file": "unter.m4a",
+      "lemma": "unter",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-unter.ogg"
+    },
+    "liegen": {
+      "file": "liegen.m4a",
+      "lemma": "liegen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-liegen.ogg"
+    },
+    "sonne": {
+      "file": "sonne.m4a",
+      "lemma": "Sonne",
+      "author": "Unknown",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Sonne.ogg"
+    },
+    "fenster": {
+      "file": "fenster.m4a",
+      "lemma": "Fenster",
+      "author": "StMH",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Fenster.ogg"
+    },
+    "warm": {
+      "file": "warm.m4a",
+      "lemma": "warm",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-warm.ogg"
+    },
+    "nehmen": {
+      "file": "nehmen.m4a",
+      "lemma": "nehmen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-nehmen.ogg"
+    },
+    "handy": {
+      "file": "handy.m4a",
+      "lemma": "Handy",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Handy.ogg"
+    },
+    "man": {
+      "file": "man.m4a",
+      "lemma": "man",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-man.ogg"
+    },
+    "jung": {
+      "file": "jung.m4a",
+      "lemma": "jung",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-jung.ogg"
+    },
+    "chef": {
+      "file": "chef.m4a",
+      "lemma": "Chef",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Chef.ogg"
+    },
+    "bei": {
+      "file": "bei.m4a",
+      "lemma": "bei",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-bei.ogg"
+    },
+    "spielen": {
+      "file": "spielen.m4a",
+      "lemma": "spielen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-spielen.ogg"
+    },
+    "garten": {
+      "file": "garten.m4a",
+      "lemma": "Garten",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Garten.ogg"
+    },
+    "acht": {
+      "file": "acht.m4a",
+      "lemma": "acht",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-acht.ogg"
+    },
+    "zug": {
+      "file": "zug.m4a",
+      "lemma": "Zug",
+      "author": "Unknown",
+      "licence": "Public domain",
+      "licenceUrl": null,
+      "source": "https://commons.wikimedia.org/wiki/File:De-Zug.ogg"
+    },
+    "ankommen": {
+      "file": "ankommen.m4a",
+      "lemma": "ankommen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-ankommen.ogg"
+    },
+    "weg": {
+      "file": "weg.m4a",
+      "lemma": "Weg",
+      "author": "User:Tosca",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Weg.ogg"
+    },
+    "hoeren": {
+      "file": "hoeren.m4a",
+      "lemma": "hören",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-h%C3%B6ren.ogg"
+    },
+    "vor": {
+      "file": "vor.m4a",
+      "lemma": "vor",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-vor.ogg"
+    },
+    "lassen": {
+      "file": "lassen.m4a",
+      "lemma": "lassen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-lassen.ogg"
+    },
+    "finden": {
+      "file": "finden.m4a",
+      "lemma": "finden",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-finden.ogg"
+    },
+    "danke": {
+      "file": "danke.m4a",
+      "lemma": "danke",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-danke.ogg"
+    },
+    "denn": {
+      "file": "denn.m4a",
+      "lemma": "denn",
+      "author": "Association Shtooka, Katrin Boxberger",
+      "licence": "CC BY 3.0 us",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/us/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:De-denn.ogg"
+    },
+    "vielleicht": {
+      "file": "vielleicht.m4a",
+      "lemma": "vielleicht",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-vielleicht.ogg"
+    },
+    "wer": {
+      "file": "wer.m4a",
+      "lemma": "wer",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wer.ogg"
+    },
+    "ueber": {
+      "file": "ueber.m4a",
+      "lemma": "über",
+      "author": "Bleibein",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-%C3%BCber.ogg"
+    },
+    "nie": {
+      "file": "nie.m4a",
+      "lemma": "nie",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-nie.ogg"
+    },
+    "warten": {
+      "file": "warten.m4a",
+      "lemma": "warten",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-warten.ogg"
+    },
+    "lieben": {
+      "file": "lieben.m4a",
+      "lemma": "lieben",
+      "author": "Leni Berlin",
+      "licence": "CC BY-SA 2.5",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:De-lieben.ogg"
+    },
+    "bringen": {
+      "file": "bringen.m4a",
+      "lemma": "bringen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-bringen.ogg"
+    },
+    "jahr": {
+      "file": "jahr.m4a",
+      "lemma": "Jahr",
+      "author": "Unknown",
+      "licence": "Public domain",
+      "licenceUrl": null,
+      "source": "https://commons.wikimedia.org/wiki/File:De-Jahr.ogg"
+    },
+    "stehen": {
+      "file": "stehen.m4a",
+      "lemma": "stehen",
+      "author": "myself",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-stehen.ogg"
+    },
+    "leute": {
+      "file": "leute.m4a",
+      "lemma": "Leute",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Leute.ogg"
+    },
+    "halten": {
+      "file": "halten.m4a",
+      "lemma": "halten",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-halten.ogg"
+    },
+    "duerfen": {
+      "file": "duerfen.m4a",
+      "lemma": "dürfen",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-d%C3%BCrfen.ogg"
+    },
+    "fragen": {
+      "file": "fragen.m4a",
+      "lemma": "fragen",
+      "author": "User:Tosca",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-fragen.ogg"
+    },
+    "ohne": {
+      "file": "ohne.m4a",
+      "lemma": "ohne",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-ohne.ogg"
+    },
+    "nacht": {
+      "file": "nacht.m4a",
+      "lemma": "Nacht",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Nacht.ogg"
+    },
+    "suchen": {
+      "file": "suchen.m4a",
+      "lemma": "suchen",
+      "author": "Own work",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-suchen.ogg"
+    },
+    "schnell": {
+      "file": "schnell.m4a",
+      "lemma": "schnell",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-schnell.ogg"
+    },
+    "spaet": {
+      "file": "spaet.m4a",
+      "lemma": "spät",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-sp%C3%A4t.ogg"
+    },
+    "sache": {
+      "file": "sache.m4a",
+      "lemma": "Sache",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Sache.ogg"
+    },
+    "dort": {
+      "file": "dort.m4a",
+      "lemma": "dort",
+      "author": "Bleibein",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-dort.ogg"
+    },
+    "laufen": {
+      "file": "laufen.m4a",
+      "lemma": "laufen",
+      "author": "Unknown",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-laufen.ogg"
+    },
+    "drei": {
+      "file": "drei.m4a",
+      "lemma": "drei",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-drei.ogg"
+    },
+    "welcher": {
+      "file": "welcher.m4a",
+      "lemma": "welcher",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-welcher.ogg"
+    },
+    "welt": {
+      "file": "welt.m4a",
+      "lemma": "Welt",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Welt.ogg"
+    },
+    "hand": {
+      "file": "hand.m4a",
+      "lemma": "Hand",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Hand.ogg"
+    },
+    "musik": {
+      "file": "musik.m4a",
+      "lemma": "Musik",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Musik.ogg"
+    },
+    "zeigen": {
+      "file": "zeigen.m4a",
+      "lemma": "zeigen",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-zeigen.ogg"
+    },
+    "wenig": {
+      "file": "wenig.m4a",
+      "lemma": "wenig",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wenig.ogg"
+    },
+    "stunde": {
+      "file": "stunde.m4a",
+      "lemma": "Stunde",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Stunde.ogg"
+    },
+    "woche": {
+      "file": "woche.m4a",
+      "lemma": "Woche",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Woche.ogg"
+    },
+    "auge": {
+      "file": "auge.m4a",
+      "lemma": "Auge",
+      "author": "Edward Montgomery Harrington",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Auge.ogg"
+    },
+    "schlecht": {
+      "file": "schlecht.m4a",
+      "lemma": "schlecht",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-schlecht.ogg"
+    },
+    "frueh": {
+      "file": "frueh.m4a",
+      "lemma": "früh",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-fr%C3%BCh.ogg"
+    },
+    "kopf": {
+      "file": "kopf.m4a",
+      "lemma": "Kopf",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Kopf.ogg"
+    },
+    "kurz": {
+      "file": "kurz.m4a",
+      "lemma": "kurz",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-kurz.ogg"
+    },
+    "schreiben": {
+      "file": "schreiben.m4a",
+      "lemma": "schreiben",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-schreiben.ogg"
+    },
+    "falsch": {
+      "file": "falsch.m4a",
+      "lemma": "falsch",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-falsch.ogg"
+    },
+    "tuer": {
+      "file": "tuer.m4a",
+      "lemma": "Tür",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-T%C3%BCr.ogg"
+    },
+    "wichtig": {
+      "file": "wichtig.m4a",
+      "lemma": "wichtig",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-wichtig.ogg"
+    },
+    "schwer": {
+      "file": "schwer.m4a",
+      "lemma": "schwer",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-schwer.ogg"
+    },
+    "grund": {
+      "file": "grund.m4a",
+      "lemma": "Grund",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Grund.ogg"
+    },
+    "eins": {
+      "file": "eins.m4a",
+      "lemma": "eins",
+      "author": "Unknown",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-eins.ogg"
+    },
+    "monat": {
+      "file": "monat.m4a",
+      "lemma": "Monat",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Monat.ogg"
+    },
+    "geschichte": {
+      "file": "geschichte.m4a",
+      "lemma": "Geschichte",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Geschichte.ogg"
+    },
+    "herz": {
+      "file": "herz.m4a",
+      "lemma": "Herz",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Herz.ogg"
+    },
+    "land": {
+      "file": "land.m4a",
+      "lemma": "Land",
+      "author": "Pill",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Land.ogg"
+    },
+    "ort": {
+      "file": "ort.m4a",
+      "lemma": "Ort",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Ort.ogg"
+    },
+    "fuenf": {
+      "file": "fuenf.m4a",
+      "lemma": "fünf",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-f%C3%BCnf.ogg"
+    },
+    "vier": {
+      "file": "vier.m4a",
+      "lemma": "vier",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-vier.ogg"
+    },
+    "wort": {
+      "file": "wort.m4a",
+      "lemma": "Wort",
+      "author": "User:Tosca",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Wort.ogg"
+    },
+    "gesicht": {
+      "file": "gesicht.m4a",
+      "lemma": "Gesicht",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Gesicht.ogg"
+    },
+    "spiel": {
+      "file": "spiel.m4a",
+      "lemma": "Spiel",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Spiel.ogg"
+    },
+    "schule": {
+      "file": "schule.m4a",
+      "lemma": "Schule",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Schule.ogg"
+    },
+    "platz": {
+      "file": "platz.m4a",
+      "lemma": "Platz",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Platz.ogg"
+    },
+    "strasse": {
+      "file": "strasse.m4a",
+      "lemma": "Straße",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Stra%C3%9Fe.ogg"
+    },
+    "zehn": {
+      "file": "zehn.m4a",
+      "lemma": "zehn",
+      "author": "Unknown",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-zehn.ogg"
+    },
+    "antworten": {
+      "file": "antworten.m4a",
+      "lemma": "antworten",
+      "author": "User:Tosca",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-antworten.ogg"
+    },
+    "leben-noun": {
+      "file": "leben-noun.m4a",
+      "lemma": "Leben",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Leben.ogg"
+    },
+    "bier": {
+      "file": "bier.m4a",
+      "lemma": "Bier",
+      "author": "Unknown",
+      "licence": "Public domain",
+      "licenceUrl": null,
+      "source": "https://commons.wikimedia.org/wiki/File:De-Bier.ogg"
+    },
+    "beispiel": {
+      "file": "beispiel.m4a",
+      "lemma": "Beispiel",
+      "author": "Dinock90",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Beispiel.ogg"
+    },
+    "neun": {
+      "file": "neun.m4a",
+      "lemma": "neun",
+      "author": "joni",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:De-neun.ogg"
+    },
+    "teuer": {
+      "file": "teuer.m4a",
+      "lemma": "teuer",
+      "author": "Jeuwre",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-teuer.ogg"
+    },
+    "milch": {
+      "file": "milch.m4a",
+      "lemma": "Milch",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Milch.ogg"
+    },
+    "brot": {
+      "file": "brot.m4a",
+      "lemma": "Brot",
+      "author": "Kampy",
+      "licence": "CC BY-SA 3.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:De-Brot.ogg"
+    }
+  }
+}

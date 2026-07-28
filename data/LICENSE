@@ -1,0 +1,34 @@
+Course content licence
+======================
+
+Everything under `data/` (lexicon entries, sentences, microstories, and the
+compiled courses in `data/dist/`) is licensed under
+
+    Creative Commons Attribution-ShareAlike 4.0 International
+    https://creativecommons.org/licenses/by-sa/4.0/
+
+CC BY-SA is chosen deliberately: it is compatible with Wiktionary, which is the
+upstream source for morphological facts (gender, plural, conjugation) once the
+full pipeline runs. If the content were licensed more permissively, Wiktionary
+data could not be mixed in.
+
+Upstream sources and their licences
+-----------------------------------
+
+| Source                     | Licence          | Used for                          |
+|----------------------------|------------------|-----------------------------------|
+| OpenSubtitles frequency     | CC BY-SA 4.0     | Spoken-German word frequency      |
+| (hermitdave/FrequencyWords) |                  | `data/sources/de_50k.txt`         |
+| Leipzig Corpora Collection  | CC BY 4.0        | Written-German frequency (opt-in) |
+| Wiktionary via kaikki.org   | CC BY-SA 4.0 +   | Gender, plural, conjugation       |
+| (wiktextract)               | GFDL             |                                   |
+| Tatoeba                     | CC BY 2.0 FR     | Example sentences (opt-in)        |
+
+Attribution for the frequency data currently shipped:
+
+    Hermit Dave, FrequencyWords (2018), derived from the OpenSubtitles corpus.
+    https://github.com/hermitdave/FrequencyWords — CC BY-SA 4.0
+
+The hand-authored lexicon glosses, example sentences and microstories in
+`data/de/` are original work by the project contributors, released under the
+same CC BY-SA 4.0 licence.

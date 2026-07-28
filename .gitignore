@@ -1,0 +1,17 @@
+node_modules/
+
+# Generated application output
+apps/web/build/
+apps/web/.svelte-kit/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Tooling and OS files
+.DS_Store
+*.log
+
+# Local agent configuration
+.codex/

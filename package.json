@@ -1,0 +1,21 @@
+{
+  "name": "tausend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Learn the 1000 most frequent words of a language, starting with German from English.",
+  "license": "MIT",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @tausend/web dev",
+    "build": "pnpm run data && pnpm --filter @tausend/web build",
+    "preview": "pnpm --filter @tausend/web preview",
+    "check": "pnpm --filter @tausend/web check",
+    "test": "pnpm --filter @tausend/engine test",
+    "data": "node data/scripts/build-course.mjs de",
+    "data:sources": "bash data/scripts/fetch-sources.sh",
+    "data:audio": "node data/scripts/fetch-audio.mjs de"
+  }
+}

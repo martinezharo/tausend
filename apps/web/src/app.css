@@ -1,0 +1,345 @@
+/*
+  Beschilderung — the signage system.
+
+  Colour classifies, it does not decorate: der/die/das own the palette, and
+  each gender carries a second, non-colour channel (a left bar, a top bar, an
+  underline) so the classification survives colour blindness and greyscale.
+*/
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: block;
+  src: url('/fonts/archivo.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JBMono';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/jbmono.woff2') format('woff2');
+}
+
+:root {
+  --beton: #e2e0d9;
+  --beton-2: #d6d3ca;
+  --beton-3: #cbc8be;
+  --tinte: #14171a;
+  --grau: #7d7b74;
+  --der: #1b4fd8;
+  --die: #d6155a;
+  --das: #b77e00;
+  --das-flaeche: #f5b301;
+  --auf-der: #ffffff;
+  --auf-die: #ffffff;
+  --auf-das: #14171a;
+  --linie: rgba(20, 23, 26, 0.2);
+  --linie-stark: rgba(20, 23, 26, 0.5);
+  --verdeckt: rgba(20, 23, 26, 0.88);
+  --richtig: #1f7a4d;
+  --falsch: #d6155a;
+
+  --sp: clamp(14px, 4vw, 20px);
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --beton: #141719;
+    --beton-2: #1d2124;
+    --beton-3: #262b2f;
+    --tinte: #e2e0d9;
+    --grau: #8b8e91;
+    --der: #6e97ff;
+    --die: #ff5c8a;
+    --das: #ffc93d;
+    --das-flaeche: #ffc93d;
+    --auf-der: #0b1020;
+    --auf-die: #2a0511;
+    --auf-das: #14171a;
+    --linie: rgba(226, 224, 217, 0.18);
+    --linie-stark: rgba(226, 224, 217, 0.44);
+    --verdeckt: rgba(226, 224, 217, 0.82);
+    --richtig: #4ecb8b;
+    --falsch: #ff5c8a;
+  }
+}
+
+:root[data-theme='dark'] {
+  --beton: #141719;
+  --beton-2: #1d2124;
+  --beton-3: #262b2f;
+  --tinte: #e2e0d9;
+  --grau: #8b8e91;
+  --der: #6e97ff;
+  --die: #ff5c8a;
+  --das: #ffc93d;
+  --das-flaeche: #ffc93d;
+  --auf-der: #0b1020;
+  --auf-die: #2a0511;
+  --auf-das: #14171a;
+  --linie: rgba(226, 224, 217, 0.18);
+  --linie-stark: rgba(226, 224, 217, 0.44);
+  --verdeckt: rgba(226, 224, 217, 0.82);
+  --richtig: #4ecb8b;
+  --falsch: #ff5c8a;
+}
+
+:root[data-theme='light'] {
+  --beton: #e2e0d9;
+  --beton-2: #d6d3ca;
+  --beton-3: #cbc8be;
+  --tinte: #14171a;
+  --grau: #7d7b74;
+  --der: #1b4fd8;
+  --die: #d6155a;
+  --das: #b77e00;
+  --das-flaeche: #f5b301;
+  --auf-der: #ffffff;
+  --auf-die: #ffffff;
+  --auf-das: #14171a;
+  --linie: rgba(20, 23, 26, 0.2);
+  --linie-stark: rgba(20, 23, 26, 0.5);
+  --verdeckt: rgba(20, 23, 26, 0.88);
+  --richtig: #1f7a4d;
+  --falsch: #d6155a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--beton);
+}
+
+body {
+  color: var(--tinte);
+  font-family: 'Archivo', system-ui, sans-serif;
+  font-variation-settings: 'wdth' 100, 'wght' 400;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+#app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------- type */
+
+.mono {
+  font-family: 'JBMono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.plate-word {
+  font-variation-settings: 'wdth' var(--w, 100), 'wght' 800;
+  text-transform: uppercase;
+  line-height: 0.88;
+  white-space: nowrap;
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-variation-settings: 'wdth' 74, 'wght' 800;
+  text-transform: uppercase;
+  line-height: 1;
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* ------------------------------------------------------ gender channels */
+
+.g-der {
+  --gender: var(--der);
+  --gender-fill: var(--der);
+  --gender-on: var(--auf-der);
+}
+.g-die {
+  --gender: var(--die);
+  --gender-fill: var(--die);
+  --gender-on: var(--auf-die);
+}
+.g-das {
+  --gender: var(--das);
+  --gender-fill: var(--das-flaeche);
+  --gender-on: var(--auf-das);
+}
+.g-none {
+  --gender: var(--grau);
+  --gender-fill: var(--grau);
+  --gender-on: var(--beton);
+}
+
+/* The second, non-colour channel. Never rely on hue alone. */
+.mark {
+  position: relative;
+}
+.mark.g-der {
+  border-left: 8px solid var(--der);
+  padding-left: 14px;
+}
+.mark.g-die {
+  border-top: 8px solid var(--die);
+  padding-top: 12px;
+}
+.mark.g-das {
+  border-bottom: 8px solid var(--das-flaeche);
+  padding-bottom: 12px;
+}
+.mark.g-none {
+  border-left: 8px solid var(--linie);
+  padding-left: 14px;
+}
+
+/* ------------------------------------------------------------- controls */
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+.btn {
+  font-family: 'Archivo';
+  font-variation-settings: 'wdth' 82, 'wght' 750;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 18px 20px;
+  background: var(--tinte);
+  color: var(--beton);
+  border: 1px solid var(--tinte);
+  border-radius: 0;
+  cursor: pointer;
+  width: 100%;
+  transition: opacity 0.12s;
+}
+.btn:active {
+  opacity: 0.8;
+}
+.btn.ghost {
+  background: transparent;
+  color: var(--tinte);
+  border-color: var(--linie-stark);
+}
+.btn[disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.choice {
+  font-family: 'Archivo';
+  font-variation-settings: 'wdth' 88, 'wght' 600;
+  font-size: 17px;
+  text-align: left;
+  padding: 16px 16px;
+  background: var(--beton-2);
+  color: var(--tinte);
+  border: 1px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+  width: 100%;
+  transition:
+    background 0.12s,
+    color 0.12s,
+    border-color 0.12s;
+}
+.choice:hover:not(:disabled) {
+  border-color: var(--linie-stark);
+}
+.choice[data-state='right'] {
+  background: var(--richtig);
+  color: var(--beton);
+  border-color: var(--richtig);
+}
+.choice[data-state='wrong'] {
+  background: var(--falsch);
+  color: #fff;
+  border-color: var(--falsch);
+}
+.choice[data-state='dim'] {
+  opacity: 0.32;
+}
+
+:focus-visible {
+  outline: 3px solid var(--der);
+  outline-offset: 2px;
+}
+
+input[type='text'] {
+  width: 100%;
+  background: var(--beton-2);
+  border: 1px solid var(--linie-stark);
+  border-radius: 0;
+  padding: 16px;
+  font-variation-settings: 'wdth' 92, 'wght' 600;
+  font-size: 20px;
+}
+
+a {
+  color: inherit;
+}
+
+/* --------------------------------------------------------------- layout */
+
+.wrap {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 var(--sp);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--linie-stark);
+  margin: 0;
+}
+
+/* Blocked-out words on the coverage text. Progress is legibility. */
+.tok {
+  display: inline-block;
+  transition:
+    color 0.35s,
+    background-color 0.35s;
+}
+.tok[data-known='no'] {
+  background: var(--verdeckt);
+  color: transparent;
+  user-select: none;
+}
+.tok[data-known='beyond'] {
+  background: var(--verdeckt);
+  color: transparent;
+  opacity: 0.45;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

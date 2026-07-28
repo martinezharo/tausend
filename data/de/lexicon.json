@@ -1,0 +1,2738 @@
+{
+  "$schema": "../schema/lexicon.md",
+  "language": "de",
+  "source": "en",
+  "note": "Ranks are NOT authored here. build-course.mjs derives them from data/sources/de_50k.txt by summing the corpus frequency of every inflected form of the lemma. Keep this file about facts (gender, plural, irregular forms), not about ordering.",
+  "words": [
+    {
+      "l": "sein",
+      "p": "verb",
+      "en": [
+        "to be"
+      ],
+      "aux": "sein",
+      "f": [
+        "bin",
+        "bist",
+        "ist",
+        "sind",
+        "seid",
+        "war",
+        "warst",
+        "waren",
+        "wart",
+        "gewesen",
+        "sei",
+        "wäre",
+        "wären"
+      ]
+    },
+    {
+      "l": "haben",
+      "p": "verb",
+      "en": [
+        "to have"
+      ],
+      "aux": "haben",
+      "f": [
+        "habe",
+        "hast",
+        "hat",
+        "habt",
+        "hatte",
+        "hattest",
+        "hatten",
+        "gehabt",
+        "hätte",
+        "hätten"
+      ]
+    },
+    {
+      "l": "werden",
+      "p": "verb",
+      "en": [
+        "to become",
+        "will"
+      ],
+      "aux": "sein",
+      "f": [
+        "werde",
+        "wirst",
+        "wird",
+        "werdet",
+        "wurde",
+        "wurden",
+        "geworden",
+        "würde",
+        "würden"
+      ]
+    },
+    {
+      "l": "können",
+      "p": "verb",
+      "en": [
+        "can",
+        "to be able to"
+      ],
+      "aux": "haben",
+      "f": [
+        "kann",
+        "kannst",
+        "könnt",
+        "konnte",
+        "konnten",
+        "gekonnt",
+        "könnte",
+        "könnten"
+      ]
+    },
+    {
+      "l": "müssen",
+      "p": "verb",
+      "en": [
+        "must",
+        "to have to"
+      ],
+      "aux": "haben",
+      "f": [
+        "muss",
+        "musst",
+        "müsst",
+        "musste",
+        "mussten",
+        "gemusst",
+        "müsste"
+      ]
+    },
+    {
+      "l": "wollen",
+      "p": "verb",
+      "en": [
+        "to want"
+      ],
+      "aux": "haben",
+      "f": [
+        "will",
+        "willst",
+        "wollt",
+        "wollte",
+        "wollten",
+        "gewollt"
+      ]
+    },
+    {
+      "l": "sollen",
+      "p": "verb",
+      "en": [
+        "should",
+        "to be supposed to"
+      ],
+      "aux": "haben",
+      "f": [
+        "soll",
+        "sollst",
+        "sollt",
+        "sollte",
+        "sollten"
+      ]
+    },
+    {
+      "l": "dürfen",
+      "p": "verb",
+      "en": [
+        "may",
+        "to be allowed to"
+      ],
+      "aux": "haben",
+      "f": [
+        "darf",
+        "darfst",
+        "dürft",
+        "durfte",
+        "durften",
+        "gedurft"
+      ]
+    },
+    {
+      "l": "mögen",
+      "p": "verb",
+      "en": [
+        "to like"
+      ],
+      "aux": "haben",
+      "f": [
+        "mag",
+        "magst",
+        "mögt",
+        "mochte",
+        "mochten",
+        "gemocht",
+        "möchte",
+        "möchtest",
+        "möchten"
+      ]
+    },
+    {
+      "l": "machen",
+      "p": "verb",
+      "en": [
+        "to do",
+        "to make"
+      ],
+      "aux": "haben"
+    },
+    {
+      "l": "gehen",
+      "p": "verb",
+      "en": [
+        "to go",
+        "to walk"
+      ],
+      "aux": "sein",
+      "f": [
+        "gehe",
+        "gehst",
+        "geht",
+        "ging",
+        "gingen",
+        "gegangen"
+      ]
+    },
+    {
+      "l": "kommen",
+      "p": "verb",
+      "en": [
+        "to come"
+      ],
+      "aux": "sein",
+      "f": [
+        "komme",
+        "kommst",
+        "kommt",
+        "kam",
+        "kamen",
+        "gekommen"
+      ]
+    },
+    {
+      "l": "sehen",
+      "p": "verb",
+      "en": [
+        "to see"
+      ],
+      "aux": "haben",
+      "f": [
+        "sehe",
+        "siehst",
+        "sieht",
+        "seht",
+        "sah",
+        "sahen",
+        "gesehen"
+      ]
+    },
+    {
+      "l": "wissen",
+      "p": "verb",
+      "en": [
+        "to know (a fact)"
+      ],
+      "aux": "haben",
+      "f": [
+        "weiß",
+        "weißt",
+        "wisst",
+        "wusste",
+        "wussten",
+        "gewusst"
+      ],
+      "note": "wissen is for facts; kennen is for people and places."
+    },
+    {
+      "l": "sagen",
+      "p": "verb",
+      "en": [
+        "to say",
+        "to tell"
+      ],
+      "aux": "haben"
+    },
+    {
+      "l": "geben",
+      "p": "verb",
+      "en": [
+        "to give"
+      ],
+      "aux": "haben",
+      "f": [
+        "gebe",
+        "gibst",
+        "gibt",
+        "gebt",
+        "gab",
+        "gaben",
+        "gegeben"
+      ],
+      "note": "es gibt = there is / there are."
+    },
+    {
+      "l": "nehmen",
+      "p": "verb",
+      "en": [
+        "to take"
+      ],
+      "aux": "haben",
+      "f": [
+        "nehme",
+        "nimmst",
+        "nimmt",
+        "nehmt",
+        "nahm",
+        "nahmen",
+        "genommen"
+      ]
+    },
+    {
+      "l": "finden",
+      "p": "verb",
+      "en": [
+        "to find",
+        "to think (an opinion)"
+      ],
+      "aux": "haben",
+      "f": [
+        "finde",
+        "findest",
+        "findet",
+        "fand",
+        "fanden",
+        "gefunden"
+      ]
+    },
+    {
+      "l": "denken",
+      "p": "verb",
+      "en": [
+        "to think"
+      ],
+      "aux": "haben",
+      "f": [
+        "denke",
+        "denkst",
+        "denkt",
+        "dachte",
+        "dachten",
+        "gedacht"
+      ]
+    },
+    {
+      "l": "glauben",
+      "p": "verb",
+      "en": [
+        "to believe"
+      ],
+      "aux": "haben"
+    },
+    {
+      "l": "sprechen",
+      "p": "verb",
+      "en": [
+        "to speak"
+      ],
+      "aux": "haben",
+      "f": [
+        "spreche",
+        "sprichst",
+        "spricht",
+        "sprecht",
+        "sprach",
+        "sprachen",
+        "gesprochen"
+      ]
+    },
+    {
+      "l": "bleiben",
+      "p": "verb",
+      "en": [
+        "to stay",
+        "to remain"
+      ],
+      "aux": "sein",
+      "f": [
+        "bleibe",
+        "bleibst",
+        "bleibt",
+        "blieb",
+        "blieben",
+        "geblieben"
+      ]
+    },
+    {
+      "l": "stehen",
+      "p": "verb",
+      "en": [
+        "to stand"
+      ],
+      "aux": "haben",
+      "f": [
+        "stehe",
+        "stehst",
+        "steht",
+        "stand",
+        "standen",
+        "gestanden"
+      ]
+    },
+    {
+      "l": "liegen",
+      "p": "verb",
+      "en": [
+        "to lie",
+        "to be located"
+      ],
+      "aux": "haben",
+      "f": [
+        "liege",
+        "liegst",
+        "liegt",
+        "lag",
+        "lagen",
+        "gelegen"
+      ]
+    },
+    {
+      "l": "lassen",
+      "p": "verb",
+      "en": [
+        "to let",
+        "to leave"
+      ],
+      "aux": "haben",
+      "f": [
+        "lasse",
+        "lässt",
+        "lasst",
+        "ließ",
+        "ließen",
+        "gelassen"
+      ]
+    },
+    {
+      "l": "halten",
+      "p": "verb",
+      "en": [
+        "to hold",
+        "to stop"
+      ],
+      "aux": "haben",
+      "f": [
+        "halte",
+        "hältst",
+        "hält",
+        "haltet",
+        "hielt",
+        "hielten",
+        "gehalten"
+      ]
+    },
+    {
+      "l": "bringen",
+      "p": "verb",
+      "en": [
+        "to bring"
+      ],
+      "aux": "haben",
+      "f": [
+        "bringe",
+        "bringst",
+        "bringt",
+        "brachte",
+        "brachten",
+        "gebracht"
+      ]
+    },
+    {
+      "l": "fahren",
+      "p": "verb",
+      "en": [
+        "to drive",
+        "to travel"
+      ],
+      "aux": "sein",
+      "f": [
+        "fahre",
+        "fährst",
+        "fährt",
+        "fahrt",
+        "fuhr",
+        "fuhren",
+        "gefahren"
+      ]
+    },
+    {
+      "l": "laufen",
+      "p": "verb",
+      "en": [
+        "to run",
+        "to walk"
+      ],
+      "aux": "sein",
+      "f": [
+        "laufe",
+        "läufst",
+        "läuft",
+        "lauft",
+        "lief",
+        "liefen",
+        "gelaufen"
+      ]
+    },
+    {
+      "l": "essen",
+      "p": "verb",
+      "en": [
+        "to eat"
+      ],
+      "aux": "haben",
+      "f": [
+        "esse",
+        "isst",
+        "esst",
+        "aß",
+        "aßen",
+        "gegessen"
+      ]
+    },
+    {
+      "l": "trinken",
+      "p": "verb",
+      "en": [
+        "to drink"
+      ],
+      "aux": "haben",
+      "cog": "drink",
+      "f": [
+        "trinke",
+        "trinkst",
+        "trinkt",
+        "trank",
+        "tranken",
+        "getrunken"
+      ]
+    },
+    {
+      "l": "schlafen",
+      "p": "verb",
+      "en": [
+        "to sleep"
+      ],
+      "aux": "haben",
+      "cog": "sleep",
+      "f": [
+        "schlafe",
+        "schläfst",
+        "schläft",
+        "schlaft",
+        "schlief",
+        "schliefen",
+        "geschlafen"
+      ]
+    },
+    {
+      "l": "lesen",
+      "p": "verb",
+      "en": [
+        "to read"
+      ],
+      "aux": "haben",
+      "f": [
+        "lese",
+        "liest",
+        "lest",
+        "las",
+        "lasen",
+        "gelesen"
+      ]
+    },
+    {
+      "l": "schreiben",
+      "p": "verb",
+      "en": [
+        "to write"
+      ],
+      "aux": "haben",
+      "cog": "write",
+      "f": [
+        "schreibe",
+        "schreibst",
+        "schreibt",
+        "schrieb",
+        "schrieben",
+        "geschrieben"
+      ]
+    },
+    {
+      "l": "helfen",
+      "p": "verb",
+      "en": [
+        "to help"
+      ],
+      "aux": "haben",
+      "cog": "help",
+      "f": [
+        "helfe",
+        "hilfst",
+        "hilft",
+        "helft",
+        "half",
+        "halfen",
+        "geholfen"
+      ]
+    },
+    {
+      "l": "verstehen",
+      "p": "verb",
+      "en": [
+        "to understand"
+      ],
+      "aux": "haben",
+      "f": [
+        "verstehe",
+        "verstehst",
+        "versteht",
+        "verstand",
+        "verstanden"
+      ]
+    },
+    {
+      "l": "arbeiten",
+      "p": "verb",
+      "en": [
+        "to work"
+      ],
+      "aux": "haben",
+      "f": [
+        "arbeite",
+        "arbeitest",
+        "arbeitet",
+        "arbeitete",
+        "arbeiteten",
+        "gearbeitet"
+      ]
+    },
+    {
+      "l": "spielen",
+      "p": "verb",
+      "en": [
+        "to play"
+      ],
+      "aux": "haben",
+      "cog": "play"
+    },
+    {
+      "l": "lernen",
+      "p": "verb",
+      "en": [
+        "to learn"
+      ],
+      "aux": "haben",
+      "cog": "learn"
+    },
+    {
+      "l": "brauchen",
+      "p": "verb",
+      "en": [
+        "to need"
+      ],
+      "aux": "haben"
+    },
+    {
+      "l": "warten",
+      "p": "verb",
+      "en": [
+        "to wait"
+      ],
+      "aux": "haben",
+      "f": [
+        "warte",
+        "wartest",
+        "wartet",
+        "wartete",
+        "warteten",
+        "gewartet"
+      ]
+    },
+    {
+      "l": "leben",
+      "p": "verb",
+      "en": [
+        "to live"
+      ],
+      "aux": "haben",
+      "cog": "live"
+    },
+    {
+      "l": "lieben",
+      "p": "verb",
+      "en": [
+        "to love"
+      ],
+      "aux": "haben",
+      "cog": "love"
+    },
+    {
+      "l": "kaufen",
+      "p": "verb",
+      "en": [
+        "to buy"
+      ],
+      "aux": "haben"
+    },
+    {
+      "l": "hören",
+      "p": "verb",
+      "en": [
+        "to hear",
+        "to listen"
+      ],
+      "aux": "haben",
+      "cog": "hear"
+    },
+    {
+      "l": "fragen",
+      "p": "verb",
+      "en": [
+        "to ask"
+      ],
+      "aux": "haben"
+    },
+    {
+      "l": "antworten",
+      "p": "verb",
+      "en": [
+        "to answer"
+      ],
+      "aux": "haben",
+      "f": [
+        "antworte",
+        "antwortest",
+        "antwortet",
+        "antwortete",
+        "geantwortet"
+      ]
+    },
+    {
+      "l": "suchen",
+      "p": "verb",
+      "en": [
+        "to look for",
+        "to search"
+      ],
+      "aux": "haben",
+      "cog": "seek"
+    },
+    {
+      "l": "zeigen",
+      "p": "verb",
+      "en": [
+        "to show"
+      ],
+      "aux": "haben"
+    },
+    {
+      "l": "bekommen",
+      "p": "verb",
+      "en": [
+        "to get",
+        "to receive"
+      ],
+      "aux": "haben",
+      "ff": "Not \"to become\" — that is werden. Ich bekomme ein Buch = I receive a book.",
+      "f": [
+        "bekomme",
+        "bekommst",
+        "bekommt",
+        "bekam",
+        "bekamen"
+      ]
+    },
+    {
+      "l": "aufstehen",
+      "p": "verb",
+      "en": [
+        "to get up"
+      ],
+      "aux": "sein",
+      "sep": "auf",
+      "f": [
+        "stehe auf",
+        "stehst auf",
+        "steht auf",
+        "stehen auf",
+        "stand auf",
+        "standen auf",
+        "aufgestanden"
+      ],
+      "note": "Separable: the prefix flies to the end. Ich stehe früh auf."
+    },
+    {
+      "l": "anrufen",
+      "p": "verb",
+      "en": [
+        "to call (on the phone)"
+      ],
+      "aux": "haben",
+      "sep": "an",
+      "f": [
+        "rufe an",
+        "rufst an",
+        "ruft an",
+        "rufen an",
+        "rief an",
+        "riefen an",
+        "angerufen"
+      ],
+      "note": "Separable: Ich rufe dich an."
+    },
+    {
+      "l": "einkaufen",
+      "p": "verb",
+      "en": [
+        "to shop",
+        "to buy groceries"
+      ],
+      "aux": "haben",
+      "sep": "ein",
+      "f": [
+        "kaufe ein",
+        "kaufst ein",
+        "kauft ein",
+        "kaufen ein",
+        "kaufte ein",
+        "eingekauft"
+      ],
+      "note": "Separable: Wir kaufen heute ein."
+    },
+    {
+      "l": "ankommen",
+      "p": "verb",
+      "en": [
+        "to arrive"
+      ],
+      "aux": "sein",
+      "sep": "an",
+      "f": [
+        "komme an",
+        "kommst an",
+        "kommt an",
+        "kommen an",
+        "kam an",
+        "kamen an",
+        "angekommen"
+      ],
+      "note": "Separable: Der Zug kommt um acht an."
+    },
+    {
+      "l": "aussehen",
+      "p": "verb",
+      "en": [
+        "to look",
+        "to appear"
+      ],
+      "aux": "haben",
+      "sep": "aus",
+      "f": [
+        "sehe aus",
+        "siehst aus",
+        "sieht aus",
+        "sehen aus",
+        "sah aus",
+        "sahen aus",
+        "ausgesehen"
+      ],
+      "note": "Separable: Du siehst müde aus."
+    },
+    {
+      "l": "Mann",
+      "p": "noun",
+      "g": "der",
+      "pl": "Männer",
+      "en": [
+        "man"
+      ],
+      "cog": "man"
+    },
+    {
+      "l": "Frau",
+      "p": "noun",
+      "g": "die",
+      "pl": "Frauen",
+      "en": [
+        "woman",
+        "wife"
+      ]
+    },
+    {
+      "l": "Kind",
+      "p": "noun",
+      "g": "das",
+      "pl": "Kinder",
+      "en": [
+        "child"
+      ],
+      "cog": "kid"
+    },
+    {
+      "l": "Mensch",
+      "p": "noun",
+      "g": "der",
+      "pl": "Menschen",
+      "en": [
+        "human",
+        "person"
+      ],
+      "note": "Weak noun: den Menschen, dem Menschen."
+    },
+    {
+      "l": "Leute",
+      "p": "noun",
+      "g": "die",
+      "pl": "Leute",
+      "en": [
+        "people"
+      ],
+      "note": "Plural only. There is no singular Leut."
+    },
+    {
+      "l": "Freund",
+      "p": "noun",
+      "g": "der",
+      "pl": "Freunde",
+      "en": [
+        "friend",
+        "boyfriend"
+      ],
+      "cog": "friend"
+    },
+    {
+      "l": "Familie",
+      "p": "noun",
+      "g": "die",
+      "pl": "Familien",
+      "en": [
+        "family"
+      ],
+      "cog": "family"
+    },
+    {
+      "l": "Mutter",
+      "p": "noun",
+      "g": "die",
+      "pl": "Mütter",
+      "en": [
+        "mother"
+      ],
+      "cog": "mother"
+    },
+    {
+      "l": "Vater",
+      "p": "noun",
+      "g": "der",
+      "pl": "Väter",
+      "en": [
+        "father"
+      ],
+      "cog": "father"
+    },
+    {
+      "l": "Tag",
+      "p": "noun",
+      "g": "der",
+      "pl": "Tage",
+      "en": [
+        "day"
+      ],
+      "cog": "day"
+    },
+    {
+      "l": "Nacht",
+      "p": "noun",
+      "g": "die",
+      "pl": "Nächte",
+      "en": [
+        "night"
+      ],
+      "cog": "night"
+    },
+    {
+      "l": "Jahr",
+      "p": "noun",
+      "g": "das",
+      "pl": "Jahre",
+      "en": [
+        "year"
+      ],
+      "cog": "year"
+    },
+    {
+      "l": "Zeit",
+      "p": "noun",
+      "g": "die",
+      "pl": "Zeiten",
+      "en": [
+        "time"
+      ],
+      "cog": "tide"
+    },
+    {
+      "l": "Stunde",
+      "p": "noun",
+      "g": "die",
+      "pl": "Stunden",
+      "en": [
+        "hour"
+      ]
+    },
+    {
+      "l": "Woche",
+      "p": "noun",
+      "g": "die",
+      "pl": "Wochen",
+      "en": [
+        "week"
+      ]
+    },
+    {
+      "l": "Monat",
+      "p": "noun",
+      "g": "der",
+      "pl": "Monate",
+      "en": [
+        "month"
+      ],
+      "cog": "month"
+    },
+    {
+      "l": "Morgen",
+      "p": "noun",
+      "g": "der",
+      "pl": "Morgen",
+      "en": [
+        "morning"
+      ],
+      "cog": "morning"
+    },
+    {
+      "l": "Abend",
+      "p": "noun",
+      "g": "der",
+      "pl": "Abende",
+      "en": [
+        "evening"
+      ]
+    },
+    {
+      "l": "Uhr",
+      "p": "noun",
+      "g": "die",
+      "pl": "Uhren",
+      "en": [
+        "clock",
+        "o'clock"
+      ]
+    },
+    {
+      "l": "Haus",
+      "p": "noun",
+      "g": "das",
+      "pl": "Häuser",
+      "en": [
+        "house"
+      ],
+      "cog": "house",
+      "f": [
+        "Hause"
+      ],
+      "note": "nach Hause = homewards; zu Hause = at home. The -e is a fossilised dative."
+    },
+    {
+      "l": "Zimmer",
+      "p": "noun",
+      "g": "das",
+      "pl": "Zimmer",
+      "en": [
+        "room"
+      ]
+    },
+    {
+      "l": "Tür",
+      "p": "noun",
+      "g": "die",
+      "pl": "Türen",
+      "en": [
+        "door"
+      ],
+      "cog": "door"
+    },
+    {
+      "l": "Fenster",
+      "p": "noun",
+      "g": "das",
+      "pl": "Fenster",
+      "en": [
+        "window"
+      ]
+    },
+    {
+      "l": "Tisch",
+      "p": "noun",
+      "g": "der",
+      "pl": "Tische",
+      "en": [
+        "table"
+      ]
+    },
+    {
+      "l": "Stadt",
+      "p": "noun",
+      "g": "die",
+      "pl": "Städte",
+      "en": [
+        "city",
+        "town"
+      ]
+    },
+    {
+      "l": "Land",
+      "p": "noun",
+      "g": "das",
+      "pl": "Länder",
+      "en": [
+        "country",
+        "land"
+      ],
+      "cog": "land"
+    },
+    {
+      "l": "Straße",
+      "p": "noun",
+      "g": "die",
+      "pl": "Straßen",
+      "en": [
+        "street"
+      ],
+      "cog": "street"
+    },
+    {
+      "l": "Platz",
+      "p": "noun",
+      "g": "der",
+      "pl": "Plätze",
+      "en": [
+        "place",
+        "square",
+        "seat"
+      ],
+      "cog": "place"
+    },
+    {
+      "l": "Weg",
+      "p": "noun",
+      "g": "der",
+      "pl": "Wege",
+      "en": [
+        "way",
+        "path"
+      ],
+      "cog": "way"
+    },
+    {
+      "l": "Welt",
+      "p": "noun",
+      "g": "die",
+      "pl": "Welten",
+      "en": [
+        "world"
+      ],
+      "cog": "world"
+    },
+    {
+      "l": "Ort",
+      "p": "noun",
+      "g": "der",
+      "pl": "Orte",
+      "en": [
+        "place",
+        "location"
+      ]
+    },
+    {
+      "l": "Wasser",
+      "p": "noun",
+      "g": "das",
+      "pl": "Wasser",
+      "en": [
+        "water"
+      ],
+      "cog": "water"
+    },
+    {
+      "l": "Milch",
+      "p": "noun",
+      "g": "die",
+      "en": [
+        "milk"
+      ],
+      "cog": "milk"
+    },
+    {
+      "l": "Bier",
+      "p": "noun",
+      "g": "das",
+      "pl": "Biere",
+      "en": [
+        "beer"
+      ],
+      "cog": "beer"
+    },
+    {
+      "l": "Kaffee",
+      "p": "noun",
+      "g": "der",
+      "pl": "Kaffees",
+      "en": [
+        "coffee"
+      ],
+      "cog": "coffee"
+    },
+    {
+      "l": "Brot",
+      "p": "noun",
+      "g": "das",
+      "pl": "Brote",
+      "en": [
+        "bread"
+      ],
+      "cog": "bread"
+    },
+    {
+      "l": "Essen",
+      "p": "noun",
+      "g": "das",
+      "pl": "Essen",
+      "en": [
+        "food",
+        "meal"
+      ]
+    },
+    {
+      "l": "Hand",
+      "p": "noun",
+      "g": "die",
+      "pl": "Hände",
+      "en": [
+        "hand"
+      ],
+      "cog": "hand"
+    },
+    {
+      "l": "Kopf",
+      "p": "noun",
+      "g": "der",
+      "pl": "Köpfe",
+      "en": [
+        "head"
+      ]
+    },
+    {
+      "l": "Auge",
+      "p": "noun",
+      "g": "das",
+      "pl": "Augen",
+      "en": [
+        "eye"
+      ],
+      "cog": "eye"
+    },
+    {
+      "l": "Gesicht",
+      "p": "noun",
+      "g": "das",
+      "pl": "Gesichter",
+      "en": [
+        "face"
+      ]
+    },
+    {
+      "l": "Herz",
+      "p": "noun",
+      "g": "das",
+      "pl": "Herzen",
+      "en": [
+        "heart"
+      ],
+      "cog": "heart"
+    },
+    {
+      "l": "Arbeit",
+      "p": "noun",
+      "g": "die",
+      "pl": "Arbeiten",
+      "en": [
+        "work",
+        "job"
+      ]
+    },
+    {
+      "l": "Schule",
+      "p": "noun",
+      "g": "die",
+      "pl": "Schulen",
+      "en": [
+        "school"
+      ],
+      "cog": "school"
+    },
+    {
+      "l": "Buch",
+      "p": "noun",
+      "g": "das",
+      "pl": "Bücher",
+      "en": [
+        "book"
+      ],
+      "cog": "book"
+    },
+    {
+      "l": "Wort",
+      "p": "noun",
+      "g": "das",
+      "pl": "Wörter",
+      "en": [
+        "word"
+      ],
+      "cog": "word",
+      "note": "die Wörter = separate words; die Worte = words in connected speech."
+    },
+    {
+      "l": "Name",
+      "p": "noun",
+      "g": "der",
+      "pl": "Namen",
+      "en": [
+        "name"
+      ],
+      "cog": "name",
+      "note": "Weak noun: den Namen, des Namens."
+    },
+    {
+      "l": "Frage",
+      "p": "noun",
+      "g": "die",
+      "pl": "Fragen",
+      "en": [
+        "question"
+      ]
+    },
+    {
+      "l": "Antwort",
+      "p": "noun",
+      "g": "die",
+      "pl": "Antworten",
+      "en": [
+        "answer"
+      ]
+    },
+    {
+      "l": "Problem",
+      "p": "noun",
+      "g": "das",
+      "pl": "Probleme",
+      "en": [
+        "problem"
+      ],
+      "cog": "problem"
+    },
+    {
+      "l": "Grund",
+      "p": "noun",
+      "g": "der",
+      "pl": "Gründe",
+      "en": [
+        "reason",
+        "ground"
+      ],
+      "cog": "ground"
+    },
+    {
+      "l": "Beispiel",
+      "p": "noun",
+      "g": "das",
+      "pl": "Beispiele",
+      "en": [
+        "example"
+      ],
+      "note": "zum Beispiel = for example (z. B.)."
+    },
+    {
+      "l": "Sache",
+      "p": "noun",
+      "g": "die",
+      "pl": "Sachen",
+      "en": [
+        "thing",
+        "matter"
+      ]
+    },
+    {
+      "l": "Leben",
+      "p": "noun",
+      "g": "das",
+      "pl": "Leben",
+      "en": [
+        "life"
+      ],
+      "cog": "life"
+    },
+    {
+      "l": "Geld",
+      "p": "noun",
+      "g": "das",
+      "pl": "Gelder",
+      "en": [
+        "money"
+      ]
+    },
+    {
+      "l": "Auto",
+      "p": "noun",
+      "g": "das",
+      "pl": "Autos",
+      "en": [
+        "car"
+      ]
+    },
+    {
+      "l": "Zug",
+      "p": "noun",
+      "g": "der",
+      "pl": "Züge",
+      "en": [
+        "train"
+      ]
+    },
+    {
+      "l": "Hund",
+      "p": "noun",
+      "g": "der",
+      "pl": "Hunde",
+      "en": [
+        "dog"
+      ],
+      "cog": "hound"
+    },
+    {
+      "l": "Katze",
+      "p": "noun",
+      "g": "die",
+      "pl": "Katzen",
+      "en": [
+        "cat"
+      ],
+      "cog": "cat"
+    },
+    {
+      "l": "Sonne",
+      "p": "noun",
+      "g": "die",
+      "pl": "Sonnen",
+      "en": [
+        "sun"
+      ],
+      "cog": "sun"
+    },
+    {
+      "l": "Wetter",
+      "p": "noun",
+      "g": "das",
+      "en": [
+        "weather"
+      ],
+      "cog": "weather"
+    },
+    {
+      "l": "Garten",
+      "p": "noun",
+      "g": "der",
+      "pl": "Gärten",
+      "en": [
+        "garden"
+      ],
+      "cog": "garden"
+    },
+    {
+      "l": "Musik",
+      "p": "noun",
+      "g": "die",
+      "en": [
+        "music"
+      ],
+      "cog": "music"
+    },
+    {
+      "l": "Film",
+      "p": "noun",
+      "g": "der",
+      "pl": "Filme",
+      "en": [
+        "film",
+        "movie"
+      ],
+      "cog": "film"
+    },
+    {
+      "l": "Spiel",
+      "p": "noun",
+      "g": "das",
+      "pl": "Spiele",
+      "en": [
+        "game"
+      ]
+    },
+    {
+      "l": "Geschichte",
+      "p": "noun",
+      "g": "die",
+      "pl": "Geschichten",
+      "en": [
+        "story",
+        "history"
+      ]
+    },
+    {
+      "l": "Gift",
+      "p": "noun",
+      "g": "das",
+      "pl": "Gifte",
+      "en": [
+        "poison"
+      ],
+      "ff": "Not a present. A gift is das Geschenk. Gift = poison."
+    },
+    {
+      "l": "Rat",
+      "p": "noun",
+      "g": "der",
+      "pl": "Ratschläge",
+      "en": [
+        "advice"
+      ],
+      "ff": "Not a rat. A rat is die Ratte. Rat = advice."
+    },
+    {
+      "l": "Handy",
+      "p": "noun",
+      "g": "das",
+      "pl": "Handys",
+      "en": [
+        "mobile phone"
+      ],
+      "ff": "Looks English, is not. Germans say Handy for a mobile phone."
+    },
+    {
+      "l": "Chef",
+      "p": "noun",
+      "g": "der",
+      "pl": "Chefs",
+      "en": [
+        "boss"
+      ],
+      "ff": "Not a cook. A chef is der Koch. Chef = boss."
+    },
+    {
+      "l": "gut",
+      "p": "adj",
+      "en": [
+        "good",
+        "well"
+      ],
+      "cog": "good",
+      "f": [
+        "gute",
+        "guter",
+        "gutes",
+        "guten",
+        "gutem",
+        "besser",
+        "best",
+        "beste",
+        "besten"
+      ]
+    },
+    {
+      "l": "schlecht",
+      "p": "adj",
+      "en": [
+        "bad"
+      ],
+      "f": [
+        "schlechte",
+        "schlechter",
+        "schlechtes",
+        "schlechten"
+      ]
+    },
+    {
+      "l": "groß",
+      "p": "adj",
+      "en": [
+        "big",
+        "tall",
+        "great"
+      ],
+      "cog": "great",
+      "f": [
+        "große",
+        "großer",
+        "großes",
+        "großen",
+        "größer",
+        "größte"
+      ]
+    },
+    {
+      "l": "klein",
+      "p": "adj",
+      "en": [
+        "small",
+        "little"
+      ],
+      "f": [
+        "kleine",
+        "kleiner",
+        "kleines",
+        "kleinen"
+      ]
+    },
+    {
+      "l": "neu",
+      "p": "adj",
+      "en": [
+        "new"
+      ],
+      "cog": "new",
+      "f": [
+        "neue",
+        "neuer",
+        "neues",
+        "neuen"
+      ]
+    },
+    {
+      "l": "alt",
+      "p": "adj",
+      "en": [
+        "old"
+      ],
+      "cog": "old",
+      "f": [
+        "alte",
+        "alter",
+        "altes",
+        "alten",
+        "älter",
+        "älteste"
+      ]
+    },
+    {
+      "l": "jung",
+      "p": "adj",
+      "en": [
+        "young"
+      ],
+      "cog": "young",
+      "f": [
+        "junge",
+        "junger",
+        "junges",
+        "jungen",
+        "jünger"
+      ]
+    },
+    {
+      "l": "lang",
+      "p": "adj",
+      "en": [
+        "long"
+      ],
+      "cog": "long",
+      "f": [
+        "lange",
+        "langer",
+        "langes",
+        "langen",
+        "länger"
+      ]
+    },
+    {
+      "l": "kurz",
+      "p": "adj",
+      "en": [
+        "short"
+      ],
+      "f": [
+        "kurze",
+        "kurzer",
+        "kurzes",
+        "kurzen",
+        "kürzer"
+      ]
+    },
+    {
+      "l": "schnell",
+      "p": "adj",
+      "en": [
+        "fast",
+        "quick"
+      ],
+      "f": [
+        "schnelle",
+        "schneller",
+        "schnelles",
+        "schnellen"
+      ]
+    },
+    {
+      "l": "langsam",
+      "p": "adj",
+      "en": [
+        "slow"
+      ],
+      "f": [
+        "langsame",
+        "langsamer",
+        "langsames",
+        "langsamen"
+      ]
+    },
+    {
+      "l": "schön",
+      "p": "adj",
+      "en": [
+        "beautiful",
+        "nice"
+      ],
+      "f": [
+        "schöne",
+        "schöner",
+        "schönes",
+        "schönen"
+      ]
+    },
+    {
+      "l": "richtig",
+      "p": "adj",
+      "en": [
+        "right",
+        "correct"
+      ],
+      "f": [
+        "richtige",
+        "richtiger",
+        "richtiges",
+        "richtigen"
+      ]
+    },
+    {
+      "l": "falsch",
+      "p": "adj",
+      "en": [
+        "wrong",
+        "false"
+      ],
+      "cog": "false",
+      "f": [
+        "falsche",
+        "falscher",
+        "falsches",
+        "falschen"
+      ]
+    },
+    {
+      "l": "einfach",
+      "p": "adj",
+      "en": [
+        "easy",
+        "simple"
+      ],
+      "f": [
+        "einfache",
+        "einfacher",
+        "einfaches",
+        "einfachen"
+      ]
+    },
+    {
+      "l": "schwer",
+      "p": "adj",
+      "en": [
+        "hard",
+        "heavy",
+        "difficult"
+      ],
+      "f": [
+        "schwere",
+        "schwerer",
+        "schweres",
+        "schweren"
+      ]
+    },
+    {
+      "l": "wichtig",
+      "p": "adj",
+      "en": [
+        "important"
+      ],
+      "f": [
+        "wichtige",
+        "wichtiger",
+        "wichtiges",
+        "wichtigen"
+      ]
+    },
+    {
+      "l": "müde",
+      "p": "adj",
+      "en": [
+        "tired"
+      ],
+      "f": [
+        "müder",
+        "müden"
+      ]
+    },
+    {
+      "l": "kalt",
+      "p": "adj",
+      "en": [
+        "cold"
+      ],
+      "cog": "cold",
+      "f": [
+        "kalte",
+        "kalter",
+        "kaltes",
+        "kalten",
+        "kälter"
+      ]
+    },
+    {
+      "l": "warm",
+      "p": "adj",
+      "en": [
+        "warm"
+      ],
+      "cog": "warm",
+      "f": [
+        "warme",
+        "warmer",
+        "warmes",
+        "warmen",
+        "wärmer"
+      ]
+    },
+    {
+      "l": "teuer",
+      "p": "adj",
+      "en": [
+        "expensive"
+      ],
+      "f": [
+        "teure",
+        "teurer",
+        "teures",
+        "teuren"
+      ]
+    },
+    {
+      "l": "glücklich",
+      "p": "adj",
+      "en": [
+        "happy"
+      ],
+      "f": [
+        "glückliche",
+        "glücklicher",
+        "glückliches",
+        "glücklichen"
+      ]
+    },
+    {
+      "l": "ich",
+      "p": "pron",
+      "en": [
+        "I"
+      ],
+      "f": [
+        "mich",
+        "mir"
+      ],
+      "pat": "ich / mich (accusative) / mir (dative)"
+    },
+    {
+      "l": "du",
+      "p": "pron",
+      "en": [
+        "you (informal singular)"
+      ],
+      "f": [
+        "dich",
+        "dir"
+      ],
+      "pat": "du / dich / dir"
+    },
+    {
+      "l": "er",
+      "p": "pron",
+      "en": [
+        "he",
+        "it"
+      ],
+      "f": [
+        "ihn",
+        "ihm"
+      ],
+      "pat": "er / ihn / ihm"
+    },
+    {
+      "l": "sie",
+      "p": "pron",
+      "en": [
+        "she",
+        "they",
+        "you (formal)"
+      ],
+      "f": [
+        "ihr",
+        "ihnen",
+        "Sie",
+        "Ihnen"
+      ],
+      "pat": "sie can mean she, they, or formal you. Word order and verb ending disambiguate."
+    },
+    {
+      "l": "es",
+      "p": "pron",
+      "en": [
+        "it"
+      ],
+      "cog": "it"
+    },
+    {
+      "l": "wir",
+      "p": "pron",
+      "en": [
+        "we"
+      ],
+      "f": [
+        "uns"
+      ],
+      "cog": "we"
+    },
+    {
+      "l": "man",
+      "p": "pron",
+      "en": [
+        "one",
+        "you (impersonal)"
+      ],
+      "pat": "man sagt = they say / one says. Not the same as Mann."
+    },
+    {
+      "l": "sich",
+      "p": "pron",
+      "en": [
+        "oneself",
+        "himself",
+        "herself"
+      ],
+      "pat": "Reflexive: er wäscht sich."
+    },
+    {
+      "l": "der",
+      "p": "det",
+      "en": [
+        "the"
+      ],
+      "f": [
+        "die",
+        "das",
+        "den",
+        "dem",
+        "des"
+      ],
+      "pat": "The definite article changes with gender AND case: der/den/dem/des, die/der, das/dem/des."
+    },
+    {
+      "l": "ein",
+      "p": "det",
+      "en": [
+        "a",
+        "an",
+        "one"
+      ],
+      "f": [
+        "eine",
+        "einen",
+        "einem",
+        "einer",
+        "eines"
+      ],
+      "cog": "one"
+    },
+    {
+      "l": "kein",
+      "p": "det",
+      "en": [
+        "no",
+        "not a"
+      ],
+      "f": [
+        "keine",
+        "keinen",
+        "keinem",
+        "keiner",
+        "keines"
+      ],
+      "pat": "German negates nouns with kein, not with nicht: Ich habe kein Geld."
+    },
+    {
+      "l": "mein",
+      "p": "det",
+      "en": [
+        "my"
+      ],
+      "f": [
+        "meine",
+        "meinen",
+        "meinem",
+        "meiner",
+        "meines"
+      ],
+      "cog": "mine"
+    },
+    {
+      "l": "dein",
+      "p": "det",
+      "en": [
+        "your"
+      ],
+      "f": [
+        "deine",
+        "deinen",
+        "deinem",
+        "deiner"
+      ],
+      "cog": "thine"
+    },
+    {
+      "l": "dieser",
+      "p": "det",
+      "en": [
+        "this"
+      ],
+      "f": [
+        "diese",
+        "dieses",
+        "diesen",
+        "diesem",
+        "dieser"
+      ]
+    },
+    {
+      "l": "alle",
+      "p": "det",
+      "en": [
+        "all"
+      ],
+      "f": [
+        "alles",
+        "allen",
+        "aller",
+        "allem"
+      ],
+      "cog": "all"
+    },
+    {
+      "l": "viel",
+      "p": "det",
+      "en": [
+        "much",
+        "many"
+      ],
+      "f": [
+        "viele",
+        "vielen",
+        "vieler",
+        "vieles"
+      ]
+    },
+    {
+      "l": "wenig",
+      "p": "det",
+      "en": [
+        "little",
+        "few"
+      ],
+      "f": [
+        "wenige",
+        "wenigen",
+        "weniger"
+      ]
+    },
+    {
+      "l": "nicht",
+      "p": "adv",
+      "en": [
+        "not"
+      ],
+      "pat": "Negates verbs and adjectives. For nouns use kein."
+    },
+    {
+      "l": "auch",
+      "p": "adv",
+      "en": [
+        "also",
+        "too"
+      ]
+    },
+    {
+      "l": "nur",
+      "p": "adv",
+      "en": [
+        "only",
+        "just"
+      ]
+    },
+    {
+      "l": "noch",
+      "p": "adv",
+      "en": [
+        "still",
+        "yet"
+      ]
+    },
+    {
+      "l": "schon",
+      "p": "adv",
+      "en": [
+        "already"
+      ]
+    },
+    {
+      "l": "so",
+      "p": "adv",
+      "en": [
+        "so",
+        "like that"
+      ],
+      "cog": "so"
+    },
+    {
+      "l": "sehr",
+      "p": "adv",
+      "en": [
+        "very"
+      ]
+    },
+    {
+      "l": "hier",
+      "p": "adv",
+      "en": [
+        "here"
+      ],
+      "cog": "here"
+    },
+    {
+      "l": "da",
+      "p": "adv",
+      "en": [
+        "there",
+        "then"
+      ]
+    },
+    {
+      "l": "dort",
+      "p": "adv",
+      "en": [
+        "over there"
+      ]
+    },
+    {
+      "l": "jetzt",
+      "p": "adv",
+      "en": [
+        "now"
+      ]
+    },
+    {
+      "l": "heute",
+      "p": "adv",
+      "en": [
+        "today"
+      ]
+    },
+    {
+      "l": "morgen",
+      "p": "adv",
+      "en": [
+        "tomorrow"
+      ],
+      "note": "morgen (lowercase) = tomorrow; der Morgen = the morning."
+    },
+    {
+      "l": "gestern",
+      "p": "adv",
+      "en": [
+        "yesterday"
+      ]
+    },
+    {
+      "l": "immer",
+      "p": "adv",
+      "en": [
+        "always"
+      ]
+    },
+    {
+      "l": "nie",
+      "p": "adv",
+      "en": [
+        "never"
+      ]
+    },
+    {
+      "l": "oft",
+      "p": "adv",
+      "en": [
+        "often"
+      ],
+      "cog": "oft"
+    },
+    {
+      "l": "wieder",
+      "p": "adv",
+      "en": [
+        "again"
+      ]
+    },
+    {
+      "l": "vielleicht",
+      "p": "adv",
+      "en": [
+        "maybe",
+        "perhaps"
+      ]
+    },
+    {
+      "l": "gern",
+      "p": "adv",
+      "en": [
+        "gladly",
+        "with pleasure"
+      ],
+      "f": [
+        "gerne"
+      ],
+      "pat": "Ich trinke gern Kaffee = I like drinking coffee. German expresses liking an activity with gern."
+    },
+    {
+      "l": "zusammen",
+      "p": "adv",
+      "en": [
+        "together"
+      ]
+    },
+    {
+      "l": "also",
+      "p": "adv",
+      "en": [
+        "so",
+        "therefore"
+      ],
+      "ff": "Not English \"also\". German also = so/therefore. English also = auch."
+    },
+    {
+      "l": "dann",
+      "p": "adv",
+      "en": [
+        "then"
+      ]
+    },
+    {
+      "l": "anders",
+      "p": "adv",
+      "en": [
+        "different",
+        "differently"
+      ]
+    },
+    {
+      "l": "früh",
+      "p": "adv",
+      "en": [
+        "early"
+      ],
+      "f": [
+        "früher",
+        "frühe",
+        "frühen"
+      ]
+    },
+    {
+      "l": "spät",
+      "p": "adv",
+      "en": [
+        "late"
+      ],
+      "f": [
+        "später",
+        "späte",
+        "späten"
+      ]
+    },
+    {
+      "l": "nichts",
+      "p": "pron",
+      "en": [
+        "nothing"
+      ]
+    },
+    {
+      "l": "etwas",
+      "p": "pron",
+      "en": [
+        "something",
+        "a bit"
+      ]
+    },
+    {
+      "l": "jeder",
+      "p": "det",
+      "en": [
+        "every",
+        "each"
+      ],
+      "f": [
+        "jede",
+        "jedes",
+        "jeden",
+        "jedem"
+      ]
+    },
+    {
+      "l": "kennen",
+      "p": "verb",
+      "en": [
+        "to know (a person or place)"
+      ],
+      "aux": "haben",
+      "f": [
+        "kenne",
+        "kennst",
+        "kennt",
+        "kannte",
+        "kannten",
+        "gekannt"
+      ],
+      "note": "kennen is for people and places; wissen is for facts."
+    },
+    {
+      "l": "wohnen",
+      "p": "verb",
+      "en": [
+        "to live",
+        "to reside"
+      ],
+      "aux": "haben"
+    },
+    {
+      "l": "Deutsch",
+      "p": "noun",
+      "g": "das",
+      "en": [
+        "German (the language)"
+      ],
+      "note": "Language names are neuter: das Deutsch, das Englisch."
+    },
+    {
+      "l": "und",
+      "p": "conj",
+      "en": [
+        "and"
+      ]
+    },
+    {
+      "l": "aber",
+      "p": "conj",
+      "en": [
+        "but"
+      ]
+    },
+    {
+      "l": "oder",
+      "p": "conj",
+      "en": [
+        "or"
+      ]
+    },
+    {
+      "l": "dass",
+      "p": "conj",
+      "en": [
+        "that"
+      ],
+      "pat": "Sends the verb to the end: Ich weiß, dass du hier bist."
+    },
+    {
+      "l": "weil",
+      "p": "conj",
+      "en": [
+        "because"
+      ],
+      "pat": "Sends the verb to the end: ...weil ich müde bin."
+    },
+    {
+      "l": "wenn",
+      "p": "conj",
+      "en": [
+        "if",
+        "when"
+      ],
+      "pat": "Sends the verb to the end."
+    },
+    {
+      "l": "ob",
+      "p": "conj",
+      "en": [
+        "whether",
+        "if"
+      ],
+      "pat": "Sends the verb to the end: Ich weiß nicht, ob er kommt."
+    },
+    {
+      "l": "als",
+      "p": "conj",
+      "en": [
+        "when (past)",
+        "than"
+      ]
+    },
+    {
+      "l": "denn",
+      "p": "conj",
+      "en": [
+        "because",
+        "for"
+      ]
+    },
+    {
+      "l": "in",
+      "p": "prep",
+      "en": [
+        "in",
+        "into"
+      ],
+      "cog": "in"
+    },
+    {
+      "l": "auf",
+      "p": "prep",
+      "en": [
+        "on",
+        "onto"
+      ]
+    },
+    {
+      "l": "mit",
+      "p": "prep",
+      "en": [
+        "with"
+      ],
+      "pat": "Always takes the dative: mit dem Auto."
+    },
+    {
+      "l": "für",
+      "p": "prep",
+      "en": [
+        "for"
+      ],
+      "pat": "Always takes the accusative: für dich."
+    },
+    {
+      "l": "von",
+      "p": "prep",
+      "en": [
+        "from",
+        "of"
+      ],
+      "pat": "Always takes the dative."
+    },
+    {
+      "l": "zu",
+      "p": "prep",
+      "en": [
+        "to"
+      ],
+      "pat": "Always takes the dative: zu Hause, zum Arzt."
+    },
+    {
+      "l": "an",
+      "p": "prep",
+      "en": [
+        "at",
+        "on"
+      ]
+    },
+    {
+      "l": "aus",
+      "p": "prep",
+      "en": [
+        "out of",
+        "from"
+      ],
+      "pat": "Always takes the dative: Ich komme aus Spanien."
+    },
+    {
+      "l": "bei",
+      "p": "prep",
+      "en": [
+        "at",
+        "near",
+        "with"
+      ],
+      "pat": "Always takes the dative."
+    },
+    {
+      "l": "nach",
+      "p": "prep",
+      "en": [
+        "after",
+        "to (a place)"
+      ],
+      "pat": "Dative. For cities and countries without an article: nach Berlin."
+    },
+    {
+      "l": "über",
+      "p": "prep",
+      "en": [
+        "over",
+        "about"
+      ]
+    },
+    {
+      "l": "unter",
+      "p": "prep",
+      "en": [
+        "under"
+      ],
+      "cog": "under"
+    },
+    {
+      "l": "vor",
+      "p": "prep",
+      "en": [
+        "before",
+        "in front of"
+      ]
+    },
+    {
+      "l": "ohne",
+      "p": "prep",
+      "en": [
+        "without"
+      ],
+      "pat": "Always takes the accusative: ohne dich."
+    },
+    {
+      "l": "um",
+      "p": "prep",
+      "en": [
+        "around",
+        "at (a time)"
+      ],
+      "pat": "um acht Uhr = at eight o'clock."
+    },
+    {
+      "l": "was",
+      "p": "wh",
+      "en": [
+        "what"
+      ]
+    },
+    {
+      "l": "wer",
+      "p": "wh",
+      "en": [
+        "who"
+      ]
+    },
+    {
+      "l": "wo",
+      "p": "wh",
+      "en": [
+        "where"
+      ]
+    },
+    {
+      "l": "wann",
+      "p": "wh",
+      "en": [
+        "when"
+      ]
+    },
+    {
+      "l": "warum",
+      "p": "wh",
+      "en": [
+        "why"
+      ]
+    },
+    {
+      "l": "wie",
+      "p": "wh",
+      "en": [
+        "how",
+        "as",
+        "like"
+      ]
+    },
+    {
+      "l": "welcher",
+      "p": "wh",
+      "en": [
+        "which"
+      ],
+      "f": [
+        "welche",
+        "welches",
+        "welchen",
+        "welchem"
+      ]
+    },
+    {
+      "l": "ja",
+      "p": "part",
+      "en": [
+        "yes"
+      ]
+    },
+    {
+      "l": "nein",
+      "p": "part",
+      "en": [
+        "no"
+      ]
+    },
+    {
+      "l": "bitte",
+      "p": "part",
+      "en": [
+        "please",
+        "you're welcome"
+      ]
+    },
+    {
+      "l": "danke",
+      "p": "part",
+      "en": [
+        "thanks"
+      ],
+      "cog": "thank"
+    },
+    {
+      "l": "eins",
+      "p": "num",
+      "en": [
+        "one"
+      ],
+      "f": [
+        "ein",
+        "eine"
+      ],
+      "cog": "one"
+    },
+    {
+      "l": "zwei",
+      "p": "num",
+      "en": [
+        "two"
+      ],
+      "cog": "two"
+    },
+    {
+      "l": "drei",
+      "p": "num",
+      "en": [
+        "three"
+      ],
+      "cog": "three"
+    },
+    {
+      "l": "vier",
+      "p": "num",
+      "en": [
+        "four"
+      ],
+      "cog": "four"
+    },
+    {
+      "l": "fünf",
+      "p": "num",
+      "en": [
+        "five"
+      ],
+      "cog": "five"
+    },
+    {
+      "l": "sechs",
+      "p": "num",
+      "en": [
+        "six"
+      ],
+      "cog": "six"
+    },
+    {
+      "l": "sieben",
+      "p": "num",
+      "en": [
+        "seven"
+      ],
+      "cog": "seven"
+    },
+    {
+      "l": "acht",
+      "p": "num",
+      "en": [
+        "eight"
+      ],
+      "cog": "eight"
+    },
+    {
+      "l": "neun",
+      "p": "num",
+      "en": [
+        "nine"
+      ],
+      "cog": "nine"
+    },
+    {
+      "l": "zehn",
+      "p": "num",
+      "en": [
+        "ten"
+      ],
+      "cog": "ten"
+    }
+  ]
+}
