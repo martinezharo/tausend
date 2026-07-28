@@ -11,13 +11,26 @@ export function fit(node: HTMLElement, _dep?: unknown) {
   const MIN = 62;
   const MAX = 125;
 
+  // A block element's scrollWidth can report its own box width rather than the
+  // exact glyph width on some mobile browsers. Measuring the text range gives
+  // us the rendered word width directly, including variable-font changes.
+  const renderedTextWidth = () => {
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    return range.getBoundingClientRect().width;
+  };
+
   const apply = () => {
     const box = node.parentElement;
     if (!box) return;
-    const available = box.clientWidth - 2;
-    if (available <= 0) return;
 
     node.style.fontSize = '';
+
+    // The word is a block that fills the plate's content box, so clientWidth is
+    // the actual horizontal space available after the plate's padding/borders.
+    const available = node.clientWidth || box.clientWidth;
+    if (available <= 0) return;
+
     let lo = MIN;
     let hi = MAX;
     let best = MIN;
@@ -25,7 +38,7 @@ export function fit(node: HTMLElement, _dep?: unknown) {
     for (let i = 0; i < 8; i++) {
       const mid = (lo + hi) / 2;
       node.style.setProperty('--w', String(mid));
-      if (node.scrollWidth <= available) {
+      if (renderedTextWidth() <= available) {
         best = mid;
         lo = mid;
       } else {
@@ -36,21 +49,22 @@ export function fit(node: HTMLElement, _dep?: unknown) {
 
     // Even fully condensed some compounds will not fit; then, and only then,
     // fall back to reducing the size.
-    if (node.scrollWidth > available) {
+    const width = renderedTextWidth();
+    if (width > available) {
       const size = parseFloat(getComputedStyle(node).fontSize);
-      node.style.fontSize = `${(size * available) / node.scrollWidth}px`;
+      node.style.fontSize = `${(size * available) / width}px`;
     }
   };
 
   const observer = new ResizeObserver(apply);
   if (node.parentElement) observer.observe(node.parentElement);
 
-  if (document.fonts?.status === 'loaded') apply();
-  else document.fonts?.ready.then(apply);
+  if (document.fonts?.status === 'loaded') requestAnimationFrame(apply);
+  else document.fonts?.ready.then(() => requestAnimationFrame(apply));
   apply();
 
   return {
-    update: apply,
+    update: () => requestAnimationFrame(apply),
     destroy: () => observer.disconnect()
   };
 }
