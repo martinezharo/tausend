@@ -1,151 +1,82 @@
 # Tausend
 
-Learn the most frequent words of a language in the order that unlocks real
-sentences fastest. German from English first; the engine is language-agnostic.
+Learn frequent German words from English in the order that unlocks real
+sentences fastest. Tausend is an offline-first PWA: progress stays in IndexedDB
+on the device, with no account, application server, or analytics.
 
-An offline-first PWA. No account, no server, no analytics.
+The compiler accepts language-specific data directories, but the current web
+app ships the German course only.
 
----
+## Current course
 
-## What it actually claims
+The checked-in course contains 241 words, 80 sentences, and 3 short stories. Its
+coverage is measured against 151,705,378 tokens from the OpenSubtitles 2018
+frequency corpus, not estimated from the number of words:
 
-The top thousand words cover a large share of running speech, but comprehension
-needs around **95 %** lexical coverage and unassisted reading around **98 %**.
-So this builds a skeleton, not fluency — and it says so on the home screen.
+| Course words | Corpus coverage |
+|---:|---:|
+| 25 | 40.7% |
+| 50 | 47.8% |
+| 100 | 55.4% |
+| 241 | 66.5% |
 
-The coverage number is **measured**, not estimated: every word's corpus
-frequency is summed over its full inflectional paradigm against 151.7 M tokens
-of spoken German. The current German course reaches **66.5 %** with 241 words.
+This is a foundation, not fluency. The current 241-word lexicon is seed content
+for the planned 1,000-word course.
 
-```
-measured coverage of the corpus
-  after  25     40.8 %
-  after  50     47.9 %
-  after 100     55.4 %
-  after 241     66.5 %
-```
+## How it works
 
-## The two ideas worth stealing
+- The compiler balances sentence progress with corpus frequency instead of
+  teaching raw frequency order. It expands inflections, assigns each corpus form
+  to one lemma, and fails when authored sentence tokens cannot be resolved.
+- Each word has independently scheduled FSRS skills: recognise, gender, listen,
+  cloze, and produce. Gender is available immediately for nouns; the other skills
+  unlock as recognition becomes stable and usable sentences become available.
+- Word pronunciations are human recordings from the German Wiktionary project via
+  Wikimedia Commons and are bundled for offline use. Sentences and stories use
+  device speech synthesis.
 
-**1. Teaching order is not frequency order.** Ordering by frequency alone means
-you cannot read a whole sentence for a very long time. The compiler instead
-picks, at each step, the word that makes the most progress toward completing
-sentences and reward texts, with frequency as a competing term. The trade-off
-is explicit and measured — see `FREQUENCY_WEIGHT` in
-`data/scripts/build-course.mjs`.
+## Repository layout
 
-**2. A word is not one flashcard.** Each word carries five independently
-scheduled skills — recognise, gender, listen, cloze, produce — that unlock in a
-ladder driven by measured FSRS stability rather than a repetition count. Gender
-is the exception: it is available from first exposure and never gated, because
-a wrong German article fossilises and exposure alone will not repair it.
-
-## Layout
-
-```
-apps/web/          SvelteKit PWA, adapter-static. The trainer plus ~250
-                   prerendered word pages.
-packages/engine/   Framework-free TypeScript: FSRS scheduling, the skill
-                   ladder, session assembly, coverage. 27 tests.
-data/              Authored lexicon and sentences, the corpus, and the
-                   compiler that joins them into a course.
+```text
+apps/web/          SvelteKit + adapter-static PWA and prerendered word pages
+packages/engine/   Framework-free TypeScript engine and tests
+data/              Lexicon, sentences, corpus, audio manifests, and compiler
 ```
 
-The engine has no framework dependency on purpose: it makes the UI choice
-reversible and puts the part that is actually hard under test.
+## Development
 
-## Getting started
+Requires Node.js `>=22` and pnpm 10.
 
-```bash
+```sh
 pnpm install
-pnpm data        # compile the course from data/de/*.json + the corpus
-pnpm data:audio  # fetch pronunciations from Wikimedia Commons (needs ffmpeg)
+pnpm data        # compile data/dist/de.json and the web course data
 pnpm dev         # http://localhost:5273
-pnpm test        # engine tests
-pnpm check       # svelte-check
-pnpm build       # static site into apps/web/build
+pnpm check       # Svelte check
+pnpm test        # engine tests; run pnpm data first
+pnpm build       # compile data and build the static web app
+pnpm preview     # preview the web build at http://localhost:5274
 ```
 
-`pnpm data:audio` is resumable and only needs running once — clips already on
-disk are skipped. Run `pnpm data` afterwards to fold the manifest into the
-course. Audio is optional: without it the app falls back to speech synthesis.
+Run `pnpm data` after editing `data/de/lexicon.json`,
+`data/de/sentences.json`, or the compiler. `pnpm build` invokes it
+automatically. Pronunciation audio is already checked in; to refresh it, run
+`pnpm data` first, then `pnpm data:audio` with `ffmpeg` available. The audio
+fetch is resumable and optional because the app has speech-synthesis fallback.
 
-`pnpm data` is not optional on a fresh clone — `apps/web/src/lib/data/de.json`
-is a build artefact.
+## Deployment
 
-## How the course is compiled
+Build the static assets and deploy them with the root Wrangler configuration:
 
-`data/scripts/build-course.mjs`:
+```sh
+pnpm build
+pnpm deploy
+```
 
-1. **Expand** every lemma into its surface forms. Regular morphology is
-   generated (`morph.mjs`); irregular paradigms are authored in `lexicon.json`
-   under `f`. The build refuses to ship impossible forms.
-2. **Assign** each corpus form to exactly one lemma, so coverage never
-   double-counts, then sum to get a real frequency rank.
-3. **Resolve** every sentence token back to a lemma — including
-   preposition/article contractions (`im`, `zur`) and separable verbs whose
-   prefix has flown to the end of the clause (`Der Zug kommt … an`). **The build
-   fails on any token it cannot resolve.** That check is what makes the i+1
-   guarantee structural: a sentence can only be scheduled once every word in it
-   is known.
-4. **Sequence** as described above.
-5. **Emit** the cumulative coverage curve, measured against the corpus.
+## Licences and sources
 
-Adding a language means writing `data/xx/lexicon.json` and
-`data/xx/sentences.json` and running the compiler. Nothing in the app knows any
-German.
+- Application code: [MIT](LICENSE)
+- Course content and compiled data: [CC BY-SA 4.0](data/LICENSE)
+- Frequency source: [FrequencyWords](https://github.com/hermitdave/FrequencyWords)
 
-## Adding or fixing a word
-
-Edit `data/de/lexicon.json` and run `pnpm data`. The build will tell you if a
-sentence now references vocabulary that does not exist, or if the morphology
-rules produced something impossible. Fixing a bad gloss or a wrong plural is a
-one-line pull request with no build environment required.
-
-## Audio
-
-Word pronunciations are **human recordings** from the German Wiktionary
-pronunciation project, fetched from Wikimedia Commons and loudness-normalised
-(volunteer recordings vary by 20 dB or more, which is unusable on headphones
-when you hear twelve in a row). They are transcoded to AAC — not Opus, because
-iOS Safari is a first-class target here — and precached with the app, so audio
-works offline like everything else.
-
-Each clip keeps its author and licence in `data/de/audio.json`, rendered on
-`/ueber`. That attribution is a licence condition, not a courtesy.
-
-## Design
-
-Deliberate: German industrial signage. A road sign is designed to be read in
-200 ms at 130 km/h, which is the same ergonomic problem as a flashcard glanced
-at one-handed on a train.
-
-Colour classifies rather than decorates — der/die/das own the palette. The
-three are Signalblau, Magenta and Verkehrsgelb rather than blue/red/green so
-they survive the red–green confusion that affects ~8 % of men, and each gender
-carries a **second, non-colour channel** (left bar, top bar, underline) so the
-classification never depends on hue alone.
-
-Type is Archivo Variable throughout, exploiting the width axis so that `Haus`
-and `Geschwindigkeitsbegrenzung` fill the same plate at the same optical weight.
-
-## Known gaps
-
-- **Sentence audio is synthetic.** Word pronunciations are real human
-  recordings; the example sentences and texts have nobody to read them, so
-  those buttons use device speech synthesis and are labelled as such.
-- **241 words, not 1000.** The lexicon is hand-authored seed content. The
-  Wiktionary/kaikki.org and Tatoeba stages of the pipeline are designed for but
-  not yet wired up.
-- **No sync.** Progress lives in IndexedDB on one device.
-- The first session is a run of recognition exercises, because the opening
-  words of the curriculum are function words with no gender and no sentence
-  context yet. Variety arrives with the first nouns.
-
-## Licence
-
-Code **MIT** (`LICENSE`). Course content **CC BY-SA 4.0** (`data/LICENSE`) —
-chosen deliberately so Wiktionary can be an upstream source for morphological
-data. Frequency data from
-[hermitdave/FrequencyWords](https://github.com/hermitdave/FrequencyWords)
-(OpenSubtitles, CC BY-SA 4.0). Archivo and JetBrains Mono under the SIL OFL.
+The running app's `/ueber` page contains the method, source, and audio
+attribution details.
