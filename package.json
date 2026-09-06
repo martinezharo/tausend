@@ -6,7 +6,7 @@
   "license": "MIT",
   "packageManager": "pnpm@10.33.0",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.18.0"
   },
   "scripts": {
     "dev": "pnpm --filter @tausend/web dev",
@@ -14,7 +14,7 @@
     "preview": "pnpm --filter @tausend/web preview",
     "check": "pnpm --filter @tausend/web check",
     "deploy": "wrangler deploy --config apps/web/wrangler.jsonc",
-    "test": "pnpm --filter @tausend/engine test",
+    "test": "pnpm --filter @tausend/engine test && pnpm --filter @tausend/web test",
     "data": "node data/scripts/build-course.mjs de",
     "data:sources": "bash data/scripts/fetch-sources.sh",
     "data:audio": "node data/scripts/fetch-audio.mjs de"

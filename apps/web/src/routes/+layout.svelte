@@ -1,6 +1,10 @@
 <script lang="ts">
   import '../app.css';
+  import { onMount } from 'svelte';
+  import { progress } from '$lib/progress.svelte.ts';
   import { page } from '$app/state';
+
+  onMount(() => { void progress.load(); });
 
   let { children } = $props();
 
@@ -34,6 +38,13 @@
   </header>
 {/if}
 
+{#if progress.storageError}
+  <div class="storage-warning wrap" role="alert">
+    <p>{progress.storageError}</p>
+    <a href="/ueber#your-data">Manage progress and backups</a>
+  </div>
+{/if}
+
 <main class:bare>
   {@render children()}
 </main>
@@ -48,6 +59,8 @@
 {/if}
 
 <style>
+  .storage-warning { padding-block: 14px; border-bottom: 3px solid var(--die); }
+  .storage-warning p { margin: 0 0 8px; }
   header {
     border-bottom: 1px solid var(--linie-stark);
     position: sticky;

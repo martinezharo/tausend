@@ -1,5 +1,8 @@
-import { emptyProgress, review, type Progress, type Rating } from '@tausend/engine';
+import { emptyProgress, review, validateProgress, type Progress, type Rating } from '@tausend/engine';
 import * as idb from './idb.ts';
+import { course } from './course.ts';
+
+const wordIds = new Set(course.words.map((word) => word.id));
 
 const KEY = 'progress:de';
 
@@ -10,34 +13,78 @@ const KEY = 'progress:de';
  * a language trainer that cannot work on a plane has failed at its one job,
  * and adding a backend later is easier than removing one.
  */
-class ProgressStore {
+export class ProgressStore {
   current = $state<Progress>(emptyProgress());
   ready = $state(false);
 
-  async load() {
-    if (this.ready) return;
+  storageError = $state('');
+  busy = $state(false);
+  private loadPromise: Promise<void> | null = null;
+  private writes: Promise<void> = Promise.resolve();
+  private loadFailed = false;
+
+  load(): Promise<void> {
+    if (this.ready) return Promise.resolve();
+    return this.loadPromise ??= this.read();
+  }
+
+  private async read() {
     try {
-      const stored = await idb.get<Progress>(KEY);
-      if (stored) this.current = stored;
+      const stored = await idb.get<unknown>(KEY);
+      if (stored !== undefined) this.current = validateProgress(stored, wordIds);
     } catch {
-      // A blocked or unavailable IndexedDB (private mode, old browser) must not
-      // stop the session — it just means progress will not survive a reload.
+      this.loadFailed = true;
+      this.storageError = 'Your saved progress could not be loaded. Practice will not be saved. Export any new progress before leaving.';
     }
     this.ready = true;
   }
 
-  private persist() {
-    idb.set(KEY, $state.snapshot(this.current)).catch(() => {});
+  private enqueue(operation: () => Promise<unknown>): Promise<void> {
+    const pending = this.writes.then(async () => {
+      try {
+        await operation();
+        this.storageError = '';
+      } catch (error) {
+        this.storageError = 'Your progress could not be saved. Export a backup before leaving or reloading.';
+        throw error;
+      }
+    });
+    this.writes = pending.catch(() => {});
+    return pending;
   }
 
   record(key: string, rating: Rating, now = new Date()) {
+    if (!this.ready || this.busy) return;
     this.current = review(this.current, key, rating, now);
-    this.persist();
+    // Never overwrite unread progress with a fresh session after a failed load.
+    if (this.loadFailed) return;
+    const snapshot = $state.snapshot(this.current);
+    void this.enqueue(() => idb.set(KEY, snapshot)).catch(() => {});
+  }
+
+  async restore(value: Progress) {
+    if (!this.ready || this.busy) throw new Error('Please wait for progress to finish loading.');
+    const snapshot = validateProgress(value, wordIds);
+    this.busy = true;
+    try {
+      await this.enqueue(() => idb.set(KEY, snapshot));
+      this.current = snapshot;
+      this.loadFailed = false;
+    } finally {
+      this.busy = false;
+    }
   }
 
   async reset() {
-    this.current = emptyProgress();
-    await idb.del(KEY).catch(() => {});
+    if (!this.ready || this.busy) throw new Error('Please wait for progress to finish loading.');
+    this.busy = true;
+    try {
+      await this.enqueue(() => idb.del(KEY));
+      this.current = emptyProgress();
+      this.loadFailed = false;
+    } finally {
+      this.busy = false;
+    }
   }
 
   /** Sessions completed this week, Monday-based. The commitment, not a streak. */
