@@ -56,7 +56,13 @@ export function preload(words: Word[], count = 6): void {
   for (const word of words.slice(0, count)) element(word)?.load();
 }
 
+export function stop(): void {
+  for (const audio of cache.values()) audio.pause();
+  if (available()) speechSynthesis.cancel();
+}
+
 export function play(word: Word): void {
+  stop();
   const audio = element(word);
   if (audio) {
     audio.currentTime = 0;
@@ -71,10 +77,14 @@ export function play(word: Word): void {
 
 function pickVoice(): SpeechSynthesisVoice | null {
   if (!available()) return null;
-  if (voice) return voice;
   const voices = speechSynthesis.getVoices();
+  let preferred = '';
+  try { preferred = localStorage.getItem('tausend:voice') ?? ''; } catch {}
+  const chosen = voices.find(v => v.voiceURI === preferred && v.lang.startsWith('de'));
+  if (chosen) return chosen;
+  if (voice) return voice;
   voice =
-    voices.find((v) => v.lang === 'de-DE' && v.localService) ??
+    voices.find((v) => v.lang === 'de-DE' && /natural|neural|premium|enhanced/i.test(v.name)) ??
     voices.find((v) => v.lang === 'de-DE') ??
     voices.find((v) => v.lang.startsWith('de')) ??
     null;
@@ -88,7 +98,7 @@ export function available(): boolean {
 /** Synthesised German. Used for sentences and stories only. */
 export function speakText(text: string, rate = 0.9): void {
   if (!available()) return;
-  speechSynthesis.cancel();
+  stop();
   const utterance = new SpeechSynthesisUtterance(text);
   const v = pickVoice();
   if (v) utterance.voice = v;
@@ -101,7 +111,10 @@ export function hasSynthesis(): boolean {
   return available() && pickVoice() !== null;
 }
 
+let warmed = false;
 export function warm(): void {
+  if (warmed) return;
+  warmed = true;
   if (!available()) return;
   pickVoice();
   speechSynthesis.addEventListener('voiceschanged', () => {

@@ -94,7 +94,7 @@ export function review(progress: Progress, key: string, rating: Rating, now = ne
   const current = fromStored(getCard(progress, key, now));
   const { card } = f.next(current, now, RATING[rating]);
 
-  const day = now.toISOString().slice(0, 10);
+  const day = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   const { wordId } = parseKey(key);
 
   return {
@@ -110,12 +110,11 @@ export function review(progress: Progress, key: string, rating: Rating, now = ne
   };
 }
 
-/** Convert a binary right/wrong plus response time into an FSRS grade. */
-export function gradeFor(correct: boolean, ms: number): Rating {
+/** Convert correctness into a conservative FSRS grade. Timing is retained for API compatibility. */
+export function gradeFor(correct: boolean, _ms: number): Rating {
   if (!correct) return 'again';
-  if (ms < 2500) return 'easy';
-  if (ms < 6000) return 'good';
-  return 'hard';
+  // Speed reflects typing, device and accessibility as much as memory.
+  return 'good';
 }
 
 /**

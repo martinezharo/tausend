@@ -1,36 +1,55 @@
 <script lang="ts">
-  import '../app.css';
-  import { onMount } from 'svelte';
-  import { progress } from '$lib/progress.svelte.ts';
-  import { page } from '$app/state';
+  import "../app.css";
+  import { onMount } from "svelte";
+  import { progress } from "$lib/progress.svelte.ts";
+  import { page } from "$app/state";
 
-  onMount(() => { void progress.load(); });
+  let offlineReady = $state(false);
+  onMount(() => {
+    void progress.load();
+    if (import.meta.env.PROD && "serviceWorker" in navigator) {
+      void navigator.serviceWorker
+        .register("/sw.js", { scope: "/" })
+        .then(() => navigator.serviceWorker.ready)
+        .then(() => {
+          offlineReady = true;
+        })
+        .catch(() => {
+          offlineReady = false;
+        });
+    }
+  });
 
   let { children } = $props();
 
   const nav = [
-    { href: '/', label: 'Deckung' },
-    { href: '/woerter', label: 'Wörter' },
-    { href: '/geschichten', label: 'Texte' }
+    { href: "/", label: "Learn" },
+    { href: "/phrases", label: "Phrasebook" },
+    { href: "/woerter", label: "Words" },
+    { href: "/geschichten", label: "Stories" },
   ];
 
   // The session runs full-bleed: no chrome competing with the exercise.
-  const bare = $derived(page.url.pathname.startsWith('/learn'));
+  const bare = $derived(
+    page.url.pathname.startsWith("/learn") ||
+      page.url.pathname.startsWith("/practice"),
+  );
 </script>
 
 {#if !bare}
   <header>
     <div class="wrap bar">
       <a href="/" class="brand" aria-label="Tausend, home">
-        <span class="logo">1000</span>
-        <span class="mono sub">Wortschatz DE&thinsp;→&thinsp;EN</span>
+        <span class="logo">tausend<span style="color:var(--der)">.</span></span>
+        <span class="mono sub">GERMAN FOR REAL LIFE</span>
       </a>
       <nav>
         {#each nav as item (item.href)}
           <a
             class="mono tab"
             href={item.href}
-            aria-current={page.url.pathname === item.href ? 'page' : undefined}>{item.label}</a
+            aria-current={page.url.pathname === item.href ? "page" : undefined}
+            >{item.label}</a
           >
         {/each}
       </nav>
@@ -52,21 +71,34 @@
 {#if !bare}
   <footer>
     <div class="wrap foot mono">
-      <span>Frequenz: OpenSubtitles · CC BY-SA</span>
-      <a href="/ueber">Über</a>
+      <span
+        >{offlineReady
+          ? "Ready for offline practice"
+          : "A little every day. Immer weiter."}</span
+      >
+      <a href="/ueber">Settings & data</a>
     </div>
   </footer>
 {/if}
 
 <style>
-  .storage-warning { padding-block: 14px; border-bottom: 3px solid var(--die); }
-  .storage-warning p { margin: 0 0 8px; }
+  .storage-warning {
+    padding-block: 14px;
+    border-bottom: 3px solid var(--die);
+  }
+  .storage-warning p {
+    margin: 0 0 8px;
+  }
   header {
     border-bottom: 1px solid var(--linie-stark);
     position: sticky;
     top: 0;
     background: var(--beton);
     z-index: 10;
+  }
+  .bar,
+  .foot {
+    max-width: 1120px;
   }
   .bar {
     display: flex;
@@ -84,8 +116,10 @@
     min-width: 0;
   }
   .logo {
-    font-variation-settings: 'wdth' 70, 'wght' 900;
-    font-size: 22px;
+    font-variation-settings:
+      "wdth" 100,
+      "wght" 800;
+    font-size: 28px;
     letter-spacing: 0.02em;
     line-height: 1;
   }
@@ -93,7 +127,7 @@
     color: var(--grau);
     white-space: nowrap;
   }
-  @media (max-width: 460px) {
+  @media (max-width: 560px) {
     .sub {
       display: none;
     }
@@ -105,10 +139,10 @@
   .tab {
     text-decoration: none;
     color: var(--grau);
-    padding: 8px 10px;
+    padding: 8px 7px;
     border: 1px solid transparent;
   }
-  .tab[aria-current='page'] {
+  .tab[aria-current="page"] {
     color: var(--tinte);
     border-color: var(--linie-stark);
   }

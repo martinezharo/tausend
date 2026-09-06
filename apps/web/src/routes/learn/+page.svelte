@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { goto } from '$app/navigation';
   import { course, genderClass } from '$lib/course.ts';
   import { progress } from '$lib/progress.svelte.ts';
+  import { feedbackSound } from '$lib/sound.ts';
   import { fit } from '$lib/fit.ts';
   import * as audio from '$lib/audio.ts';
   import {
@@ -23,6 +24,8 @@
   let typed = $state('');
   let correct = $state(0);
   let askedAt = 0;
+  const scheduled = new Set<string>();
+  onDestroy(() => audio.stop());
   let inputEl = $state<HTMLInputElement | null>(null);
 
   const shareBefore = $state({ value: 0 });
@@ -55,12 +58,18 @@
     given = value;
     const ok = checkAnswer(current, value);
     if (ok) correct += 1;
-    progress.record(current.key, gradeFor(ok, performance.now() - askedAt));
+    feedbackSound(ok);
+    if (!ok && session.filter(e => e.key === current.key).length < 3) {
+      session.splice(Math.min(index + 4, session.length), 0, current);
+    }
+    if (!scheduled.has(current.key) || !ok) progress.record(current.key, gradeFor(ok, performance.now() - askedAt));
+    scheduled.add(current.key);
     phase = 'shown';
 
     // Hearing the word right after answering is free extra exposure, and it is
     // the only moment the learner is guaranteed to be paying attention to it.
-    if (current.kind !== 'listen') audio.play(current.word);
+    if (current.kind === 'cloze') audio.speakText(current.sentence.de);
+    else if (current.kind !== 'listen') audio.play(current.word);
   }
 
   function next() {
@@ -77,7 +86,8 @@
 
   function onKey(event: KeyboardEvent) {
     if (event.key !== 'Enter') return;
-    if (phase === 'shown') next();
+    if (event.repeat || event.isComposing || event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement) return;
+    if (phase === 'shown') { event.preventDefault(); next(); }
     else if (phase === 'ask' && current?.kind === 'produce' && typed.trim()) answer(typed);
   }
 
@@ -98,7 +108,7 @@
       <div class="gain">
         <p class="mono label">Coverage gained</p>
         <b>+{pct(gained)} %</b>
-        <span class="mono">now {pct(coverage(course, progress.current).share)} % of spoken German</span
+        <span class="mono">now {pct(coverage(course, progress.current).share)} % of corpus tokens</span
         >
       </div>
       <div class="stack actions">
@@ -107,6 +117,7 @@
           onclick={() => {
             session = buildSession(course, progress.current, { size: 12, newWords: 3 });
             audio.preload(session.map((e) => e.word));
+            scheduled.clear();
             index = 0;
             correct = 0;
             given = null;
@@ -129,7 +140,7 @@
     <div class="head wrap">
       <span class="mono">{SKILL_LABEL[current.kind === 'gender' ? 'gender' : current.kind]}</span>
       <span class="mono dim">{index + 1} / {session.length}</span>
-      <a class="mono quit" href="/">Beenden</a>
+      <a class="mono quit" href="/">Exit</a>
     </div>
 
     <div class="body wrap">
@@ -181,8 +192,8 @@
 
     <div class="foot wrap">
       {#if phase === 'shown'}
-        <div class="feedback" class:bad={!wasRight}>
-          <b class="mono">{wasRight ? 'Richtig' : 'Falsch'}</b>
+        <div class="feedback" class:bad={!wasRight} role="status" aria-live="polite">
+          <b class="mono">{wasRight ? '✓ Correct' : '↻ Let’s practise that again'}</b>
           <span>
             {#if current.kind === 'gender'}
               {current.word.gender}
@@ -207,7 +218,7 @@
           <p class="tip">{current.word.pattern}</p>
         {/if}
 
-        <button class="btn" onclick={next}>Weiter</button>
+        <button class="btn" onclick={next}>Continue</button>
       {:else if current.kind === 'gender'}
         <div class="genders">
           {#each GENDER_OPTIONS as option (option)}
@@ -225,7 +236,7 @@
           spellcheck="false"
           placeholder="auf Deutsch"
         />
-        <button class="btn" disabled={!typed.trim()} onclick={() => answer(typed)}>Prüfen</button>
+        <button class="btn" disabled={!typed.trim()} onclick={() => answer(typed)}>Check answer</button>
       {:else}
         <div class="stack">
           {#each current.options as option (option)}
@@ -428,10 +439,13 @@
     gap: 12px;
     flex-wrap: wrap;
     border-left: 8px solid var(--richtig);
-    padding-left: 12px;
+    padding: 18px;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--richtig) 14%, var(--beton));
   }
   .feedback.bad {
     border-left-color: var(--falsch);
+    background: color-mix(in srgb, var(--falsch) 14%, var(--beton));
   }
   .feedback b {
     color: var(--richtig);
@@ -459,8 +473,8 @@
 
   .summary {
     margin: auto;
-    padding-top: 60px;
-    padding-bottom: 60px;
+    padding-top: 32px;
+    padding-bottom: 32px;
     width: 100%;
   }
   .label {

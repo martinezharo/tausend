@@ -1,8 +1,8 @@
-import { emptyProgress, review, validateProgress, type Progress, type Rating } from '@tausend/engine';
+import { emptyProgress, phrases, review, validateProgress, type Progress, type Rating } from '@tausend/engine';
 import * as idb from './idb.ts';
 import { course } from './course.ts';
 
-const wordIds = new Set(course.words.map((word) => word.id));
+const wordIds = new Set([...course.words.map((word) => word.id), ...phrases.map(p => p.id)]);
 
 const KEY = 'progress:de';
 

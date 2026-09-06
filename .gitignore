@@ -16,3 +16,5 @@ apps/web/.svelte-kit/
 
 # Local agent configuration
 .codex/
+/test-results/
+/playwright-report/

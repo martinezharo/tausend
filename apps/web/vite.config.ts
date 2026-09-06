@@ -10,13 +10,13 @@ export default defineConfig({
       manifest: {
         name: 'Tausend — German',
         short_name: 'Tausend',
-        description: 'The 1000 most frequent German words, in the order that unlocks real sentences fastest.',
+        description: 'German for real life: everyday expressions, listening and personal spaced repetition.',
         lang: 'en',
         start_url: '/',
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#E2E0D9',
-        theme_color: '#1B4FD8',
+        background_color: '#F7F8FC',
+        theme_color: '#5148C8',
         icons: [
           { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },

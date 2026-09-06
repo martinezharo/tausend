@@ -343,3 +343,14 @@ a {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Everyday German: ink, violet and quiet paper surfaces. */
+:root, :root[data-theme='light'] { --beton:#f7f8fc; --beton-2:#ffffff; --beton-3:#eceef6; --tinte:#24263e; --grau:#62677e; --der:#5148c8; --linie:#e1e4ee; --linie-stark:#afb5ca; --richtig:#16704e; --falsch:#b62f4c; color-scheme:light; }
+@media(prefers-color-scheme:dark){:root:not([data-theme='light']){--beton:#171925;--beton-2:#222536;--beton-3:#30354b;--tinte:#f0effa;--grau:#b3b7cd;--der:#b0a7ff;--linie:#373c54;--linie-stark:#717a9d;--richtig:#73dfb2;--falsch:#ff92aa;color-scheme:dark}}
+:root[data-theme='dark']{--beton:#171925;--beton-2:#222536;--beton-3:#30354b;--tinte:#f0effa;--grau:#b3b7cd;--der:#b0a7ff;--linie:#373c54;--linie-stark:#717a9d;--richtig:#73dfb2;--falsch:#ff92aa;color-scheme:dark}
+h1,h2,h3 {font-variation-settings:'wdth' 100,'wght' 720;text-transform:none;line-height:1.15;letter-spacing:-.025em}
+.btn {border-radius:12px;text-transform:none;font-variation-settings:'wdth' 100,'wght' 650;background:var(--der);border-color:var(--der);color:var(--beton);text-decoration:none;display:inline-block;text-align:center}
+.btn.ghost{background:transparent;color:var(--tinte)}
+.choice,input[type='text']{border-radius:12px;border-color:var(--linie)}
+.stack{gap:8px}.plate-word{text-transform:none;line-height:1.05}
+button,a,input{touch-action:manipulation}

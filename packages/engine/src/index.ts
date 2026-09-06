@@ -47,3 +47,4 @@ export {
 export { mulberry32, shuffle, sample, type Rng } from './rng.ts';
 
 export { validateProgress, exportBackup, importBackup } from './backup.ts';
+export { units, phrases, dailySession, phraseMatches, type Phrase, type Unit, type DailyExercise } from './practical.ts';

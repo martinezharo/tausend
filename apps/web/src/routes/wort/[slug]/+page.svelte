@@ -2,12 +2,13 @@
   import { course, genderClass, posLabel } from '$lib/course.ts';
   import { fit } from '$lib/fit.ts';
   import * as audio from '$lib/audio.ts';
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import type { PageData } from './$types';
 
   let { data }: { data: PageData } = $props();
   const { word, sentences, share } = $derived(data);
 
+  onDestroy(() => audio.stop());
   let canPlay = $state(false);
   onMount(() => {
     audio.warm();
@@ -51,7 +52,7 @@
       <div><dt class="mono">Genus</dt><dd class="gender">{word.gender}</dd></div>
     {/if}
     {#if word.plural}
-      <div><dt class="mono">Plural</dt><dd>die {word.plural}</dd></div>
+      <div><dt class="mono">Plural</dt><dd>die {word.plural} <button class="form-audio" onclick={() => audio.speakText(`die ${word.plural}`)} aria-label={`Listen: die ${word.plural}`}>▷</button></dd></div>
     {/if}
     {#if word.aux}
       <div><dt class="mono">Hilfsverb</dt><dd>{word.aux}</dd></div>
@@ -92,7 +93,7 @@
       <ul class="examples">
         {#each sentences as sentence (sentence.id)}
           <li>
-            <p class="de" lang="de">{sentence.de}</p>
+            <p class="de" lang="de">{sentence.de} <button class="form-audio" onclick={() => audio.speakText(sentence.de)} aria-label="Listen to this sentence">▷</button></p>
             <p class="tr">{sentence.en}</p>
           </li>
         {/each}
@@ -119,6 +120,8 @@
 </article>
 
 <style>
+  .form-audio {border:1px solid var(--linie);border-radius:8px;background:var(--beton-2);color:var(--der);padding:5px 10px;cursor:pointer}
+
   article {
     padding-bottom: 60px;
   }

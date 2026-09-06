@@ -11,6 +11,7 @@ export function GET() {
   const paths = [
     '/',
     '/woerter',
+    '/phrases',
     '/geschichten',
     '/ueber',
     ...course.stories.map((s) => `/geschichten/${s.id}`),

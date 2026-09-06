@@ -2,7 +2,7 @@
   "name": "tausend",
   "version": "0.1.0",
   "private": true,
-  "description": "Learn the 1000 most frequent words of a language, starting with German from English.",
+  "description": "Practical German for everyday life, with independent recall and listening review.",
   "license": "MIT",
   "packageManager": "pnpm@10.33.0",
   "engines": {
@@ -17,9 +17,13 @@
     "test": "pnpm --filter @tausend/engine test && pnpm --filter @tausend/web test",
     "data": "node data/scripts/build-course.mjs de",
     "data:sources": "bash data/scripts/fetch-sources.sh",
-    "data:audio": "node data/scripts/fetch-audio.mjs de"
+    "data:audio": "node data/scripts/fetch-audio.mjs de",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-svelte": "^4.1.1",
     "wrangler": "^4.114.0"
   }
 }
