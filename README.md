@@ -56,7 +56,7 @@ data/              Lexicon, sentences, corpus, audio manifests, and compiler
 
 ## Development
 
-Requires Node.js `>=22` and pnpm 10.
+Requires Node.js `>=22.18.0` and pnpm 10.
 
 ```sh
 pnpm install
