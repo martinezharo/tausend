@@ -45,3 +45,5 @@ export {
 } from './coverage.ts';
 
 export { mulberry32, shuffle, sample, type Rng } from './rng.ts';
+
+export { validateProgress, exportBackup, importBackup } from './backup.ts';

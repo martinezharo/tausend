@@ -35,6 +35,17 @@ for the planned 1,000-word course.
   Wikimedia Commons and are bundled for offline use. Sentences and stories use
   device speech synthesis.
 
+## Progress backups
+
+Open **Über → Your data** to export progress as a JSON file or import a backup on
+another device. Imports validate the backup format, language, words, and review
+data, then ask before replacing local progress. Export first to keep a copy of
+your current progress. Backups include review history and scheduling data.
+
+If loading or saving fails, the app displays an alert. Practice can continue in
+memory, but export before leaving. A failed load never automatically overwrites
+unread data, and a failed import or reset keeps the current progress in memory.
+
 ## Repository layout
 
 ```text
@@ -52,7 +63,7 @@ pnpm install
 pnpm data        # compile data/dist/de.json and the web course data
 pnpm dev         # http://localhost:5273
 pnpm check       # Svelte check
-pnpm test        # engine tests; run pnpm data first
+pnpm test        # engine and storage tests; run pnpm data first
 pnpm build       # compile data and build the static web app
 pnpm preview     # preview the web build at http://localhost:5274
 ```

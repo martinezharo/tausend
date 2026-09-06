@@ -2,9 +2,70 @@
   import { onMount } from 'svelte';
   import { course } from '$lib/course.ts';
   import { progress } from '$lib/progress.svelte.ts';
-  import { UNLOCK } from '@tausend/engine';
+  import { UNLOCK, exportBackup, importBackup, type Progress } from '@tausend/engine';
 
   let confirming = $state(false);
+  let pendingImport = $state<Progress | null>(null);
+  let message = $state('');
+  let failed = $state(false);
+  let reading = $state(false);
+  const wordIds = new Set(course.words.map((word) => word.id));
+
+  function download() {
+    const blob = new Blob([exportBackup($state.snapshot(progress.current), course.language)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `tausend-${course.language}-${new Date().toISOString().slice(0, 10)}.json`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  async function chooseBackup(event: Event) {
+    const input = event.currentTarget as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    pendingImport = null;
+    message = '';
+    failed = false;
+    if (!file) return;
+    reading = true;
+    try {
+      if (file.size > 10 * 1024 * 1024) throw new Error('Choose a backup smaller than 10 MB.');
+      pendingImport = importBackup(await file.text(), course.language, wordIds);
+      confirming = false;
+    } catch (error) {
+      failed = true;
+      message = error instanceof Error ? error.message : 'Could not read this backup.';
+    } finally {
+      reading = false;
+    }
+  }
+
+  async function replaceProgress() {
+    if (!pendingImport) return;
+    try {
+      await progress.restore($state.snapshot(pendingImport));
+      pendingImport = null;
+      failed = false;
+      message = 'Backup imported and saved on this device.';
+    } catch {
+      failed = true;
+      message = 'Could not save the backup. Your current progress has been kept. You can try again.';
+    }
+  }
+
+  async function resetProgress() {
+    try {
+      await progress.reset();
+      confirming = false;
+      failed = false;
+      message = 'Progress deleted from this device.';
+    } catch {
+      failed = true;
+      message = 'Could not delete progress. Your current progress has been kept.';
+    }
+  }
 
   interface Clip {
     file: string;
@@ -158,22 +219,41 @@
     {/if}
   </section>
 
-  <section>
+  <section id="your-data">
     <h2>Your data</h2>
     <p>
-      Everything stays on this device, in IndexedDB. There is no account, no server and no analytics.
-      Clearing it cannot be undone.
+      Progress stays on this device. There is no account, no server and no analytics.
+      Export a backup to keep it safe or move it to another device. Importing replaces the progress
+      on this device, so export your current progress first if you want to keep both.
     </p>
-    {#if confirming}
+    <div class="row backup-actions">
+      <button class="btn" disabled={!progress.ready || progress.busy} onclick={download}>Export progress</button>
+      <label class="backup-input">
+        <span>Import progress</span>
+        <input type="file" accept=".json,application/json" disabled={!progress.ready || progress.busy || reading} onchange={chooseBackup} />
+      </label>
+    </div>
+    {#if reading}<p role="status">Reading backup…</p>{/if}
+    {#if message}<p role={failed ? 'alert' : 'status'}>{message}</p>{/if}
+    {#if pendingImport}
       <div class="danger">
-        <p>Delete all progress for German?</p>
+        <p>Replace your current German progress with this backup?
+          It contains {pendingImport.introduced.length} introduced words and {Object.keys(pendingImport.cards).length} practice cards.</p>
         <div class="row">
-          <button class="btn" onclick={() => { progress.reset(); confirming = false; }}>Delete</button>
-          <button class="btn ghost" onclick={() => (confirming = false)}>Keep it</button>
+          <button class="btn" disabled={progress.busy} onclick={replaceProgress}>{progress.busy ? 'Saving…' : 'Replace progress'}</button>
+          <button class="btn ghost" disabled={progress.busy} onclick={() => { pendingImport = null; }}>Cancel</button>
+        </div>
+      </div>
+    {:else if confirming}
+      <div class="danger">
+        <p>Delete all progress for German? This cannot be undone without a backup.</p>
+        <div class="row">
+          <button class="btn" disabled={progress.busy} onclick={resetProgress}>Delete</button>
+          <button class="btn ghost" disabled={progress.busy} onclick={() => (confirming = false)}>Keep it</button>
         </div>
       </div>
     {:else}
-      <button class="btn ghost" onclick={() => (confirming = true)}>Reset progress</button>
+      <button class="btn ghost" disabled={!progress.ready || progress.busy || reading} onclick={() => (confirming = true)}>Reset progress</button>
     {/if}
   </section>
 
@@ -277,7 +357,12 @@
     border-left: 5px solid var(--die);
     padding: 14px;
   }
+  .backup-actions { margin-bottom: 16px; align-items: center; }
+  .backup-input { display: grid; gap: 8px; min-width: 0; }
+  .backup-input input { max-width: 100%; }
+  #your-data { scroll-margin-top: 90px; }
   .row {
+    flex-wrap: wrap;
     display: flex;
     gap: 8px;
   }
