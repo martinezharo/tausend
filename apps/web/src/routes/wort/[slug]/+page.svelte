@@ -11,9 +11,19 @@
   onDestroy(() => audio.stop());
 
   let canPlay = $state(false);
+  // Inflected forms and example sentences have no recordings, so their listen
+  // buttons only appear where the device can synthesise German at all.
+  let canSpeak = $state(false);
   onMount(() => {
     audio.warm();
     canPlay = audio.hasClip(word) || audio.available();
+    canSpeak = audio.hasSynthesis();
+    if (canSpeak || !audio.available()) return;
+    // Chrome fills the voice list asynchronously, so the first check usually
+    // finds nothing and the buttons would never appear without this.
+    const recheck = () => (canSpeak = audio.hasSynthesis());
+    speechSynthesis.addEventListener('voiceschanged', recheck);
+    return () => speechSynthesis.removeEventListener('voiceschanged', recheck);
   });
 
   const title = $derived(
@@ -53,7 +63,19 @@
       <div><dt class="mono">Genus</dt><dd class="gender">{word.gender}</dd></div>
     {/if}
     {#if word.plural}
-      <div><dt class="mono">Plural</dt><dd>die {word.plural}</dd></div>
+      <div>
+        <dt class="mono">Plural</dt>
+        <dd>
+          die {word.plural}
+          {#if canSpeak}
+            <button
+              class="speak-inline"
+              onclick={() => audio.speakText(`die ${word.plural}`)}
+              aria-label="die {word.plural} anhören">▷</button
+            >
+          {/if}
+        </dd>
+      </div>
     {/if}
     {#if word.aux}
       <div><dt class="mono">Hilfsverb</dt><dd>{word.aux}</dd></div>
@@ -94,7 +116,16 @@
       <ul class="examples">
         {#each sentences as sentence (sentence.id)}
           <li>
-            <p class="de" lang="de">{sentence.de}</p>
+            <p class="de" lang="de">
+              {sentence.de}
+              {#if canSpeak}
+                <button
+                  class="speak-inline"
+                  onclick={() => audio.speakText(sentence.de)}
+                  aria-label="Diesen Satz anhören">▷</button
+                >
+              {/if}
+            </p>
             <p class="tr">{sentence.en}</p>
           </li>
         {/each}
@@ -121,6 +152,18 @@
 </article>
 
 <style>
+  .speak-inline {
+    border: 1px solid var(--linie);
+    border-radius: 8px;
+    background: var(--beton-2);
+    color: var(--der);
+    padding: 2px 9px;
+    font-size: 13px;
+    line-height: 1.4;
+    cursor: pointer;
+    vertical-align: baseline;
+  }
+
   article {
     padding-bottom: 60px;
   }

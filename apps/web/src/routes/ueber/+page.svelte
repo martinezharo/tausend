@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { course } from '$lib/course.ts';
   import { progress } from '$lib/progress.svelte.ts';
+  import { feedbackSound, setSoundEnabled, soundEnabled } from '$lib/sound.ts';
   import { UNLOCK, exportBackup, importBackup, type Progress } from '@tausend/engine';
 
   let confirming = $state(false);
@@ -9,6 +10,14 @@
   let message = $state('');
   let failed = $state(false);
   let reading = $state(false);
+  let sound = $state(true);
+
+  function toggleSound(event: Event) {
+    sound = (event.currentTarget as HTMLInputElement).checked;
+    setSoundEnabled(sound);
+    // Play the tone being switched on, so the choice is audible immediately.
+    if (sound) feedbackSound(true);
+  }
   const wordIds = new Set(course.words.map((word) => word.id));
 
   function download() {
@@ -81,6 +90,7 @@
   let credits = $state<Record<string, Clip> | null>(null);
 
   onMount(async () => {
+    sound = soundEnabled();
     try {
       const module = await import('$lib/data/audio-de.json');
       credits = (module.default as { clips: Record<string, Clip> }).clips;
@@ -201,6 +211,17 @@
       sentences aloud. Those buttons use your device's speech synthesis and say so.
     </p>
 
+    <label class="toggle">
+      <input type="checkbox" checked={sound} onchange={toggleSound} />
+      <span>
+        <b>Answer tones</b>
+        <span class="small"
+          >A short chord after each answer in a session. The written result is always shown either
+          way.</span
+        >
+      </span>
+    </label>
+
     {#if credits}
       <p class="small">
         {clipCount} clips from {contributors.length} Commons contributors. Attribution is a licence
@@ -261,6 +282,26 @@
 </div>
 
 <style>
+  .toggle {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-block: 18px;
+    cursor: pointer;
+  }
+  .toggle input {
+    margin-top: 3px;
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+  .toggle span {
+    display: block;
+  }
+  .toggle .small {
+    margin-top: 2px;
+  }
+
   h1 {
     font-size: clamp(34px, 11vw, 58px);
     padding-top: 28px;

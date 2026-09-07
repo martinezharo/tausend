@@ -5,6 +5,7 @@
   import { progress } from '$lib/progress.svelte.ts';
   import { fit } from '$lib/fit.ts';
   import * as audio from '$lib/audio.ts';
+  import { feedbackSound } from '$lib/sound.ts';
   import {
     buildSession,
     checkAnswer,
@@ -78,13 +79,17 @@
       session.splice(Math.min(index + 4, session.length), 0, current);
     }
 
+    feedbackSound(ok);
     if (!ok || firstAttempt) progress.record(current.key, gradeFor(ok));
     scheduled.add(current.key);
     phase = 'shown';
 
-    // Hearing the word right after answering is free extra exposure, and it is
-    // the only moment the learner is guaranteed to be paying attention to it.
-    if (current.kind !== 'listen') audio.play(current.word);
+    // Hearing the answer right after giving it is free extra exposure, and it
+    // is the only moment the learner is guaranteed to be paying attention. A
+    // cloze is answered in a sentence, so the sentence is what gets read back
+    // — the bare lemma would drop the very context being practised.
+    if (current.kind === 'cloze') audio.speakText(current.sentence.de);
+    else if (current.kind !== 'listen') audio.play(current.word);
   }
 
   function next() {
