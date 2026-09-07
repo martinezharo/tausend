@@ -86,6 +86,13 @@ export const stabilityOf = (progress: Progress, key: string): number =>
 export const hasSeen = (progress: Progress, key: string): boolean =>
   progress.cards[key] !== undefined && progress.cards[key].state !== State.New;
 
+/** The calendar day a moment falls on, in the learner's own timezone. */
+function localDay(now: Date): string {
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const date = String(now.getDate()).padStart(2, '0');
+  return `${now.getFullYear()}-${month}-${date}`;
+}
+
 /**
  * Record an answer and return a NEW progress object. Never mutates its input,
  * so callers can keep it in a store and get change detection for free.
@@ -94,7 +101,9 @@ export function review(progress: Progress, key: string, rating: Rating, now = ne
   const current = fromStored(getCard(progress, key, now));
   const { card } = f.next(current, now, RATING[rating]);
 
-  const day = now.toISOString().slice(0, 10);
+  // Local date, not UTC: an answer at 00:30 in Madrid belongs to the day the
+  // learner thinks it does, otherwise streaks silently lose a day.
+  const day = localDay(now);
   const { wordId } = parseKey(key);
 
   return {
@@ -110,12 +119,18 @@ export function review(progress: Progress, key: string, rating: Rating, now = ne
   };
 }
 
-/** Convert a binary right/wrong plus response time into an FSRS grade. */
-export function gradeFor(correct: boolean, ms: number): Rating {
-  if (!correct) return 'again';
-  if (ms < 2500) return 'easy';
-  if (ms < 6000) return 'good';
-  return 'hard';
+/**
+ * Convert a binary right/wrong into an FSRS grade.
+ *
+ * Response time is deliberately not an input. It measures the keyboard, the
+ * device and the learner's motor control at least as much as it measures
+ * memory: a slow typist answering from perfect recall was being graded `hard`
+ * and buried under reviews, while a lucky fast tap on a four-option question
+ * earned `easy` and a fortnight of silence. `good` for every correct answer
+ * lets FSRS do its own work from the one signal that is actually reliable.
+ */
+export function gradeFor(correct: boolean): Rating {
+  return correct ? 'good' : 'again';
 }
 
 /**

@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { goto } from '$app/navigation';
   import { course, genderClass } from '$lib/course.ts';
   import { progress } from '$lib/progress.svelte.ts';
   import { fit } from '$lib/fit.ts';
   import * as audio from '$lib/audio.ts';
+  import { feedbackSound } from '$lib/sound.ts';
   import {
     buildSession,
     checkAnswer,
@@ -22,10 +23,24 @@
   let given = $state<string | null>(null);
   let typed = $state('');
   let correct = $state(0);
-  let askedAt = 0;
   let inputEl = $state<HTMLInputElement | null>(null);
 
+  /**
+   * Keys already handed to FSRS in this session. A card missed and then
+   * retried a minute later is not evidence of durable memory, so the retry
+   * must not inflate stability — only the first attempt is scheduled, plus
+   * any further failure.
+   */
+  const scheduled = new Set<string>();
+
+  /** How many times one exercise may appear in a single session. */
+  const MAX_ATTEMPTS = 3;
+
   const shareBefore = $state({ value: 0 });
+
+  // Speech synthesis outlives the page that started it, so leaving mid-word
+  // otherwise leaves a disembodied voice reading to an empty room.
+  onDestroy(() => audio.stop());
 
   const current = $derived(session[index]);
   const wasRight = $derived(current && given !== null ? checkAnswer(current, given) : false);
@@ -38,7 +53,6 @@
     session = buildSession(course, progress.current, { size: 12, newWords: 3 });
     audio.preload(session.map((e) => e.word));
     phase = session.length ? 'ask' : 'done';
-    askedAt = performance.now();
   });
 
   // Listening exercises play as soon as they appear — the prompt IS the audio.
@@ -54,13 +68,28 @@
     if (phase !== 'ask' || !current) return;
     given = value;
     const ok = checkAnswer(current, value);
-    if (ok) correct += 1;
-    progress.record(current.key, gradeFor(ok, performance.now() - askedAt));
+    const firstAttempt = !scheduled.has(current.key);
+    // The score is out of cards, not out of prompts: a retry must not be able
+    // to lift a missed card back into the total.
+    if (ok && firstAttempt) correct += 1;
+
+    // A missed card comes back before the session ends, a few cards later so
+    // the answer has to be recalled rather than echoed.
+    if (!ok && session.filter((e) => e.key === current.key).length < MAX_ATTEMPTS) {
+      session.splice(Math.min(index + 4, session.length), 0, current);
+    }
+
+    feedbackSound(ok);
+    if (!ok || firstAttempt) progress.record(current.key, gradeFor(ok));
+    scheduled.add(current.key);
     phase = 'shown';
 
-    // Hearing the word right after answering is free extra exposure, and it is
-    // the only moment the learner is guaranteed to be paying attention to it.
-    if (current.kind !== 'listen') audio.play(current.word);
+    // Hearing the answer right after giving it is free extra exposure, and it
+    // is the only moment the learner is guaranteed to be paying attention. A
+    // cloze is answered in a sentence, so the sentence is what gets read back
+    // — the bare lemma would drop the very context being practised.
+    if (current.kind === 'cloze') audio.speakText(current.sentence.de);
+    else if (current.kind !== 'listen') audio.play(current.word);
   }
 
   function next() {
@@ -72,15 +101,21 @@
     }
     index += 1;
     phase = 'ask';
-    askedAt = performance.now();
   }
 
   function onKey(event: KeyboardEvent) {
-    if (event.key !== 'Enter') return;
-    if (phase === 'shown') next();
-    else if (phase === 'ask' && current?.kind === 'produce' && typed.trim()) answer(typed);
+    if (event.key !== 'Enter' || event.repeat || event.isComposing) return;
+    // Enter on a focused button or link is that control's own activation; and
+    // a held Enter used to skip several cards before the learner saw them.
+    if (event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement)
+      return;
+    if (phase === 'shown') {
+      event.preventDefault();
+      next();
+    } else if (phase === 'ask' && current?.kind === 'produce' && typed.trim()) answer(typed);
   }
 
+  const cardCount = $derived(new Set(session.map((e) => e.key)).size);
   const gained = $derived(coverage(course, progress.current).share - shareBefore.value);
   const pct = (n: number) => (n * 100).toFixed(n >= 0.1 ? 0 : 2);
 </script>
@@ -94,7 +129,7 @@
   {:else if phase === 'done'}
     <div class="wrap summary">
       <p class="mono label">Fertig</p>
-      <h1 class="score">{correct}<small>/{session.length}</small></h1>
+      <h1 class="score">{correct}<small>/{cardCount}</small></h1>
       <div class="gain">
         <p class="mono label">Coverage gained</p>
         <b>+{pct(gained)} %</b>
@@ -111,8 +146,8 @@
             correct = 0;
             given = null;
             shareBefore.value = coverage(course, progress.current).share;
+            scheduled.clear();
             phase = session.length ? 'ask' : 'done';
-            askedAt = performance.now();
           }}>Another round</button
         >
         <button class="btn ghost" onclick={() => goto('/')}>Done for now</button>
@@ -181,7 +216,7 @@
 
     <div class="foot wrap">
       {#if phase === 'shown'}
-        <div class="feedback" class:bad={!wasRight}>
+        <div class="feedback" class:bad={!wasRight} role="status" aria-live="polite">
           <b class="mono">{wasRight ? 'Richtig' : 'Falsch'}</b>
           <span>
             {#if current.kind === 'gender'}
