@@ -21,6 +21,14 @@ const cache = new Map<string, HTMLAudioElement>();
 let unlocked = false;
 let voice: SpeechSynthesisVoice | null = null;
 
+/**
+ * Bumped every time playback is cut short. Pausing an element rejects any
+ * `play()` promise still in flight for it, so a superseded request has to be
+ * able to tell "this clip is blocked" from "this clip was interrupted" —
+ * otherwise its fallback would talk over the clip that replaced it.
+ */
+let generation = 0;
+
 export const hasClip = (word: Word): boolean => word.audio !== null;
 
 function element(word: Word): HTMLAudioElement | null {
@@ -62,17 +70,23 @@ export function preload(words: Word[], count = 6): void {
  * synthesis outlives the page that started it unless it is cancelled.
  */
 export function stop(): void {
+  generation += 1;
   for (const audio of cache.values()) audio.pause();
   if (available()) speechSynthesis.cancel();
 }
 
 export function play(word: Word): void {
   stop();
+  const mine = generation;
   const audio = element(word);
   if (audio) {
     audio.currentTime = 0;
     // A blocked play is not worth surfacing: the learner can tap the speaker.
-    audio.play().catch(() => speakText(word.lemma));
+    // A superseded one must stay quiet, or tapping twice in a row leaves the
+    // first word being read over the second.
+    audio.play().catch(() => {
+      if (mine === generation) speakText(word.lemma);
+    });
     return;
   }
   speakText(word.gender ? `${word.gender} ${word.lemma}` : word.lemma);
