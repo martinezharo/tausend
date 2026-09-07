@@ -68,7 +68,7 @@
       <h2>Keep it with you.</h2>
       <p>
         {due
-          ? `${due} skills are ready for another look.`
+          ? `${due} ${due === 1 ? "skill is" : "skills are"} ready for another look.`
           : "Your words come back when it’s time to remember."}
       </p>
       <span>{due ? "Review now" : "Check your review"} →</span></a
