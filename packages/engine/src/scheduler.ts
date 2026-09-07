@@ -119,12 +119,18 @@ export function review(progress: Progress, key: string, rating: Rating, now = ne
   };
 }
 
-/** Convert a binary right/wrong plus response time into an FSRS grade. */
-export function gradeFor(correct: boolean, ms: number): Rating {
-  if (!correct) return 'again';
-  if (ms < 2500) return 'easy';
-  if (ms < 6000) return 'good';
-  return 'hard';
+/**
+ * Convert a binary right/wrong into an FSRS grade.
+ *
+ * Response time is deliberately not an input. It measures the keyboard, the
+ * device and the learner's motor control at least as much as it measures
+ * memory: a slow typist answering from perfect recall was being graded `hard`
+ * and buried under reviews, while a lucky fast tap on a four-option question
+ * earned `easy` and a fortnight of silence. `good` for every correct answer
+ * lets FSRS do its own work from the one signal that is actually reliable.
+ */
+export function gradeFor(correct: boolean): Rating {
+  return correct ? 'good' : 'again';
 }
 
 /**
