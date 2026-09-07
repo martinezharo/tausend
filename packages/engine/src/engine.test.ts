@@ -167,6 +167,14 @@ test('review never mutates the progress it was given', () => {
   assert.deepEqual(before.introduced, []);
 });
 
+test('active days are recorded in the learner timezone, not UTC', () => {
+  // Just past midnight locally: UTC would file this under the previous day
+  // anywhere east of Greenwich, quietly breaking the streak.
+  const justAfterMidnight = new Date(2026, 0, 15, 0, 30);
+  const after = review(emptyProgress(), cardKey(byLemma('Haus').id, 'recognise'), 'good', justAfterMidnight);
+  assert.deepEqual(after.activeDays, ['2026-01-15']);
+});
+
 test('grading maps response time onto FSRS ratings', () => {
   assert.equal(gradeFor(false, 500), 'again');
   assert.equal(gradeFor(true, 1200), 'easy');

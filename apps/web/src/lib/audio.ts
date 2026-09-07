@@ -56,7 +56,18 @@ export function preload(words: Word[], count = 6): void {
   for (const word of words.slice(0, count)) element(word)?.load();
 }
 
+/**
+ * Silence everything. Playback is a single channel here: starting a new clip
+ * while another is still running just makes both unintelligible, and speech
+ * synthesis outlives the page that started it unless it is cancelled.
+ */
+export function stop(): void {
+  for (const audio of cache.values()) audio.pause();
+  if (available()) speechSynthesis.cancel();
+}
+
 export function play(word: Word): void {
+  stop();
   const audio = element(word);
   if (audio) {
     audio.currentTime = 0;
@@ -88,7 +99,7 @@ export function available(): boolean {
 /** Synthesised German. Used for sentences and stories only. */
 export function speakText(text: string, rate = 0.9): void {
   if (!available()) return;
-  speechSynthesis.cancel();
+  stop();
   const utterance = new SpeechSynthesisUtterance(text);
   const v = pickVoice();
   if (v) utterance.voice = v;
@@ -101,8 +112,12 @@ export function hasSynthesis(): boolean {
   return available() && pickVoice() !== null;
 }
 
+let warmed = false;
+
 export function warm(): void {
-  if (!available()) return;
+  // Idempotent: every call used to add another `voiceschanged` listener.
+  if (warmed || !available()) return;
+  warmed = true;
   pickVoice();
   speechSynthesis.addEventListener('voiceschanged', () => {
     voice = null;

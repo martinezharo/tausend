@@ -86,6 +86,13 @@ export const stabilityOf = (progress: Progress, key: string): number =>
 export const hasSeen = (progress: Progress, key: string): boolean =>
   progress.cards[key] !== undefined && progress.cards[key].state !== State.New;
 
+/** The calendar day a moment falls on, in the learner's own timezone. */
+function localDay(now: Date): string {
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const date = String(now.getDate()).padStart(2, '0');
+  return `${now.getFullYear()}-${month}-${date}`;
+}
+
 /**
  * Record an answer and return a NEW progress object. Never mutates its input,
  * so callers can keep it in a store and get change detection for free.
@@ -94,7 +101,9 @@ export function review(progress: Progress, key: string, rating: Rating, now = ne
   const current = fromStored(getCard(progress, key, now));
   const { card } = f.next(current, now, RATING[rating]);
 
-  const day = now.toISOString().slice(0, 10);
+  // Local date, not UTC: an answer at 00:30 in Madrid belongs to the day the
+  // learner thinks it does, otherwise streaks silently lose a day.
+  const day = localDay(now);
   const { wordId } = parseKey(key);
 
   return {

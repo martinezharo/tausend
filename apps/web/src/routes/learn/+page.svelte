@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { goto } from '$app/navigation';
   import { course, genderClass } from '$lib/course.ts';
   import { progress } from '$lib/progress.svelte.ts';
@@ -26,6 +26,10 @@
   let inputEl = $state<HTMLInputElement | null>(null);
 
   const shareBefore = $state({ value: 0 });
+
+  // Speech synthesis outlives the page that started it, so leaving mid-word
+  // otherwise leaves a disembodied voice reading to an empty room.
+  onDestroy(() => audio.stop());
 
   const current = $derived(session[index]);
   const wasRight = $derived(current && given !== null ? checkAnswer(current, given) : false);
@@ -76,9 +80,15 @@
   }
 
   function onKey(event: KeyboardEvent) {
-    if (event.key !== 'Enter') return;
-    if (phase === 'shown') next();
-    else if (phase === 'ask' && current?.kind === 'produce' && typed.trim()) answer(typed);
+    if (event.key !== 'Enter' || event.repeat || event.isComposing) return;
+    // Enter on a focused button or link is that control's own activation; and
+    // a held Enter used to skip several cards before the learner saw them.
+    if (event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement)
+      return;
+    if (phase === 'shown') {
+      event.preventDefault();
+      next();
+    } else if (phase === 'ask' && current?.kind === 'produce' && typed.trim()) answer(typed);
   }
 
   const gained = $derived(coverage(course, progress.current).share - shareBefore.value);
@@ -181,7 +191,7 @@
 
     <div class="foot wrap">
       {#if phase === 'shown'}
-        <div class="feedback" class:bad={!wasRight}>
+        <div class="feedback" class:bad={!wasRight} role="status" aria-live="polite">
           <b class="mono">{wasRight ? 'Richtig' : 'Falsch'}</b>
           <span>
             {#if current.kind === 'gender'}

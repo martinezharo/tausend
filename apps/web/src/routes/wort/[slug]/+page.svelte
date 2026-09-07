@@ -2,11 +2,13 @@
   import { course, genderClass, posLabel } from '$lib/course.ts';
   import { fit } from '$lib/fit.ts';
   import * as audio from '$lib/audio.ts';
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import type { PageData } from './$types';
 
   let { data }: { data: PageData } = $props();
   const { word, sentences, share } = $derived(data);
+
+  onDestroy(() => audio.stop());
 
   let canPlay = $state(false);
   onMount(() => {
