@@ -17,9 +17,11 @@
     "test": "pnpm --filter @tausend/engine test && pnpm --filter @tausend/web test",
     "data": "node data/scripts/build-course.mjs de",
     "data:sources": "bash data/scripts/fetch-sources.sh",
-    "data:audio": "node data/scripts/fetch-audio.mjs de"
+    "data:audio": "node data/scripts/fetch-audio.mjs de",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "wrangler": "^4.114.0"
   }
 }

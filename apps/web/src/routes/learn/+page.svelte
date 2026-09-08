@@ -6,6 +6,7 @@
   import AnswerTiles from '$lib/AnswerTiles.svelte';
   import { fit } from '$lib/fit.ts';
   import * as audio from '$lib/audio.ts';
+  import { feedbackSound } from '$lib/sound.ts';
   import {
     buildSession,
     practicePlan,
@@ -82,7 +83,9 @@
     if (phase !== 'ask' || !current || !plan) return;
     wasRight = plan.mode === 'words'
       ? practiceMatches(plan.target, value) : checkAnswer(current, value);
-    if (wasRight) correct += 1;
+    const firstAttempt = !scheduled.has(current.key);
+    if (wasRight && !assisted && firstAttempt) correct += 1;
+    feedbackSound(wasRight);
     // Only the first attempt can increase stability. Corrections are practice.
     if (!scheduled.has(current.key) || !wasRight || assisted) {
       progress.record(current.key, gradeFor(wasRight && !assisted));
@@ -133,6 +136,7 @@
     }
   }
 
+  const cardCount = $derived(new Set(session.map((exercise) => exercise.key)).size);
   const gained = $derived(coverage(course, progress.current).share - shareBefore.value);
   const pct = (n: number) => (n * 100).toFixed(n >= 0.1 ? 0 : 2);
 </script>
@@ -146,7 +150,7 @@
   {:else if phase === 'done'}
     <div class="wrap summary">
       <p class="mono label">Fertig</p>
-      <h1 class="score">{correct}<small>/{session.length}</small></h1>
+      <h1 class="score">{correct}<small>/{cardCount}</small></h1>
       <div class="gain">
         <p class="mono label">Coverage gained</p>
         <b>+{pct(gained)} %</b>
