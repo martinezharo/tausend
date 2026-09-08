@@ -69,6 +69,10 @@ test('a lemma without a recording falls back to synthesis', () => {
   assert.deepEqual(heard('hier'), { played: [], spoken: ['hier'] });
 });
 
+test('punctuation inside a word is left alone', () => {
+  assert.deepEqual(heard('"geht\'s!"'), { played: [], spoken: ["geht's"] });
+});
+
 test('a token that is only punctuation says nothing', () => {
   assert.deepEqual(heard('…'), { played: [], spoken: [] });
 });

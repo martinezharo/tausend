@@ -106,7 +106,8 @@ export function play(word: Word): void {
  * token is synthesised.
  */
 export function playToken(token: string): void {
-  const text = token.replace(/[.,!?;:„“”"'…]/g, '').trim();
+  // Only at the edges: "geht's" is one word, and "gehts" is not how it sounds.
+  const text = token.trim().replace(/^[.,!?;:„“”"'…]+|[.,!?;:„“”"'…]+$/g, '');
   if (!text) return;
   const word = clipByLemma.get(text.toLowerCase());
   if (word) play(word);
