@@ -3,11 +3,15 @@
   import { goto } from '$app/navigation';
   import { course, genderClass } from '$lib/course.ts';
   import { progress } from '$lib/progress.svelte.ts';
+  import AnswerTiles from '$lib/AnswerTiles.svelte';
   import { fit } from '$lib/fit.ts';
   import * as audio from '$lib/audio.ts';
   import { feedbackSound } from '$lib/sound.ts';
   import {
     buildSession,
+    practicePlan,
+    practiceMatches,
+    type PracticePlan,
     checkAnswer,
     coverage,
     gradeFor,
@@ -19,31 +23,23 @@
 
   let session = $state<Exercise[]>([]);
   let index = $state(0);
-  let phase = $state<'loading' | 'ask' | 'shown' | 'done'>('loading');
-  let given = $state<string | null>(null);
+  let phase = $state<'loading' | 'intro' | 'ask' | 'shown' | 'done'>('loading');
   let typed = $state('');
   let correct = $state(0);
-  let inputEl = $state<HTMLInputElement | null>(null);
-
-  /**
-   * Keys already handed to FSRS in this session. A card missed and then
-   * retried a minute later is not evidence of durable memory, so the retry
-   * must not inflate stability — only the first attempt is scheduled, plus
-   * any further failure.
-   */
+  let plan = $state<PracticePlan | null>(null);
+  let assisted = $state(false);
+  let revealed = $state(false);
+  let wasRight = $state(false);
+  const presented = new Set<string>();
   const scheduled = new Set<string>();
-
-  /** How many times one exercise may appear in a single session. */
-  const MAX_ATTEMPTS = 3;
+  const retries = new Map<string, number>();
+  let addedConstruction = 0;
+  onDestroy(() => audio.stop());
+  let inputEl = $state<HTMLInputElement | null>(null);
 
   const shareBefore = $state({ value: 0 });
 
-  // Speech synthesis outlives the page that started it, so leaving mid-word
-  // otherwise leaves a disembodied voice reading to an empty room.
-  onDestroy(() => audio.stop());
-
   const current = $derived(session[index]);
-  const wasRight = $derived(current && given !== null ? checkAnswer(current, given) : false);
 
   onMount(async () => {
     await progress.load();
@@ -52,7 +48,7 @@
     shareBefore.value = coverage(course, progress.current).share;
     session = buildSession(course, progress.current, { size: 12, newWords: 3 });
     audio.preload(session.map((e) => e.word));
-    phase = session.length ? 'ask' : 'done';
+    show();
   });
 
   // Listening exercises play as soon as they appear — the prompt IS the audio.
@@ -61,61 +57,86 @@
   });
 
   $effect(() => {
-    if (phase === 'ask' && current?.kind === 'produce') inputEl?.focus();
+    if (phase === 'ask' && (plan?.mode === 'hinted' || plan?.mode === 'write')) inputEl?.focus();
   });
 
+  function show() {
+    typed = '';
+    assisted = false;
+    revealed = false;
+    if (!current) { phase = 'done'; return; }
+    plan = practicePlan(current, progress.current);
+    const unseenWord = !progress.current.introduced.includes(current.word.id) && !presented.has(current.word.id);
+    const unseenSentence = current.kind === 'cloze' && plan.mode === 'words' && !presented.has(current.key);
+    phase = unseenWord || unseenSentence ? 'intro' : 'ask';
+  }
+
+  function startQuestion() {
+    if (!current) return;
+    presented.add(current.word.id);
+    presented.add(current.key);
+    audio.stop();
+    phase = 'ask';
+  }
+
   function answer(value: string) {
-    if (phase !== 'ask' || !current) return;
-    given = value;
-    const ok = checkAnswer(current, value);
+    if (phase !== 'ask' || !current || !plan) return;
+    wasRight = plan.mode === 'words'
+      ? practiceMatches(plan.target, value) : checkAnswer(current, value);
     const firstAttempt = !scheduled.has(current.key);
-    // The score is out of cards, not out of prompts: a retry must not be able
-    // to lift a missed card back into the total.
-    if (ok && firstAttempt) correct += 1;
-
-    // A missed card comes back before the session ends, a few cards later so
-    // the answer has to be recalled rather than echoed.
-    if (!ok && session.filter((e) => e.key === current.key).length < MAX_ATTEMPTS) {
-      session.splice(Math.min(index + 4, session.length), 0, current);
+    if (wasRight && !assisted && firstAttempt) correct += 1;
+    feedbackSound(wasRight);
+    // Only the first attempt can increase stability. Corrections are practice.
+    if (!scheduled.has(current.key) || !wasRight || assisted) {
+      progress.record(current.key, gradeFor(wasRight && !assisted));
+      scheduled.add(current.key);
     }
-
-    feedbackSound(ok);
-    if (!ok || firstAttempt) progress.record(current.key, gradeFor(ok));
-    scheduled.add(current.key);
+    const count = retries.get(current.key) ?? 0;
+    if ((!wasRight || assisted) && count < 2) {
+      session.splice(Math.min(index + 4, session.length), 0, current);
+      retries.set(current.key, count + 1);
+    }
+    // A few newly introduced words get a supported construction turn today.
+    if (current.kind === 'recognise' && presented.has(current.word.id) && addedConstruction < 3) {
+      const key = `${current.word.id}#produce`;
+      if (!progress.current.cards[key] && !session.some((exercise) => exercise.key === key)) {
+        session.splice(Math.min(index + 4, session.length), 0, {
+          kind: 'produce', key, word: current.word, answer: current.word.lemma,
+          prompt: current.word.en.join(', ')
+        });
+        addedConstruction++;
+      }
+    }
     phase = 'shown';
-
-    // Hearing the answer right after giving it is free extra exposure, and it
-    // is the only moment the learner is guaranteed to be paying attention. A
-    // cloze is answered in a sentence, so the sentence is what gets read back
-    // — the bare lemma would drop the very context being practised.
     if (current.kind === 'cloze') audio.speakText(current.sentence.de);
     else if (current.kind !== 'listen') audio.play(current.word);
   }
 
-  function next() {
-    given = null;
+  function help() {
+    if (!current) return;
+    assisted = true;
+    revealed = true;
+    // Return to construction even when free recall was previously unlocked.
+    plan = practicePlan(current, { ...progress.current, cards: {} });
     typed = '';
-    if (index + 1 >= session.length) {
-      phase = 'done';
-      return;
-    }
+  }
+
+  function next() {
+    audio.stop();
     index += 1;
-    phase = 'ask';
+    show();
   }
 
   function onKey(event: KeyboardEvent) {
-    if (event.key !== 'Enter' || event.repeat || event.isComposing) return;
-    // Enter on a focused button or link is that control's own activation; and
-    // a held Enter used to skip several cards before the learner saw them.
-    if (event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement)
-      return;
-    if (phase === 'shown') {
-      event.preventDefault();
-      next();
-    } else if (phase === 'ask' && current?.kind === 'produce' && typed.trim()) answer(typed);
+    if (event.key !== 'Enter' || event.repeat || event.isComposing ||
+      event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement) return;
+    if (phase === 'shown') { event.preventDefault(); next(); }
+    else if (phase === 'ask' && (plan?.mode === 'write' || plan?.mode === 'hinted') && typed.trim()) {
+      event.preventDefault(); answer(typed);
+    }
   }
 
-  const cardCount = $derived(new Set(session.map((e) => e.key)).size);
+  const cardCount = $derived(new Set(session.map((exercise) => exercise.key)).size);
   const gained = $derived(coverage(course, progress.current).share - shareBefore.value);
   const pct = (n: number) => (n * 100).toFixed(n >= 0.1 ? 0 : 2);
 </script>
@@ -133,7 +154,7 @@
       <div class="gain">
         <p class="mono label">Coverage gained</p>
         <b>+{pct(gained)} %</b>
-        <span class="mono">now {pct(coverage(course, progress.current).share)} % of spoken German</span
+        <span class="mono">now {pct(coverage(course, progress.current).share)} % of corpus tokens</span
         >
       </div>
       <div class="stack actions">
@@ -144,10 +165,12 @@
             audio.preload(session.map((e) => e.word));
             index = 0;
             correct = 0;
-            given = null;
             shareBefore.value = coverage(course, progress.current).share;
+            presented.clear();
             scheduled.clear();
-            phase = session.length ? 'ask' : 'done';
+            retries.clear();
+            addedConstruction = 0;
+            show();
           }}>Another round</button
         >
         <button class="btn ghost" onclick={() => goto('/')}>Done for now</button>
@@ -168,7 +191,19 @@
     </div>
 
     <div class="body wrap">
-      {#if current.kind === 'gender'}
+      {#if phase === 'intro'}
+        <p class="mono hint">First, get to know it</p>
+        {#if current.kind === 'cloze'}
+          <p class="sentence" lang="de">{current.sentence.de}</p>
+          <p class="sentence-en">{current.sentence.en}</p>
+        {:else}
+          <div class="plate mark {genderClass(current.word)}">
+            <span class="plate-word big" use:fit={current.word.lemma} lang="de">{current.word.gender ? `${current.word.gender} ` : ''}{current.word.lemma}</span>
+            <p class="gloss">{current.word.en.join(', ')}</p>
+          </div>
+        {/if}
+        {#if current.word.note || current.word.pattern}<p class="tip">{current.word.note || current.word.pattern}</p>{/if}
+      {:else if current.kind === 'gender'}
         <p class="mono hint">{SKILL_HINT.gender}</p>
         <div class="plate mark {phase === 'shown' ? genderClass(current.word) : 'g-hidden'}">
           <span class="plate-word big" use:fit={current.word.lemma}>{current.word.lemma}</span>
@@ -188,21 +223,23 @@
           </div>
         {/if}
       {:else if current.kind === 'produce'}
-        <p class="mono hint">{SKILL_HINT.produce}</p>
+        <p class="mono hint">{plan?.mode === 'letters' ? 'Build the word with the letters below' : SKILL_HINT.produce}</p>
         <div class="prompt">
           <b>{current.prompt}</b>
           {#if current.word.gender}<span class="mono dim">include the article</span>{/if}
         </div>
       {:else if current.kind === 'cloze'}
-        <p class="mono hint">{SKILL_HINT.cloze}</p>
-        <p class="sentence" lang="de">
+        <p class="mono hint">{plan?.mode === 'words' ? 'Rebuild the example with the words below' : SKILL_HINT.cloze}</p>
+        <p class="sentence" lang={plan?.mode === 'words' && phase !== 'shown' ? 'en' : 'de'}>
           {#if phase === 'shown'}
             {current.sentence.de}
+          {:else if plan?.mode === 'words'}
+            {current.sentence.en}
           {:else}
             {current.masked}
           {/if}
         </p>
-        <p class="sentence-en">{current.sentence.en}</p>
+        {#if plan?.mode !== 'words'}<p class="sentence-en">{current.sentence.en}</p>{/if}
       {:else}
         <p class="mono hint">{SKILL_HINT.recognise}</p>
         <div class="plate mark {genderClass(current.word)}">
@@ -215,9 +252,13 @@
     </div>
 
     <div class="foot wrap">
-      {#if phase === 'shown'}
+      {#if phase === 'intro'}
+        <button class="btn ghost" onclick={() => current.kind === 'cloze' ? audio.speakText(current.sentence.de) : audio.play(current.word)}>Listen</button>
+        <p class="tip">Look at the German and its meaning. Then try it with help.</p>
+        <button class="btn" onclick={startQuestion}>Ready to practise</button>
+      {:else if phase === 'shown'}
         <div class="feedback" class:bad={!wasRight} role="status" aria-live="polite">
-          <b class="mono">{wasRight ? 'Richtig' : 'Falsch'}</b>
+          <b class="mono">{wasRight ? (assisted ? 'With help' : 'Richtig') : 'Let’s try it again'}</b>
           <span>
             {#if current.kind === 'gender'}
               {current.word.gender}
@@ -249,8 +290,15 @@
             <button class="gbtn g-{option}" onclick={() => answer(option)}>{option}</button>
           {/each}
         </div>
-      {:else if current.kind === 'produce'}
+      {:else if plan?.mode === 'letters' || plan?.mode === 'words'}
+        {#if revealed}<p class="tip" lang="de">{plan.target}</p>{/if}
+        {#key index}<AnswerTiles tokens={plan.tokens} separator={plan.mode === 'words' ? ' ' : ''} onanswer={answer} />{/key}
+        <button class="btn ghost" onclick={help}>Show me again</button>
+      {:else if plan?.mode === 'hinted' || plan?.mode === 'write'}
+        {#if plan.mode === 'hinted'}<p class="tip mono" lang="de">{plan.hint}</p>{/if}
+        <label class="mono" for="german-answer">{current.kind === 'cloze' ? 'Missing word' : 'Your German'}</label>
         <input
+          id="german-answer"
           type="text"
           bind:this={inputEl}
           bind:value={typed}
@@ -261,7 +309,8 @@
           placeholder="auf Deutsch"
         />
         <button class="btn" disabled={!typed.trim()} onclick={() => answer(typed)}>Prüfen</button>
-      {:else}
+        <button class="btn ghost" onclick={help}>Give me tiles</button>
+      {:else if 'options' in current}
         <div class="stack">
           {#each current.options as option (option)}
             <button class="choice" onclick={() => answer(option)}>{option}</button>

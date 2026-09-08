@@ -248,11 +248,13 @@ test('recognition offers the right answer among plausible distractors', () => {
   assert.equal(new Set(exercise.options).size, 4, 'options must be distinct');
 });
 
-test('production accepts the noun with or without its article', () => {
+test('production requires the correct noun article', () => {
   const haus = byLemma('Haus');
   const exercise = buildExercise(haus, 'produce', course, course.words, new Set(), () => 0.5)!;
-  assert.ok(checkAnswer(exercise, 'Haus'));
-  assert.ok(checkAnswer(exercise, 'haus'));
+  assert.ok(!checkAnswer(exercise, 'Haus'));
+  assert.ok(!checkAnswer(exercise, 'haus'));
+  assert.ok(!checkAnswer(exercise, 'der Haus'));
+  assert.ok(checkAnswer(exercise, ' DAS haus! '));
   assert.ok(checkAnswer(exercise, 'das Haus'));
   assert.ok(!checkAnswer(exercise, 'Hause'));
 });

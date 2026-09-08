@@ -9,6 +9,14 @@ async function counter(page: Page): Promise<{ at: number; total: number }> {
 
 /** Answer the card on screen, whatever kind it is. Correctness is not the point. */
 async function answerSomething(page: Page): Promise<void> {
+  const intro = page.getByRole('button', { name: 'Ready to practise' });
+  if (await intro.isVisible()) await intro.click();
+  const bank = page.locator('[aria-label="Available tiles"]');
+  if (await bank.isVisible()) {
+    for (const tile of await bank.getByRole('button').all()) await tile.click();
+    await page.getByRole('button', { name: 'Prüfen', exact: true }).click();
+    return;
+  }
   const input = page.locator('input[type="text"]');
   if (await input.isVisible()) {
     await input.fill('etwas');
@@ -54,4 +62,26 @@ test('a missed card is queued to come back before the session ends', async ({ pa
 
   expect(missed, 'expected at least one wrong answer in six cards').toBe(true);
   expect((await counter(page)).total).toBeGreaterThan(total);
+});
+
+
+test('new material is introduced before recognition and construction', async ({ page }) => {
+  await page.goto('/learn');
+  await expect(page.getByRole('button', { name: 'Ready to practise' })).toBeVisible();
+  await expect(page.locator('.gloss')).toBeVisible();
+  await expect(page.locator('input')).toHaveCount(0);
+  const bank = page.locator('[aria-label="Available tiles"]');
+  for (let i = 0; i < 12 && !await bank.isVisible(); i++) {
+    await answerSomething(page);
+    await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  }
+  await expect(bank).toBeVisible();
+  await expect(page.locator('input')).toHaveCount(0);
+  const tile = bank.getByRole('button').first();
+  await tile.click();
+  await expect(tile).toBeDisabled();
+  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await expect(tile).toBeEnabled();
+  await page.getByRole('button', { name: 'Show me again', exact: true }).click();
+  await expect(page.locator('.foot .tip')).toBeVisible();
 });

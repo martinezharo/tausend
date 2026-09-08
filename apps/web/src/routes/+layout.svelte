@@ -4,7 +4,12 @@
   import { progress } from '$lib/progress.svelte.ts';
   import { page } from '$app/state';
 
-  onMount(() => { void progress.load(); });
+  onMount(() => {
+    void progress.load();
+    if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+      void navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
+    }
+  });
 
   let { children } = $props();
 
