@@ -35,6 +35,11 @@ jobs:
       - name: Types and Svelte
         run: pnpm check
 
+      # The engine tests read the compiled course, which is a build artifact and
+      # is not checked in. A clean checkout has to compile it first.
+      - name: Compile the course
+        run: pnpm data
+
       - name: Unit tests
         run: pnpm test
 

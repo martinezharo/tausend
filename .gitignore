@@ -4,6 +4,7 @@ node_modules/
 apps/web/build/
 apps/web/.svelte-kit/
 .wrangler/
+data/dist/
 
 # Local environment files
 .env
