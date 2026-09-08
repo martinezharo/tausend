@@ -56,9 +56,22 @@
     if (phase === 'ask' && current?.kind === 'listen') audio.play(current.word);
   });
 
+  // Meeting a word or a sentence includes hearing it. The introduction speaks
+  // for itself, and the listen button is there to hear it a second time.
+  $effect(() => {
+    if (phase === 'intro' && current) playCurrent();
+  });
+
   $effect(() => {
     if (phase === 'ask' && (plan?.mode === 'hinted' || plan?.mode === 'write')) inputEl?.focus();
   });
+
+  /** The German on screen, as a clip when there is one and as speech otherwise. */
+  function playCurrent() {
+    if (!current) return;
+    if (current.kind === 'cloze') audio.speakText(current.sentence.de);
+    else audio.play(current.word);
+  }
 
   function show() {
     typed = '';
@@ -253,8 +266,8 @@
 
     <div class="foot wrap">
       {#if phase === 'intro'}
-        <button class="btn ghost" onclick={() => current.kind === 'cloze' ? audio.speakText(current.sentence.de) : audio.play(current.word)}>Listen</button>
-        <p class="tip">Look at the German and its meaning. Then try it with help.</p>
+        <button class="btn ghost" onclick={playCurrent}>Nochmal hören</button>
+        <p class="tip">Listen, and look at the German and its meaning. Then try it with help.</p>
         <button class="btn" onclick={startQuestion}>Ready to practise</button>
       {:else if phase === 'shown'}
         <div class="feedback" class:bad={!wasRight} role="status" aria-live="polite">
@@ -292,7 +305,12 @@
         </div>
       {:else if plan?.mode === 'letters' || plan?.mode === 'words'}
         {#if revealed}<p class="tip" lang="de">{plan.target}</p>{/if}
-        {#key index}<AnswerTiles tokens={plan.tokens} separator={plan.mode === 'words' ? ' ' : ''} onanswer={answer} />{/key}
+        {#key index}<AnswerTiles
+          tokens={plan.tokens}
+          separator={plan.mode === 'words' ? ' ' : ''}
+          onanswer={answer}
+          onpick={plan.mode === 'words' ? audio.playToken : undefined}
+        />{/key}
         <button class="btn ghost" onclick={help}>Show me again</button>
       {:else if plan?.mode === 'hinted' || plan?.mode === 'write'}
         {#if plan.mode === 'hinted'}<p class="tip mono" lang="de">{plan.hint}</p>{/if}

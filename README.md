@@ -33,7 +33,10 @@ for the planned 1,000-word course.
   unlock as recognition becomes stable and usable sentences become available.
 - Word pronunciations are human recordings from the German Wiktionary project via
   Wikimedia Commons and are bundled for offline use. Sentences and stories use
-  device speech synthesis.
+  device speech synthesis. New material is spoken as it is introduced, and every
+  word says itself as it is tapped into a sentence — with its own recording only
+  when the tile is the lemma, so an inflected form is never given the sound of a
+  different word.
 
 ## Progress backups
 

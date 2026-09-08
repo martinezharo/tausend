@@ -1,9 +1,11 @@
 <script lang="ts">
   import { shuffle, mulberry32 } from '@tausend/engine';
-  let { tokens, separator = '', onanswer }: {
+  let { tokens, separator = '', onanswer, onpick }: {
     tokens: string[];
     separator?: string;
     onanswer: (answer: string) => void;
+    /** Called with a tile's text as it is placed, so the caller can say it aloud. */
+    onpick?: (token: string) => void;
   } = $props();
   let selected = $state<number[]>([]);
   const tiles = $derived(shuffle(tokens.map((text, id) => ({ text, id })), mulberry32(42)));
@@ -21,7 +23,7 @@
 <div class="tiles" aria-label="Available tiles">
   {#each tiles as tile (tile.id)}
     <button class="tile" lang="de" disabled={selected.includes(tile.id)}
-      onclick={() => selected = [...selected, tile.id]}>{tile.text}</button>
+      onclick={() => { selected = [...selected, tile.id]; onpick?.(tile.text); }}>{tile.text}</button>
   {/each}
 </div>
 <div class="controls">

@@ -31,6 +31,11 @@ let generation = 0;
 
 export const hasClip = (word: Word): boolean => word.audio !== null;
 
+/** Lemma → word, for the recorded words only. Lower-cased for lookup. */
+const clipByLemma = new Map<string, Word>(
+  course.words.filter((word) => word.audio).map((word) => [word.lemma.toLowerCase(), word])
+);
+
 function element(word: Word): HTMLAudioElement | null {
   if (!word.audio) return null;
   let audio = cache.get(word.audio);
@@ -90,6 +95,23 @@ export function play(word: Word): void {
     return;
   }
   speakText(word.gender ? `${word.gender} ${word.lemma}` : word.lemma);
+}
+
+/**
+ * Say one token of a sentence, for the tiles a learner taps while building it.
+ *
+ * The human clips are recordings of lemmas, so an inflected token must not be
+ * answered with its lemma's clip — tapping "bin" and hearing "sein" would
+ * teach the wrong sound. Only an exact lemma gets the recording; every other
+ * token is synthesised.
+ */
+export function playToken(token: string): void {
+  // Only at the edges: "geht's" is one word, and "gehts" is not how it sounds.
+  const text = token.trim().replace(/^[.,!?;:„“”"'…]+|[.,!?;:„“”"'…]+$/g, '');
+  if (!text) return;
+  const word = clipByLemma.get(text.toLowerCase());
+  if (word) play(word);
+  else speakText(text);
 }
 
 // ------------------------------------------------------- synthesis fallback
