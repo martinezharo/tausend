@@ -69,7 +69,14 @@ pnpm check       # Svelte check
 pnpm test        # engine and storage tests; run pnpm data first
 pnpm build       # compile data and build the static web app
 pnpm preview     # preview the web build at http://localhost:5274
+pnpm test:e2e    # browser smoke tests for a real session; needs a build first
 ```
+
+Every pull request and every push to `main` runs that same sequence on GitHub
+Actions — check, unit tests, build, then the end-to-end suite against a freshly
+installed Chromium, with `test-results/` uploaded when it fails. The browser is
+never downloaded locally: point `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` at a
+Chromium already on the machine.
 
 Run `pnpm data` after editing `data/de/lexicon.json`,
 `data/de/sentences.json`, or the compiler. `pnpm build` invokes it

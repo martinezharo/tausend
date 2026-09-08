@@ -1,0 +1,63 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# A newer push makes the run in flight irrelevant, and the e2e job is the
+# slowest thing in the repository.
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      # No version pin here: action-setup reads packageManager from package.json,
+      # so the lockfile and CI can never drift apart.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Types and Svelte
+        run: pnpm check
+
+      # The engine tests read the compiled course, which is a build artifact and
+      # is not checked in. A clean checkout has to compile it first.
+      - name: Compile the course
+        run: pnpm data
+
+      - name: Unit tests
+        run: pnpm test
+
+      # Also recompiles the course from data/, so a broken lexicon fails here.
+      - name: Build
+        run: pnpm build
+
+      # The e2e config takes the browser from this variable and otherwise looks
+      # for a local install, which is what a runner has.
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: End-to-end tests
+        run: pnpm test:e2e
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-results
+          path: test-results/
+          retention-days: 7
