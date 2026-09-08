@@ -110,12 +110,9 @@ export function review(progress: Progress, key: string, rating: Rating, now = ne
   };
 }
 
-/** Convert a binary right/wrong plus response time into an FSRS grade. */
-export function gradeFor(correct: boolean, ms: number): Rating {
-  if (!correct) return 'again';
-  if (ms < 2500) return 'easy';
-  if (ms < 6000) return 'good';
-  return 'hard';
+/** Grade recall independently of typing speed and device. */
+export function gradeFor(correct: boolean, _ms = 0): Rating {
+  return correct ? 'good' : 'again';
 }
 
 /**

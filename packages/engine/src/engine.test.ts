@@ -167,11 +167,11 @@ test('review never mutates the progress it was given', () => {
   assert.deepEqual(before.introduced, []);
 });
 
-test('grading maps response time onto FSRS ratings', () => {
+test('grading does not confuse typing speed with recall', () => {
   assert.equal(gradeFor(false, 500), 'again');
-  assert.equal(gradeFor(true, 1200), 'easy');
+  assert.equal(gradeFor(true, 1200), 'good');
   assert.equal(gradeFor(true, 4000), 'good');
-  assert.equal(gradeFor(true, 9000), 'hard');
+  assert.equal(gradeFor(true, 9000), 'good');
 });
 
 // ------------------------------------------------------------- skill ladder
@@ -242,11 +242,13 @@ test('recognition offers the right answer among plausible distractors', () => {
   assert.equal(new Set(exercise.options).size, 4, 'options must be distinct');
 });
 
-test('production accepts the noun with or without its article', () => {
+test('production requires the correct noun article', () => {
   const haus = byLemma('Haus');
   const exercise = buildExercise(haus, 'produce', course, course.words, new Set(), () => 0.5)!;
-  assert.ok(checkAnswer(exercise, 'Haus'));
-  assert.ok(checkAnswer(exercise, 'haus'));
+  assert.ok(!checkAnswer(exercise, 'Haus'));
+  assert.ok(!checkAnswer(exercise, 'haus'));
+  assert.ok(!checkAnswer(exercise, 'der Haus'));
+  assert.ok(checkAnswer(exercise, ' DAS haus! '));
   assert.ok(checkAnswer(exercise, 'das Haus'));
   assert.ok(!checkAnswer(exercise, 'Hause'));
 });

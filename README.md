@@ -91,3 +91,19 @@ pnpm deploy
 
 The running app's `/ueber` page contains the method, source, and audio
 attribution details.
+
+### Supported practice
+
+New words are shown with their meaning and article before the first question.
+Up to three newly introduced words also receive a letter-building turn in the
+same session. New sentence exercises show the complete example first, then offer
+a word bank. With spaced practice, construction gives way to a first-letter hint
+and finally writing; sentence writing asks only for the missing word.
+
+Support is selected separately for each skill: review-state cards with at least
+two reviews and three days of stability get a hint; four reviews and ten days of
+stability unlock unprompted writing. These are conservative product thresholds,
+not a proficiency certification. A lapse restores construction. Learners can
+always request tiles or see the model again; using that help schedules another
+review. In-session corrections cannot increase memory stability. Answer speed
+has no effect on grading, and noun production requires the correct article.

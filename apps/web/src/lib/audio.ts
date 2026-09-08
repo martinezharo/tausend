@@ -56,7 +56,13 @@ export function preload(words: Word[], count = 6): void {
   for (const word of words.slice(0, count)) element(word)?.load();
 }
 
+export function stop(): void {
+  for (const audio of cache.values()) audio.pause();
+  if (available()) speechSynthesis.cancel();
+}
+
 export function play(word: Word): void {
+  stop();
   const audio = element(word);
   if (audio) {
     audio.currentTime = 0;
@@ -88,7 +94,7 @@ export function available(): boolean {
 /** Synthesised German. Used for sentences and stories only. */
 export function speakText(text: string, rate = 0.9): void {
   if (!available()) return;
-  speechSynthesis.cancel();
+  stop();
   const utterance = new SpeechSynthesisUtterance(text);
   const v = pickVoice();
   if (v) utterance.voice = v;

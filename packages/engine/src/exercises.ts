@@ -129,11 +129,11 @@ export function checkAnswer(exercise: Exercise, given: string): boolean {
       .replace(/[.,!?]/g, '');
 
   if (exercise.kind === 'produce') {
-    // Accept the bare lemma with or without its article, and tolerate a
-    // missing capital — the point of this exercise is recall, not typing.
-    const accepted = [exercise.answer];
-    if (exercise.word.gender) accepted.push(`${exercise.word.gender} ${exercise.answer}`);
-    return accepted.some((a) => normalise(a) === normalise(given));
+    // The article is part of a noun's recall target.
+    const expected = exercise.word.gender
+      ? `${exercise.word.gender} ${exercise.answer}`
+      : exercise.answer;
+    return normalise(expected) === normalise(given);
   }
 
   return normalise(exercise.answer) === normalise(given);
