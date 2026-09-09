@@ -17,12 +17,12 @@
  * same voice, and a tapped letter sounds instantly rather than after a network
  * round trip.
  *
- * Piper (MIT) with de_DE-thorsten-medium, finetuned on the Thorsten-Voice
+ * Piper (MIT) with de_DE-thorsten-high, finetuned on the Thorsten-Voice
  * corpus that Thorsten Müller released as CC0:
  * https://github.com/thorstenMueller/Thorsten-Voice
  *
- * Both the venv and the 63 MB voice model are created on first run under
- * data/, and neither is committed.
+ * Both the venv and the voice model are created on first run under data/, and
+ * neither is committed.
  *
  * Requires python3 and ffmpeg on PATH (FFMPEG=/path/to/ffmpeg to override).
  */
@@ -41,7 +41,7 @@ const ROOT = resolve(HERE, '../..');
 const lang = process.argv[2] ?? 'de';
 const FFMPEG = process.env.FFMPEG ?? 'ffmpeg';
 
-const VOICE = 'de_DE-thorsten-medium';
+const VOICE = 'de_DE-thorsten-high';
 const VENV = resolve(ROOT, 'data/.venv');
 const PYTHON = resolve(VENV, 'bin/python');
 const VOICES = resolve(ROOT, 'data/.voices');
@@ -96,8 +96,14 @@ for (const word of course.words) if (word.plural) want(`die ${word.plural}`);
 // Letter names, for a word being spelled out tile by tile.
 for (const name of Object.values(LETTER_NAMES)) want(name);
 
-/** Content-addressed, so editing a sentence orphans its clip rather than reusing it. */
-const nameFor = (text) => `${createHash('sha1').update(text).digest('hex').slice(0, 10)}.m4a`;
+/**
+ * Content-addressed, so editing a sentence orphans its clip rather than
+ * reusing it. The voice is part of what is hashed: without it, switching
+ * voices would leave every filename unchanged, every clip would look already
+ * rendered, and the course would keep the old voice in silence.
+ */
+const nameFor = (text) =>
+  `${createHash('sha1').update(`${VOICE}\n${text}`).digest('hex').slice(0, 10)}.m4a`;
 
 const wanted = new Map([...texts].sort().map((text) => [text, nameFor(text)]));
 
@@ -120,7 +126,7 @@ function provision() {
     run(PYTHON, ['-m', 'pip', 'install', '--quiet', 'piper-tts']);
   }
   if (!existsSync(MODEL)) {
-    console.log(`  downloading ${VOICE} (63 MB)`);
+    console.log(`  downloading ${VOICE}`);
     mkdirSync(VOICES, { recursive: true });
     run(PYTHON, ['-m', 'piper.download_voices', VOICE, '--data-dir', VOICES]);
   }
