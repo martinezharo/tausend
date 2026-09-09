@@ -2,14 +2,8 @@
   import '../app.css';
   import { onMount } from 'svelte';
   import { progress } from '$lib/progress.svelte.ts';
+  import { watchForUpdates, type UpdateWatcher } from '$lib/updates.ts';
   import { page } from '$app/state';
-
-  onMount(() => {
-    void progress.load();
-    if (import.meta.env.PROD && 'serviceWorker' in navigator) {
-      void navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
-    }
-  });
 
   let { children } = $props();
 
@@ -21,6 +15,21 @@
 
   // The session runs full-bleed: no chrome competing with the exercise.
   const bare = $derived(page.url.pathname.startsWith('/learn'));
+
+  let updates: UpdateWatcher | undefined;
+
+  onMount(() => {
+    void progress.load();
+    // A reload mid-round would throw away the twelve cards in flight, so a new
+    // build waits until the learner is out of the session.
+    updates = watchForUpdates(() => !bare);
+    return () => updates?.stop();
+  });
+
+  // Leaving the session is the moment a held-back update can land unnoticed.
+  $effect(() => {
+    if (!bare) updates?.applyIfReady();
+  });
 </script>
 
 {#if !bare}
