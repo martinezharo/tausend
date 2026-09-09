@@ -34,6 +34,7 @@ export function watchForUpdates(canReload: () => boolean): UpdateWatcher {
   let lastCheck = Date.now();
   let requestUpdate: (() => void) | undefined;
   let timer: ReturnType<typeof setInterval> | undefined;
+  let retry: ReturnType<typeof setTimeout> | undefined;
 
   const applyIfReady = () => {
     if (!waiting || !canReload()) return;
@@ -42,7 +43,18 @@ export function watchForUpdates(canReload: () => boolean): UpdateWatcher {
   };
 
   const check = () => {
-    if (!requestUpdate || Date.now() - lastCheck < MIN_GAP_MS) return;
+    if (!requestUpdate) return;
+    const since = Date.now() - lastCheck;
+    if (since < MIN_GAP_MS) {
+      // Coming back to the foreground is announced once and never again, so a
+      // throttled event waits out the gap rather than being dropped until the
+      // next interval half an hour away.
+      retry ??= setTimeout(() => {
+        retry = undefined;
+        check();
+      }, MIN_GAP_MS - since);
+      return;
+    }
     lastCheck = Date.now();
     requestUpdate();
   };
@@ -75,6 +87,7 @@ export function watchForUpdates(canReload: () => boolean): UpdateWatcher {
     applyIfReady,
     stop() {
       if (timer !== undefined) clearInterval(timer);
+      if (retry !== undefined) clearTimeout(retry);
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('online', check);
     }
