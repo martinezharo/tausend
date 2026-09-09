@@ -18,6 +18,7 @@
     "data": "node data/scripts/build-course.mjs de",
     "data:sources": "bash data/scripts/fetch-sources.sh",
     "data:audio": "node data/scripts/fetch-audio.mjs de",
+    "data:tts": "node data/scripts/synth-audio.mjs de",
     "test:e2e": "playwright test"
   },
   "devDependencies": {
