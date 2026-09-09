@@ -208,8 +208,15 @@
       cards, and all of them are packaged with the app.
     </p>
     <p>
-      Example sentences and the texts have no recordings; nobody has read this course's invented
-      sentences aloud. Those buttons use your device's speech synthesis and say so.
+      Example sentences, the texts and the letters of a word being spelled out have no recordings;
+      nobody has read this course's invented sentences aloud. Those are synthesised once when the
+      course is built, with <b>Piper</b> and a voice trained on
+      <a href="https://github.com/thorstenMueller/Thorsten-Voice">Thorsten-Voice</a> — the German
+      corpus Thorsten Müller released under CC0 — and shipped as clips like the rest. They are
+      labelled synthetic wherever they appear. Building them into the course rather than asking
+      your browser to read them is what makes everyone hear the same voice: left to the browser,
+      the voice changed with the device, and a machine set to another language read German with
+      that language's accent.
     </p>
     <p>
       Speaking cards work the other way round: they open the microphone and check what you said.
