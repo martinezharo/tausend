@@ -7,9 +7,9 @@ import { course } from './course.ts';
  * `SpeechRecognition` sends the recording to whatever service the browser uses
  * — Google's for Chrome, Apple's for Safari — and Firefox has no
  * implementation at all. Speaking is worth that: a course that never asks for
- * your voice teaches you to read German, not to speak it. Everything else
- * still runs offline, and where recognition is missing the speaking cards are
- * simply left out of the session.
+ * your voice teaches you to read German, not to speak it. Nothing else leaves
+ * the device, and where recognition is missing the speaking cards are simply
+ * left out of the session.
  */
 
 const TAGS: Record<string, string> = { de: 'de-DE' };

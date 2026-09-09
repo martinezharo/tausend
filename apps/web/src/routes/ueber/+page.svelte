@@ -205,7 +205,7 @@
     <p>
       Every word is a <b>human recording</b> from the German Wiktionary pronunciation project, via
       Wikimedia Commons. Each clip is loudness-normalised so a drill does not jump 20&nbsp;dB between
-      cards, and all of them are packaged with the app — audio works offline.
+      cards, and all of them are packaged with the app.
     </p>
     <p>
       Example sentences and the texts have no recordings; nobody has read this course's invented

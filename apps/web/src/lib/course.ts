@@ -4,10 +4,10 @@ import data from './data/de.json';
 /**
  * The compiled course, shipped as static data.
  *
- * It is imported rather than fetched so the service worker precaches it with
- * the app bundle — a session started on the underground behaves exactly like
- * one started on wifi. At ~100 kB for 241 words this is comfortably cheap; a
- * full thousand-word course with audio moves to a separate precached asset.
+ * It is imported rather than fetched so it travels with the bundle and is
+ * typechecked against the engine's types. At ~100 kB for 241 words this is
+ * comfortably cheap; a full thousand-word course with audio moves to a
+ * separate asset.
  */
 export const course = data as unknown as Course;
 

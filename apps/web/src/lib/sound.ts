@@ -2,11 +2,10 @@
  * Answer feedback tones.
  *
  * Two short synthesised chords, generated on the fly rather than shipped as
- * files: they cost nothing to precache and never need a network. The visible
- * correct/incorrect panel remains authoritative — this is a confirmation for
- * someone drilling with their eyes half on the keyboard, not the only channel
- * carrying the result. Anyone who finds it patronising can turn it off in
- * settings, and it stays off.
+ * files: they cost nothing to ship. The visible correct/incorrect panel remains
+ * authoritative — this is a confirmation for someone drilling with their eyes
+ * half on the keyboard, not the only channel carrying the result. Anyone who
+ * finds it patronising can turn it off in settings, and it stays off.
  */
 
 const KEY = 'tausend:sound';
