@@ -26,6 +26,7 @@ registerHooks({
 
 const played = [];
 const spoken = [];
+const voices = [];
 
 class FakeAudio {
   constructor(src) { this.src = src; }
@@ -34,14 +35,23 @@ class FakeAudio {
   play() { played.push(this.src); return Promise.resolve(); }
 }
 
+/** Two German voices, so the pick has something to be deterministic about. */
+const VOICES = [
+  { name: 'Zoe', lang: 'de-DE', localService: true, default: false, voiceURI: 'de-zoe' },
+  { name: 'Anna', lang: 'de-DE', localService: true, default: false, voiceURI: 'de-anna' },
+  { name: 'Monica', lang: 'es-ES', localService: true, default: true, voiceURI: 'es-monica' }
+];
+
 globalThis.window = globalThis;
 globalThis.Audio = FakeAudio;
 globalThis.SpeechSynthesisUtterance = class { constructor(text) { this.text = text; } };
 globalThis.speechSynthesis = {
-  getVoices: () => [],
+  // A fresh object per call, the way Safari and Chrome hand voices back.
+  getVoices: () => VOICES.map((v) => ({ ...v })),
   cancel() {},
-  speak(utterance) { spoken.push(utterance.text); },
-  addEventListener() {}
+  speak(utterance) { spoken.push(utterance.text); voices.push(utterance.voice.voiceURI); },
+  addEventListener() {},
+  removeEventListener() {}
 };
 
 const audio = await import('../src/lib/audio.ts');
@@ -49,8 +59,16 @@ const audio = await import('../src/lib/audio.ts');
 function heard(token) {
   played.length = 0;
   spoken.length = 0;
+  voices.length = 0;
   audio.playToken(token);
   return { played: [...played], spoken: [...spoken] };
+}
+
+function spelled(token) {
+  spoken.length = 0;
+  voices.length = 0;
+  audio.spellToken(token);
+  return spoken[0];
 }
 
 test('a lemma with a recording is played, not synthesised', () => {
@@ -75,4 +93,47 @@ test('punctuation inside a word is left alone', () => {
 
 test('a token that is only punctuation says nothing', () => {
   assert.deepEqual(heard('…'), { played: [], spoken: [] });
+});
+
+/**
+ * Letters are named, not sounded out: the bank a beginner spells "der Kaffee"
+ * from holds the article as one tile and every letter as its own.
+ */
+test('a letter tile is said by its German name', () => {
+  assert.equal(spelled('K'), 'Kah');
+  assert.equal(spelled('z'), 'Zett');
+  assert.equal(spelled('ü'), '\u00dc');
+});
+
+test('the article tile is read as a word, not spelled out', () => {
+  assert.equal(spelled('der '), 'der');
+});
+
+test('a tile of pure whitespace says nothing', () => {
+  assert.equal(spelled('  '), undefined);
+});
+
+test('every letter of the alphabet has a name', () => {
+  for (const letter of 'abcdefghijklmnopqrstuvwxyz\u00e4\u00f6\u00fc\u00df') {
+    assert.notEqual(spelled(letter), letter, `${letter} falls through unnamed`);
+  }
+});
+
+/**
+ * The complaint this fixes: a sentence built tile by tile came out in a
+ * different voice for each word, and on a Spanish-locale desktop the German
+ * was read with Spanish vowels.
+ */
+test('every utterance uses the same voice', () => {
+  voices.length = 0;
+  audio.spellToken('K');
+  audio.spellToken('a');
+  audio.playToken('hier');
+  assert.equal(new Set(voices).size, 1);
+});
+
+test('the voice chosen is a German one, never the system default', () => {
+  voices.length = 0;
+  audio.playToken('hier');
+  assert.ok(voices[0].startsWith('de-'), voices[0]);
 });

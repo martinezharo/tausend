@@ -5,21 +5,23 @@ import { course } from './course.ts';
  * Audio.
  *
  * Word pronunciations are real human recordings from the German Wiktionary
- * pronunciation project via Wikimedia Commons, loudness-normalised and shipped
- * as AAC. They are precached with the app, so a session on the underground
- * sounds the same as one on wifi.
+ * pronunciation project via Wikimedia Commons, loudness-normalised, shipped as
+ * AAC and packaged with the app.
  *
- * Sentences and stories have no recordings — nobody has read this course's
- * invented example sentences aloud — so those fall back to the device's speech
- * synthesis. The UI says which is which rather than passing synthesis off as
- * the real thing.
+ * Sentences, spelled-out letters and stories have no recordings — nobody has
+ * read this course's invented example sentences aloud — so those fall back to
+ * the device's speech synthesis. The UI says which is which rather than
+ * passing synthesis off as the real thing.
+ *
+ * Synthesis is the weak half and behaves accordingly: one German voice is
+ * chosen per session and reused, and a device with no German voice at all
+ * stays silent rather than reading German through its own locale's accent.
  */
 
 const CLIPS = `/audio/${course.language}/`;
 
 const cache = new Map<string, HTMLAudioElement>();
 let unlocked = false;
-let voice: SpeechSynthesisVoice | null = null;
 
 /**
  * Bumped every time playback is cut short. Pausing an element rejects any
@@ -116,32 +118,124 @@ export function playToken(token: string): void {
 
 // ------------------------------------------------------- synthesis fallback
 
+/**
+ * The German alphabet, written the way a German voice reads it aloud.
+ *
+ * A synthesiser handed a bare "k" is as likely to say the sound as the name,
+ * and which one it picks differs by platform. Spelling the names out removes
+ * the guess: tapping K always says "kah", the way a German would spell it.
+ */
+const LETTER_NAMES: Record<string, string> = {
+  a: 'Ah', b: 'Beh', c: 'Zeh', d: 'Deh', e: 'Eh', f: 'Eff', g: 'Geh',
+  h: 'Hah', i: 'Ih', j: 'Jott', k: 'Kah', l: 'Ell', m: 'Emm', n: 'Enn',
+  o: 'Oh', p: 'Peh', q: 'Kuh', r: 'Err', s: 'Ess', t: 'Teh', u: 'Uh',
+  v: 'Vau', w: 'Weh', x: 'Iks', y: 'Ypsilon', z: 'Zett',
+  ä: 'Ä', ö: 'Ö', ü: 'Ü', ß: 'Eszett'
+};
+
+/**
+ * Say one tile of a word a learner is spelling out.
+ *
+ * The bank holds single letters plus, for a noun, its article as one tile —
+ * so "der " is a word to be read and "K" is a letter to be named.
+ */
+export function spellToken(token: string): void {
+  const text = token.trim();
+  if (!text) return;
+  if (text.length === 1) {
+    const name = LETTER_NAMES[text.toLowerCase()];
+    speakText(name ?? text, 1);
+    return;
+  }
+  speakText(text);
+}
+
+/**
+ * The voice, held by URI rather than by object: browsers are free to hand back
+ * a fresh `SpeechSynthesisVoice` from every `getVoices()` call, and a stale
+ * object silently falls back to the default voice when assigned.
+ */
+let chosen: string | null = null;
+let seenVoices = false;
+
+function voices(): SpeechSynthesisVoice[] {
+  const list = speechSynthesis.getVoices();
+  if (list.length) seenVoices = true;
+  return list;
+}
+
+/** Higher is better. Ranking rather than a find-chain so the choice is total. */
+function rank(v: SpeechSynthesisVoice): number {
+  const lang = v.lang.toLowerCase().replace('_', '-');
+  return (lang === 'de-de' ? 4 : 0) + (v.localService ? 2 : 0) + (v.default ? 1 : 0);
+}
+
 function pickVoice(): SpeechSynthesisVoice | null {
   if (!available()) return null;
-  if (voice) return voice;
-  const voices = speechSynthesis.getVoices();
-  voice =
-    voices.find((v) => v.lang === 'de-DE' && v.localService) ??
-    voices.find((v) => v.lang === 'de-DE') ??
-    voices.find((v) => v.lang.startsWith('de')) ??
-    null;
-  return voice;
+  const all = voices();
+  // Once a voice is settled on, keep it. Re-deciding as the list fills in is
+  // what made a sentence come out in a different voice for every tile tapped.
+  if (chosen) {
+    const still = all.find((v) => v.voiceURI === chosen);
+    if (still) return still;
+  }
+  const german = all.filter((v) => v.lang.toLowerCase().startsWith('de'));
+  if (!german.length) return null;
+  // Name as the tiebreak, so two equally good voices do not alternate.
+  german.sort((a, b) => rank(b) - rank(a) || a.name.localeCompare(b.name));
+  chosen = german[0].voiceURI;
+  return german[0];
+}
+
+/**
+ * Run something once the voice list is known.
+ *
+ * Desktop Chrome and Firefox populate `getVoices()` asynchronously and return
+ * an empty list until they do. Speaking into that gap leaves the utterance on
+ * the browser's default voice — which reads German in whatever accent the
+ * machine's own locale has — so it is worth the wait.
+ */
+function withVoice(run: (voice: SpeechSynthesisVoice | null) => void): void {
+  if (seenVoices || voices().length) {
+    run(pickVoice());
+    return;
+  }
+  let done = false;
+  const go = () => {
+    if (done) return;
+    done = true;
+    clearTimeout(timer);
+    speechSynthesis.removeEventListener('voiceschanged', go);
+    run(pickVoice());
+  };
+  const timer = setTimeout(go, 1000);
+  speechSynthesis.addEventListener('voiceschanged', go);
 }
 
 export function available(): boolean {
   return typeof window !== 'undefined' && 'speechSynthesis' in window;
 }
 
-/** Synthesised German. Used for sentences and stories only. */
+/**
+ * Synthesised German. Used for sentences, letters and stories only.
+ *
+ * Silent when the device has no German voice installed. A machine whose own
+ * locale is Spanish will happily read "Ich bin hier" with Spanish vowels if
+ * asked, and a course that teaches the wrong sounds is worse than a quiet one.
+ */
 export function speakText(text: string, rate = 0.9): void {
   if (!available()) return;
   stop();
-  const utterance = new SpeechSynthesisUtterance(text);
-  const v = pickVoice();
-  if (v) utterance.voice = v;
-  utterance.lang = 'de-DE';
-  utterance.rate = rate;
-  speechSynthesis.speak(utterance);
+  const mine = generation;
+  withVoice((voice) => {
+    // Superseded while the voice list loaded, or nothing German to say it in.
+    if (mine !== generation || !voice) return;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = voice;
+    utterance.lang = voice.lang;
+    utterance.rate = rate;
+    speechSynthesis.speak(utterance);
+  });
 }
 
 export function hasSynthesis(): boolean {
@@ -155,8 +249,5 @@ export function warm(): void {
   if (warmed || !available()) return;
   warmed = true;
   pickVoice();
-  speechSynthesis.addEventListener('voiceschanged', () => {
-    voice = null;
-    pickVoice();
-  });
+  speechSynthesis.addEventListener('voiceschanged', () => pickVoice());
 }

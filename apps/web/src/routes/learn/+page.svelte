@@ -421,7 +421,7 @@
           tokens={plan.tokens}
           separator={plan.mode === 'words' ? ' ' : ''}
           onanswer={answer}
-          onpick={plan.mode === 'words' ? audio.playToken : undefined}
+          onpick={plan.mode === 'words' ? audio.playToken : audio.spellToken}
         />{/key}
         <button class="btn ghost" onclick={help}>Show me again</button>
       {:else if plan?.mode === 'hinted' || plan?.mode === 'write'}

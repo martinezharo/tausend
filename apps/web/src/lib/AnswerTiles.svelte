@@ -4,7 +4,10 @@
     tokens: string[];
     separator?: string;
     onanswer: (answer: string) => void;
-    /** Called with a tile's text as it is placed, so the caller can say it aloud. */
+    /**
+     * Called with a tile's text as it is placed, so the caller can say it
+     * aloud — a word in a sentence, a letter named as you would spell it.
+     */
     onpick?: (token: string) => void;
   } = $props();
   let selected = $state<number[]>([]);
