@@ -8,7 +8,7 @@ import type { Course, Progress } from './types.ts';
 import { cardKey, emptyProgress, review, stabilityOf, knownWords, gradeFor } from './scheduler.ts';
 import { applicableSkills, UNLOCK } from './skills.ts';
 import { buildSession } from './session.ts';
-import { buildExercise, checkAnswer, maskSentence } from './exercises.ts';
+import { buildExercise, checkAnswer, maskSentence, speechMatches } from './exercises.ts';
 import { coverage, coverageAfter, showcase, nextStory } from './coverage.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -203,6 +203,45 @@ test('production unlocks only once recognition is stable and listening has happe
 
   p = review(p, cardKey(haus.id, 'listen'), 'good');
   assert.ok(applicableSkills(haus, p, course, new Set()).includes('produce'));
+});
+
+test('speaking unlocks after the word has been heard, not before', () => {
+  const haus = byLemma('Haus');
+  let p = stabilise(emptyProgress(), cardKey(haus.id, 'recognise'), UNLOCK.speak);
+
+  // The model voice comes first: repeating a word you have never heard
+  // rehearses a guess at its sound.
+  assert.ok(!applicableSkills(haus, p, course, new Set()).includes('speak'));
+
+  p = review(p, cardKey(haus.id, 'listen'), 'good');
+  const skills = applicableSkills(haus, p, course, new Set());
+  assert.ok(skills.includes('speak'));
+  assert.ok(!skills.includes('produce'), 'saying it is not yet writing it cold');
+});
+
+test('a speaking card asks for the word with its article and is graded by ear', () => {
+  const haus = byLemma('Haus');
+  const exercise = buildExercise(haus, 'speak', course, course.words, new Set(), () => 0.5);
+  assert.ok(exercise && exercise.kind === 'speak');
+  assert.equal(exercise.answer, 'das Haus');
+
+  // The recogniser's article is not the point of the exercise.
+  assert.ok(checkAnswer(exercise, 'das Haus'));
+  assert.ok(checkAnswer(exercise, 'Haus'));
+  assert.ok(checkAnswer(exercise, 'der Haus'));
+  assert.ok(!checkAnswer(exercise, 'die Maus'));
+});
+
+test('speech grading forgives the channel but not the vowel', () => {
+  // Filler and punctuation around the word are the recogniser's, not the learner's.
+  assert.ok(speechMatches('gehen', 'ähm, gehen.'));
+  assert.ok(speechMatches('die Frau', 'Die Frau!'));
+  // A long word survives a near miss; a short one has no room to be wrong.
+  assert.ok(speechMatches('sprechen', 'sprächen'));
+  assert.ok(!speechMatches('und', 'ist'));
+  // Umlauts are exactly what this exercise trains.
+  assert.ok(!speechMatches('schön', 'schon'));
+  assert.ok(!speechMatches('', ''));
 });
 
 test('non-nouns never get a gender exercise', () => {

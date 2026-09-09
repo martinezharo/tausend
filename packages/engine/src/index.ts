@@ -29,7 +29,7 @@ export {
 
 export { UNLOCK, applicableSkills, readableSentences, sentencesFor, SKILL_LABEL, SKILL_HINT } from './skills.ts';
 
-export { buildExercise, checkAnswer, maskSentence, GENDER_OPTIONS } from './exercises.ts';
+export { buildExercise, checkAnswer, maskSentence, speechMatches, GENDER_OPTIONS } from './exercises.ts';
 
 export { buildSession, dueCount, nextDue, type SessionOptions } from './session.ts';
 

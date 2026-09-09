@@ -2,7 +2,9 @@
 
 Learn frequent German words from English in the order that unlocks real
 sentences fastest. Tausend is an offline-first PWA: progress stays in IndexedDB
-on the device, with no account, application server, or analytics.
+on the device, with no account, application server, or analytics. The one
+exception is the speaking exercise, which uses the browser's own speech
+recognition.
 
 The compiler accepts language-specific data directories, but the current web
 app ships the German course only.
@@ -29,8 +31,14 @@ for the planned 1,000-word course.
   teaching raw frequency order. It expands inflections, assigns each corpus form
   to one lemma, and fails when authored sentence tokens cannot be resolved.
 - Each word has independently scheduled FSRS skills: recognise, gender, listen,
-  cloze, and produce. Gender is available immediately for nouns; the other skills
-  unlock as recognition becomes stable and usable sentences become available.
+  speak, cloze, and produce. Gender is available immediately for nouns; the other
+  skills unlock as recognition becomes stable and usable sentences become
+  available.
+- Speaking cards show the word, play the recording, and open the microphone: you
+  say it and the transcript is graded, generously on the article and the channel
+  but not on umlauts. They need the browser's `SpeechRecognition`, so they are
+  omitted where it is missing, and **Kann nicht sprechen** drops them for the
+  rest of a session without scheduling a lapse.
 - Word pronunciations are human recordings from the German Wiktionary project via
   Wikimedia Commons and are bundled for offline use. Sentences and stories use
   device speech synthesis. New material is spoken as it is introduced, and every

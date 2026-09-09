@@ -6,6 +6,7 @@
   import AnswerTiles from '$lib/AnswerTiles.svelte';
   import { fit } from '$lib/fit.ts';
   import * as audio from '$lib/audio.ts';
+  import * as speech from '$lib/speech.ts';
   import { feedbackSound } from '$lib/sound.ts';
   import {
     buildSession,
@@ -30,30 +31,55 @@
   let assisted = $state(false);
   let revealed = $state(false);
   let wasRight = $state(false);
+  let listening = $state(false);
+  let heard = $state('');
+  let micTrouble = $state('');
+  /** Set when the microphone is refused or waved off: speaking then stops being asked for. */
+  let speechOff = $state(!speech.supported());
+  let attempt: speech.Attempt | null = null;
   const presented = new Set<string>();
   const scheduled = new Set<string>();
   const retries = new Map<string, number>();
   let addedConstruction = 0;
-  onDestroy(() => audio.stop());
+  onDestroy(() => {
+    audio.stop();
+    attempt?.cancel();
+  });
   let inputEl = $state<HTMLInputElement | null>(null);
 
   const shareBefore = $state({ value: 0 });
 
   const current = $derived(session[index]);
 
+  /**
+   * A round of twelve. Speaking cards are dropped when this browser cannot
+   * hear — asking for a word the page has no way to grade would just be a
+   * dead card.
+   */
+  function round(): Exercise[] {
+    return buildSession(course, progress.current, {
+      size: 12,
+      newWords: 3,
+      omit: speechOff ? ['speak'] : []
+    });
+  }
+
   onMount(async () => {
     await progress.load();
     audio.warm();
     audio.unlock();
     shareBefore.value = coverage(course, progress.current).share;
-    session = buildSession(course, progress.current, { size: 12, newWords: 3 });
+    session = round();
     audio.preload(session.map((e) => e.word));
     show();
   });
 
   // Listening exercises play as soon as they appear — the prompt IS the audio.
+  // A speaking card plays too: you imitate a voice, not a spelling.
   $effect(() => {
-    if (phase === 'ask' && current?.kind === 'listen') audio.play(current.word);
+    if (phase === 'ask' && (current?.kind === 'listen' || current?.kind === 'speak')) {
+      audio.play(current.word);
+    }
   });
 
   // Meeting a word or a sentence includes hearing it. The introduction speaks
@@ -77,6 +103,12 @@
     typed = '';
     assisted = false;
     revealed = false;
+    stopListening();
+    heard = '';
+    micTrouble = '';
+    // Speaking can be switched off mid-session — by a refused microphone or by
+    // a learner on a bus. Those cards are then skipped, never failed.
+    while (session[index]?.kind === 'speak' && speechOff) index += 1;
     if (!current) { phase = 'done'; return; }
     plan = practicePlan(current, progress.current);
     const unseenWord = !progress.current.introduced.includes(current.word.id) && !presented.has(current.word.id);
@@ -140,10 +172,67 @@
     show();
   }
 
+  const TROUBLE: Record<speech.SpeechFailure, string> = {
+    denied: 'The microphone is blocked. Allow it in your browser to practise speaking.',
+    silent: 'Nothing was picked up. Speak right after the tone, close to the microphone.',
+    unavailable: 'This browser could not listen. Speaking cards are skipped for now.'
+  };
+
+  function stopListening() {
+    attempt?.cancel();
+    attempt = null;
+    listening = false;
+  }
+
+  /** Open the microphone for one attempt at the word on screen. */
+  function record() {
+    const exercise = current;
+    if (!exercise || exercise.kind !== 'speak' || listening || phase !== 'ask') return;
+    // The model recording and the learner's voice must not overlap: the
+    // microphone would hear the app and grade it as the learner.
+    audio.stop();
+    heard = '';
+    micTrouble = '';
+    listening = true;
+    attempt = speech.listen({
+      onpartial: (text) => (heard = text),
+      onresult: (alternatives) => {
+        stopListening();
+        // Any reading that is right counts as right — a recogniser's first
+        // guess is not more authoritative than its second.
+        const best = alternatives.find((text) => checkAnswer(exercise, text)) ?? alternatives[0] ?? '';
+        heard = best;
+        answer(best);
+      },
+      onfail: (reason) => {
+        stopListening();
+        micTrouble = TROUBLE[reason];
+        // A blocked or missing microphone is not this card's problem but the
+        // rest of the session's. The card stays put, so the reason can be read
+        // before it is waved off.
+        if (reason !== 'silent') speechOff = true;
+      }
+    });
+  }
+
+  /**
+   * Give up on speaking, for this card and the rest of the session.
+   *
+   * Nothing is recorded against the card: not being able to speak right now is
+   * a fact about the room, not about the word, and scheduling it as a lapse
+   * would push the word back for weeks.
+   */
+  function skipSpeaking() {
+    speechOff = true;
+    stopListening();
+    if (phase === 'ask' && current?.kind === 'speak') next();
+  }
+
   function onKey(event: KeyboardEvent) {
     if (event.key !== 'Enter' || event.repeat || event.isComposing ||
       event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement) return;
     if (phase === 'shown') { event.preventDefault(); next(); }
+    else if (phase === 'ask' && current?.kind === 'speak') { event.preventDefault(); record(); }
     else if (phase === 'ask' && (plan?.mode === 'write' || plan?.mode === 'hinted') && typed.trim()) {
       event.preventDefault(); answer(typed);
     }
@@ -174,7 +263,7 @@
         <button
           class="btn"
           onclick={() => {
-            session = buildSession(course, progress.current, { size: 12, newWords: 3 });
+            session = round();
             audio.preload(session.map((e) => e.word));
             index = 0;
             correct = 0;
@@ -235,6 +324,19 @@
             >
           </div>
         {/if}
+      {:else if current.kind === 'speak'}
+        <p class="mono hint">{SKILL_HINT.speak}</p>
+        <div class="plate mark {genderClass(current.word)}">
+          <span class="plate-word mid" use:fit={current.answer} lang="de">{current.answer}</span>
+          <p class="gloss">{current.prompt}</p>
+        </div>
+        <button class="speaker" onclick={() => audio.play(current.word)}>
+          <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="mono">Nochmal hören</span>
+        </button>
+        <p class="heard mono" class:live={listening} lang="de" aria-live="polite">
+          {heard ? `„${heard}“` : listening ? 'Hört zu …' : ''}
+        </p>
       {:else if current.kind === 'produce'}
         <p class="mono hint">{plan?.mode === 'letters' ? 'Build the word with the letters below' : SKILL_HINT.produce}</p>
         <div class="prompt">
@@ -278,7 +380,7 @@
               {current.word.lemma}{current.word.plural ? ` · die ${current.word.plural}` : ''}
             {:else if current.kind === 'cloze'}
               {current.answer}
-            {:else if current.kind === 'produce'}
+            {:else if current.kind === 'produce' || current.kind === 'speak'}
               {current.word.gender ? `${current.word.gender} ` : ''}{current.word.lemma}
             {:else}
               {current.word.en.join(', ')}
@@ -303,6 +405,16 @@
             <button class="gbtn g-{option}" onclick={() => answer(option)}>{option}</button>
           {/each}
         </div>
+      {:else if current.kind === 'speak'}
+        {#if micTrouble}<p class="tip">{micTrouble}</p>{/if}
+        {#if !speechOff}
+          <button class="btn mic" class:live={listening} onclick={() => (listening ? stopListening() : record())}>
+            {listening ? 'Hört zu …' : 'Sprechen'}
+          </button>
+        {/if}
+        <button class="btn" class:ghost={!speechOff} onclick={skipSpeaking}>
+          {speechOff ? 'Weiter' : 'Kann nicht sprechen'}
+        </button>
       {:else if plan?.mode === 'letters' || plan?.mode === 'words'}
         {#if revealed}<p class="tip" lang="de">{plan.target}</p>{/if}
         {#key index}<AnswerTiles
@@ -469,6 +581,36 @@
   }
   .wave i:nth-child(5) {
     height: 30%;
+  }
+
+  .heard {
+    margin: 18px 0 0;
+    min-height: 1.4em;
+    color: var(--grau);
+    font-size: 17px;
+  }
+  .heard.live {
+    color: var(--der);
+  }
+
+  .mic.live {
+    background: var(--der);
+    color: var(--auf-der);
+  }
+  .mic.live::after {
+    content: '';
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-left: 10px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pulse 1s steps(2, end) infinite;
+  }
+  @keyframes pulse {
+    50% {
+      opacity: 0.2;
+    }
   }
 
   .prompt b {

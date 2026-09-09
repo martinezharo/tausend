@@ -7,23 +7,40 @@ async function counter(page: Page): Promise<{ at: number; total: number }> {
   return { at, total };
 }
 
-/** Answer the card on screen, whatever kind it is. Correctness is not the point. */
-async function answerSomething(page: Page): Promise<void> {
+/**
+ * Answer the card on screen, whatever kind it is. Correctness is not the point.
+ *
+ * Returns false when the card was waved off rather than answered: a speaking
+ * card asks for a microphone, so a test that is not about speaking skips it,
+ * and no verdict follows.
+ */
+async function answerSomething(page: Page): Promise<boolean> {
+  // Every phase has buttons in the footer; waiting for one is waiting for the
+  // card to be on screen at all.
+  await expect(page.locator('.foot button').first()).toBeVisible();
+
   const intro = page.getByRole('button', { name: 'Ready to practise' });
   if (await intro.isVisible()) await intro.click();
+
+  const waveOff = page.getByRole('button', { name: 'Kann nicht sprechen' });
+  if (await waveOff.isVisible()) {
+    await waveOff.click();
+    return false;
+  }
   const bank = page.locator('[aria-label="Available tiles"]');
   if (await bank.isVisible()) {
     for (const tile of await bank.getByRole('button').all()) await tile.click();
     await page.getByRole('button', { name: 'Prüfen', exact: true }).click();
-    return;
+    return true;
   }
   const input = page.locator('input[type="text"]');
   if (await input.isVisible()) {
     await input.fill('etwas');
     await page.getByRole('button', { name: /Prüfen|Check/ }).click();
-    return;
+    return true;
   }
   await page.locator('.stack button, .genders button').first().click();
+  return true;
 }
 
 /**
@@ -46,15 +63,95 @@ async function captureAudio(page: Page): Promise<void> {
   });
 }
 
+/**
+ * Stand in for the browser's speech recognition, which no headless browser has.
+ *
+ * `transcript` is what the microphone "hears": pass a string to say something
+ * specific, or nothing at all to echo the word on screen back — a learner who
+ * pronounces it perfectly.
+ */
+async function stubSpeech(page: Page, transcript?: string): Promise<void> {
+  await page.addInitScript((fixed) => {
+    class FakeRecognition {
+      lang = '';
+      continuous = false;
+      interimResults = false;
+      maxAlternatives = 1;
+      onresult: ((event: unknown) => void) | null = null;
+      onerror: ((event: unknown) => void) | null = null;
+      onend: (() => void) | null = null;
+      onstart: (() => void) | null = null;
+
+      start() {
+        setTimeout(() => {
+          this.onstart?.();
+          const shown = document.querySelector('.plate-word')?.textContent?.trim() ?? '';
+          const result: Record<string, unknown> = { 0: { transcript: fixed ?? shown }, length: 1, isFinal: true };
+          this.onresult?.({ resultIndex: 0, results: { 0: result, length: 1 } });
+          this.onend?.();
+        }, 20);
+      }
+      stop() {}
+      abort() {}
+    }
+    (window as unknown as { SpeechRecognition: unknown }).SpeechRecognition = FakeRecognition;
+  }, transcript);
+}
+
+/**
+ * Work through the session until a speaking card is on screen. Each step waits
+ * for the card to actually change: reading the next card off a screen that is
+ * still showing the previous one is the whole flakiness budget of this suite.
+ */
+async function reachSpeaking(page: Page): Promise<void> {
+  const hint = page.getByText('Say it out loud');
+  for (let i = 0; i < 14; i += 1) {
+    await expect(page.locator('.foot button').first()).toBeVisible();
+    if (await hint.isVisible()) return;
+    const intro = page.getByRole('button', { name: 'Ready to practise' });
+    if (await intro.isVisible()) {
+      await intro.click();
+      await expect(intro).toBeHidden();
+      continue;
+    }
+    const before = (await counter(page)).at;
+    if (await answerSomething(page)) {
+      await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+    }
+    await expect.poll(async () => (await counter(page)).at).toBeGreaterThan(before);
+  }
+  await expect(hint).toBeVisible();
+}
+
+/** The cards actually written to IndexedDB, which is what the scheduler sees. */
+async function storedCards(page: Page): Promise<string[]> {
+  return page.evaluate(
+    () =>
+      new Promise<string[]>((resolve, reject) => {
+        const request = indexedDB.open('tausend', 1);
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => {
+          const db = request.result;
+          const read = db.transaction('kv', 'readonly').objectStore('kv').get('progress:de');
+          read.onsuccess = () => {
+            db.close();
+            resolve(Object.keys((read.result as { cards?: object })?.cards ?? {}));
+          };
+          read.onerror = () => reject(read.error);
+        };
+      })
+  );
+}
+
 const said = (page: Page): Promise<string[]> =>
   page.evaluate(() => (window as unknown as { __said: string[] }).__said);
 
 /**
  * A learner who already knows every word of "Ich bin hier." and has heard all
- * three. Their next unpractised skill is the sentence itself, which is the
- * one exercise built out of word tiles.
+ * three. Whichever rung of the ladder is left unpractised is what the next
+ * session asks for, so `skills` says how far up they already are.
  */
-function knowsFirstSentence() {
+function knowsFirstSentence(skills: string[] = ['recognise', 'listen']) {
   const words = ['de:ich:pron', 'de:sein:verb', 'de:hier:adv'];
   const card = {
     due: new Date(Date.now() + 30 * 86400000).toISOString(),
@@ -64,7 +161,7 @@ function knowsFirstSentence() {
   };
   return {
     cards: Object.fromEntries(
-      words.flatMap((id) => [[`${id}#recognise`, card], [`${id}#listen`, card]])
+      words.flatMap((id) => skills.map((skill) => [`${id}#${skill}`, card]))
     ),
     introduced: words,
     activeDays: [],
@@ -121,7 +218,7 @@ test('a missed card is queued to come back before the session ends', async ({ pa
   // first option produces a miss well within a handful of cards.
   let missed = false;
   for (let i = 0; i < 6 && !missed; i += 1) {
-    await answerSomething(page);
+    if (!(await answerSomething(page))) continue;
     missed = await page.locator('.feedback.bad').isVisible();
     await page.getByRole('button', { name: /Weiter|Continue/ }).click();
   }
@@ -138,8 +235,9 @@ test('new material is introduced before recognition and construction', async ({ 
   await expect(page.locator('input')).toHaveCount(0);
   const bank = page.locator('[aria-label="Available tiles"]');
   for (let i = 0; i < 12 && !await bank.isVisible(); i++) {
-    await answerSomething(page);
-    await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+    if (await answerSomething(page)) {
+      await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+    }
   }
   await expect(bank).toBeVisible();
   await expect(page.locator('input')).toHaveCount(0);
@@ -174,7 +272,9 @@ test('a new word is spoken as it is introduced, and again on request', async ({ 
 
 test('each word says itself as it is placed into the sentence', async ({ page }) => {
   await captureAudio(page);
-  await seedProgress(page, knowsFirstSentence());
+  // Speaking sits below the sentence on the ladder, so it has to be behind
+  // them already for the sentence to be the skill this session reaches for.
+  await seedProgress(page, knowsFirstSentence(['recognise', 'listen', 'speak']));
   await page.goto('/learn');
 
   const hint = page.getByText('Rebuild the example with the words below');
@@ -184,8 +284,9 @@ test('each word says itself as it is placed into the sentence', async ({ page })
       await intro.click();
       continue;
     }
-    await answerSomething(page);
-    await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+    if (await answerSomething(page)) {
+      await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+    }
   }
   await expect(hint).toBeVisible();
 
@@ -199,4 +300,51 @@ test('each word says itself as it is placed into the sentence', async ({ page })
     // A recorded lemma arrives as its clip; anything else is synthesised text.
     expect(last === text || last === `${text}.m4a`).toBe(true);
   }
+});
+
+
+test('a spoken word is graded by what the microphone heard', async ({ page }) => {
+  await captureAudio(page);
+  await stubSpeech(page);
+  await seedProgress(page, knowsFirstSentence());
+  await page.goto('/learn');
+  await reachSpeaking(page);
+
+  // The model is played first: the card is imitation, not spelling.
+  await expect.poll(async () => (await said(page)).length).toBeGreaterThan(0);
+
+  await page.getByRole('button', { name: 'Sprechen', exact: true }).click();
+  const feedback = page.locator('.feedback');
+  await expect(feedback).toBeVisible();
+  await expect(feedback).not.toHaveClass(/bad/);
+});
+
+test('a mispronounced word is marked wrong and comes back', async ({ page }) => {
+  await captureAudio(page);
+  await stubSpeech(page, 'Banane');
+  await seedProgress(page, knowsFirstSentence());
+  await page.goto('/learn');
+  await reachSpeaking(page);
+  const { total } = await counter(page);
+
+  await page.getByRole('button', { name: 'Sprechen', exact: true }).click();
+  await expect(page.locator('.feedback.bad')).toBeVisible();
+  expect((await counter(page)).total).toBeGreaterThan(total);
+});
+
+test('waving off the microphone skips speaking without failing the card', async ({ page }) => {
+  await captureAudio(page);
+  await stubSpeech(page);
+  await seedProgress(page, knowsFirstSentence());
+  await page.goto('/learn');
+  await reachSpeaking(page);
+  const at = (await counter(page)).at;
+
+  await page.getByRole('button', { name: 'Kann nicht sprechen' }).click();
+
+  // Straight on to the next card: no verdict, and nothing scheduled against it.
+  await expect(page.locator('.feedback')).toBeHidden();
+  await expect(page.getByText('Say it out loud')).toBeHidden();
+  expect((await counter(page)).at).toBeGreaterThan(at);
+  expect((await storedCards(page)).filter((key) => key.endsWith('#speak'))).toEqual([]);
 });

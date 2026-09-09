@@ -88,13 +88,13 @@ export interface Course {
 }
 
 /**
- * The five things it means to "know" a word here.
+ * The six things it means to "know" a word here.
  *
  * A word is not one flashcard. Each of these is scheduled independently, and
  * they unlock in a ladder as the word gets more stable — which is the
  * desirable-difficulties principle made concrete rather than decorative.
  */
-export type Skill = 'recognise' | 'gender' | 'listen' | 'cloze' | 'produce';
+export type Skill = 'recognise' | 'gender' | 'listen' | 'speak' | 'cloze' | 'produce';
 
 /** A serialisable FSRS card. Dates are ISO strings so this survives JSON. */
 export interface StoredCard {
@@ -127,6 +127,12 @@ export type Exercise =
   | { kind: 'recognise'; key: string; word: Word; options: string[]; answer: string }
   | { kind: 'gender'; key: string; word: Word; answer: Gender }
   | { kind: 'listen'; key: string; word: Word; options: string[]; answer: string }
+  /**
+   * Say the word out loud. The German is on screen — this asks the mouth for
+   * something the eye already has, so it is a pronunciation test, not a recall
+   * test. `answer` is what the microphone has to hear back.
+   */
+  | { kind: 'speak'; key: string; word: Word; answer: string; prompt: string }
   | { kind: 'produce'; key: string; word: Word; answer: string; prompt: string }
   | {
       kind: 'cloze';
