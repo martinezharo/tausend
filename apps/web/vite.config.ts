@@ -1,8 +1,16 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
+import { execFileSync } from 'node:child_process';
 import { defineConfig } from 'vite';
 
+const commit = execFileSync('git', ['rev-parse', '--short=8', 'HEAD'], {
+  encoding: 'utf8'
+}).trim();
+
 export default defineConfig({
+  define: {
+    'import.meta.env.VITE_GIT_COMMIT': JSON.stringify(commit)
+  },
   plugins: [
     sveltekit(),
     SvelteKitPWA({
