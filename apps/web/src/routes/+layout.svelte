@@ -58,7 +58,10 @@
   <footer>
     <div class="wrap foot mono">
       <span>Frequenz: OpenSubtitles · CC BY-SA</span>
-      <a href="/ueber">Über</a>
+      <span class="foot-meta">
+        <a href="/ueber">Über</a>
+        <span class="commit" title="Deployed commit">{import.meta.env.VITE_GIT_COMMIT}</span>
+      </span>
     </div>
   </footer>
 {/if}
@@ -134,5 +137,12 @@
     padding-top: 14px;
     padding-bottom: 24px;
     color: var(--grau);
+  }
+  .foot-meta {
+    display: flex;
+    gap: 12px;
+  }
+  .commit {
+    opacity: 0.58;
   }
 </style>

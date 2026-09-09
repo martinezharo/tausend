@@ -1,8 +1,25 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
+import { execFileSync } from 'node:child_process';
 import { defineConfig } from 'vite';
 
+function deployedCommit() {
+  const configuredCommit = process.env.VITE_GIT_COMMIT?.trim();
+  if (configuredCommit) return configuredCommit.slice(0, 8);
+
+  try {
+    return execFileSync('git', ['rev-parse', '--short=8', 'HEAD'], {
+      encoding: 'utf8'
+    }).trim();
+  } catch {
+    return 'unknown';
+  }
+}
+
 export default defineConfig({
+  define: {
+    'import.meta.env.VITE_GIT_COMMIT': JSON.stringify(deployedCommit())
+  },
   plugins: [
     sveltekit(),
     SvelteKitPWA({
