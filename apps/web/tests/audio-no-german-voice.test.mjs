@@ -18,6 +18,10 @@ registerHooks({
         source: `export const course = { language: 'de', words: [] };`
       };
     }
+    // No clips either, so every line reaches the fallback.
+    if (url.endsWith('/tts-de.json')) {
+      return { format: 'module', shortCircuit: true, source: 'export default {};' };
+    }
     return next(url, context);
   }
 });
@@ -46,6 +50,7 @@ test('nothing is spoken when the device has no German voice', () => {
   assert.deepEqual(spoken, []);
 });
 
-test('the UI can tell that synthesis is unavailable', () => {
+test('the UI can tell that a line cannot be heard', () => {
   assert.equal(audio.hasSynthesis(), false);
+  assert.equal(audio.canSay('Ich bin hier.'), false);
 });

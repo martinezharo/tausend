@@ -41,11 +41,24 @@ export default defineConfig({
         ]
       },
       workbox: {
-        // The whole course — including every pronunciation clip — is a couple
-        // of megabytes, so precache the lot. A session started underground has
-        // to work exactly like any other, and audio is not optional here.
+        // Word recordings are the hot path of a drill and small enough to
+        // precache. The synthesised sentence and letter clips are three times
+        // as many files for audio a learner meets far less often, so they are
+        // fetched when first played and kept from then on.
         globPatterns: ['**/*.{js,css,html,woff2,json,svg,png,m4a}'],
-        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024
+        globIgnores: ['**/audio/*/tts/**'],
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+        runtimeCaching: [
+          {
+            urlPattern: /\/audio\/[^/]+\/tts\/.*\.m4a$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'tausend-tts',
+              expiration: { maxEntries: 600 },
+              cacheableResponse: { statuses: [0, 200] }
+            }
+          }
+        ]
       },
       devOptions: { enabled: false }
     })

@@ -1,4 +1,7 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+import { LETTER_NAMES } from '../apps/web/src/lib/alphabet.ts';
 
 /** The "3 / 12" counter in the session header, as a pair of numbers. */
 async function counter(page: Page): Promise<{ at: number; total: number }> {
@@ -44,9 +47,24 @@ async function answerSomething(page: Page): Promise<boolean> {
 }
 
 /**
+ * The clips the course ships for its own lines, by filename. Nearly everything
+ * the app says is now a file, so a captured filename has to be turned back
+ * into the words it holds before a test can assert on it.
+ */
+const SPOKEN: Record<string, string> = JSON.parse(
+  readFileSync(resolve(__dirname, '../apps/web/src/lib/data/tts-de.json'), 'utf8')
+);
+const textByClip = new Map(Object.entries(SPOKEN).map(([text, file]) => [file, text]));
+
+/** What a captured entry means: the line in a synthesised clip, or the entry itself. */
+const meaning = (entry: string): string =>
+  (textByClip.get(entry) ?? entry).replace(/[.,!?]/g, '').toLowerCase();
+
+/**
  * Record what the page tries to say. A headless browser has no sound device
  * and usually no German voice, so playback is captured rather than heard:
- * clip filenames for the human recordings, the text itself for synthesis.
+ * clip filenames for anything with a recording or a built clip, the text
+ * itself on the rare line that falls through to the device's own voice.
  */
 async function captureAudio(page: Page): Promise<void> {
   await page.addInitScript(() => {
@@ -296,9 +314,52 @@ test('each word says itself as it is placed into the sentence', async ({ page })
     const text = (await tile.innerText()).replace(/[.,!?]/g, '').toLowerCase();
     await tile.click();
     await expect.poll(async () => (await said(page)).length).toBe(before + 1);
-    const last = (await said(page)).at(-1)?.toLowerCase() ?? '';
-    // A recorded lemma arrives as its clip; anything else is synthesised text.
-    expect(last === text || last === `${text}.m4a`).toBe(true);
+    const last = (await said(page)).at(-1) ?? '';
+    // A recorded lemma arrives as its own clip, named after the word; every
+    // other tile arrives as the content-addressed clip built for that line.
+    expect(meaning(last) === text || last.toLowerCase() === `${text}.m4a`).toBe(true);
+  }
+});
+
+
+test('a word says its letters as it is spelled out', async ({ page }) => {
+  await captureAudio(page);
+  // Spelling from a letter bank is the first rung of producing a word, so a
+  // session that starts from nothing reaches one within a handful of cards.
+  await page.goto('/learn');
+
+  const bank = page.locator('[aria-label="Available tiles"]');
+  const tiles = bank.getByRole('button');
+  const isLetterBank = async () =>
+    (await bank.isVisible()) &&
+    (await tiles.allInnerTexts()).every((text) => text.trim().length === 1);
+
+  let reached = false;
+  for (let i = 0; i < 14 && !reached; i += 1) {
+    const intro = page.getByRole('button', { name: 'Ready to practise' });
+    if (await intro.isVisible()) {
+      await intro.click();
+      continue;
+    }
+    if (await isLetterBank()) {
+      reached = true;
+      break;
+    }
+    if (await answerSomething(page)) {
+      await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+    }
+  }
+  expect(reached).toBe(true);
+
+  for (const tile of await tiles.all()) {
+    const letter = (await tile.innerText()).trim();
+    const before = (await said(page)).length;
+    await tile.click();
+    await expect.poll(async () => (await said(page)).length).toBe(before + 1);
+    // Named, not sounded out: tapping K says "kah", the way it is spelled.
+    expect(meaning((await said(page)).at(-1) ?? '')).toBe(
+      LETTER_NAMES[letter.toLowerCase()].toLowerCase()
+    );
   }
 });
 

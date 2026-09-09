@@ -1,5 +1,7 @@
 import type { Word } from '@tausend/engine';
 import { course } from './course.ts';
+import { letterName } from './alphabet.ts';
+import spoken from './data/tts-de.json';
 
 /**
  * Audio.
@@ -8,17 +10,22 @@ import { course } from './course.ts';
  * pronunciation project via Wikimedia Commons, loudness-normalised, shipped as
  * AAC and packaged with the app.
  *
- * Sentences, spelled-out letters and stories have no recordings — nobody has
- * read this course's invented example sentences aloud — so those fall back to
- * the device's speech synthesis. The UI says which is which rather than
- * passing synthesis off as the real thing.
+ * Sentences, story lines and the letters of a word being spelled out have no
+ * recordings — nobody has read this course's invented example sentences aloud.
+ * Those are synthesised once at build time by data/scripts/synth-audio.mjs and
+ * shipped as clips too, so the course sounds the same on every device. The UI
+ * says which is which rather than passing synthesis off as a human recording.
  *
- * Synthesis is the weak half and behaves accordingly: one German voice is
- * chosen per session and reused, and a device with no German voice at all
- * stays silent rather than reading German through its own locale's accent.
+ * `speechSynthesis` survives only as a last resort, for a clip that fails to
+ * load. It picks one German voice and keeps it, and stays silent on a device
+ * with no German voice rather than reading German through the local accent.
  */
 
 const CLIPS = `/audio/${course.language}/`;
+const SYNTHESISED = `${CLIPS}tts/`;
+
+/** Text → pre-rendered clip, written by data/scripts/synth-audio.mjs. */
+const SPOKEN = spoken as Record<string, string>;
 
 const cache = new Map<string, HTMLAudioElement>();
 let unlocked = false;
@@ -38,15 +45,34 @@ const clipByLemma = new Map<string, Word>(
   course.words.filter((word) => word.audio).map((word) => [word.lemma.toLowerCase(), word])
 );
 
-function element(word: Word): HTMLAudioElement | null {
-  if (!word.audio) return null;
-  let audio = cache.get(word.audio);
+function sound(src: string): HTMLAudioElement {
+  let audio = cache.get(src);
   if (!audio) {
-    audio = new Audio(CLIPS + word.audio);
+    audio = new Audio(src);
     audio.preload = 'auto';
-    cache.set(word.audio, audio);
+    cache.set(src, audio);
   }
   return audio;
+}
+
+function element(word: Word): HTMLAudioElement | null {
+  return word.audio ? sound(CLIPS + word.audio) : null;
+}
+
+/**
+ * Play a file, falling back only when it is refused rather than superseded.
+ *
+ * A blocked play is not worth surfacing: the learner can tap the speaker. A
+ * superseded one must stay quiet, or tapping twice in a row leaves the first
+ * word being read over the second.
+ */
+function start(src: string, fallback: () => void): void {
+  const mine = generation;
+  const audio = sound(src);
+  audio.currentTime = 0;
+  audio.play().catch(() => {
+    if (mine === generation) fallback();
+  });
 }
 
 /**
@@ -84,16 +110,8 @@ export function stop(): void {
 
 export function play(word: Word): void {
   stop();
-  const mine = generation;
-  const audio = element(word);
-  if (audio) {
-    audio.currentTime = 0;
-    // A blocked play is not worth surfacing: the learner can tap the speaker.
-    // A superseded one must stay quiet, or tapping twice in a row leaves the
-    // first word being read over the second.
-    audio.play().catch(() => {
-      if (mine === generation) speakText(word.lemma);
-    });
+  if (word.audio) {
+    start(CLIPS + word.audio, () => speakText(word.lemma));
     return;
   }
   speakText(word.gender ? `${word.gender} ${word.lemma}` : word.lemma);
@@ -105,7 +123,7 @@ export function play(word: Word): void {
  * The human clips are recordings of lemmas, so an inflected token must not be
  * answered with its lemma's clip — tapping "bin" and hearing "sein" would
  * teach the wrong sound. Only an exact lemma gets the recording; every other
- * token is synthesised.
+ * token gets its synthesised clip.
  */
 export function playToken(token: string): void {
   // Only at the edges: "geht's" is one word, and "gehts" is not how it sounds.
@@ -116,22 +134,7 @@ export function playToken(token: string): void {
   else speakText(text);
 }
 
-// ------------------------------------------------------- synthesis fallback
-
-/**
- * The German alphabet, written the way a German voice reads it aloud.
- *
- * A synthesiser handed a bare "k" is as likely to say the sound as the name,
- * and which one it picks differs by platform. Spelling the names out removes
- * the guess: tapping K always says "kah", the way a German would spell it.
- */
-const LETTER_NAMES: Record<string, string> = {
-  a: 'Ah', b: 'Beh', c: 'Zeh', d: 'Deh', e: 'Eh', f: 'Eff', g: 'Geh',
-  h: 'Hah', i: 'Ih', j: 'Jott', k: 'Kah', l: 'Ell', m: 'Emm', n: 'Enn',
-  o: 'Oh', p: 'Peh', q: 'Kuh', r: 'Err', s: 'Ess', t: 'Teh', u: 'Uh',
-  v: 'Vau', w: 'Weh', x: 'Iks', y: 'Ypsilon', z: 'Zett',
-  ä: 'Ä', ö: 'Ö', ü: 'Ü', ß: 'Eszett'
-};
+// -------------------------------------------------------- synthesised lines
 
 /**
  * Say one tile of a word a learner is spelling out.
@@ -142,12 +145,7 @@ const LETTER_NAMES: Record<string, string> = {
 export function spellToken(token: string): void {
   const text = token.trim();
   if (!text) return;
-  if (text.length === 1) {
-    const name = LETTER_NAMES[text.toLowerCase()];
-    speakText(name ?? text, 1);
-    return;
-  }
-  speakText(text);
+  speakText((text.length === 1 && letterName(text)) || text, 1);
 }
 
 /**
@@ -217,15 +215,31 @@ export function available(): boolean {
 }
 
 /**
- * Synthesised German. Used for sentences, letters and stories only.
+ * Say a German line: sentences, story lines, plurals, spelled-out letters.
+ *
+ * Everything the course itself says has a clip built by synth-audio.mjs, so
+ * this is a lookup rather than synthesis in every ordinary case. `rate` only
+ * reaches the fallback — a pre-rendered clip is already at speaking pace.
+ */
+export function speakText(text: string, rate = 0.9): void {
+  stop();
+  const file = SPOKEN[text.trim()];
+  if (file) {
+    start(SYNTHESISED + file, () => synthesise(text, rate));
+    return;
+  }
+  synthesise(text, rate);
+}
+
+/**
+ * The last resort, for a line with no clip or a clip that would not load.
  *
  * Silent when the device has no German voice installed. A machine whose own
  * locale is Spanish will happily read "Ich bin hier" with Spanish vowels if
  * asked, and a course that teaches the wrong sounds is worse than a quiet one.
  */
-export function speakText(text: string, rate = 0.9): void {
+function synthesise(text: string, rate: number): void {
   if (!available()) return;
-  stop();
   const mine = generation;
   withVoice((voice) => {
     // Superseded while the voice list loaded, or nothing German to say it in.
@@ -240,6 +254,14 @@ export function speakText(text: string, rate = 0.9): void {
 
 export function hasSynthesis(): boolean {
   return available() && pickVoice() !== null;
+}
+
+/**
+ * Whether a line can be heard at all: a clip covers it, or the device can fall
+ * back to synthesising it. A button that would be silent is not worth drawing.
+ */
+export function canSay(text: string): boolean {
+  return text.trim() in SPOKEN || hasSynthesis();
 }
 
 let warmed = false;

@@ -11,20 +11,15 @@
   onDestroy(() => audio.stop());
 
   let canPlay = $state(false);
-  // Inflected forms and example sentences have no recordings, so their listen
-  // buttons only appear where the device can synthesise German at all.
-  let canSpeak = $state(false);
   onMount(() => {
     audio.warm();
-    canPlay = audio.hasClip(word) || audio.available();
-    canSpeak = audio.hasSynthesis();
-    if (canSpeak || !audio.available()) return;
-    // Chrome fills the voice list asynchronously, so the first check usually
-    // finds nothing and the buttons would never appear without this.
-    const recheck = () => (canSpeak = audio.hasSynthesis());
-    speechSynthesis.addEventListener('voiceschanged', recheck);
-    return () => speechSynthesis.removeEventListener('voiceschanged', recheck);
+    canPlay = audio.hasClip(word) || audio.hasSynthesis();
   });
+
+  // Plurals and example sentences have no human recording, but they do have a
+  // clip built with the course, so these buttons no longer wait on the
+  // browser's voice list to fill in before they can appear.
+  const canSpeakPlural = $derived(word.plural ? audio.canSay(`die ${word.plural}`) : false);
 
   const title = $derived(
     word.gender ? `${word.gender} ${word.lemma}` : word.lemma
@@ -67,7 +62,7 @@
         <dt class="mono">Plural</dt>
         <dd>
           die {word.plural}
-          {#if canSpeak}
+          {#if canSpeakPlural}
             <button
               class="speak-inline"
               onclick={() => audio.speakText(`die ${word.plural}`)}
@@ -118,7 +113,7 @@
           <li>
             <p class="de" lang="de">
               {sentence.de}
-              {#if canSpeak}
+              {#if audio.canSay(sentence.de)}
                 <button
                   class="speak-inline"
                   onclick={() => audio.speakText(sentence.de)}
