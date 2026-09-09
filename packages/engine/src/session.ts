@@ -17,6 +17,12 @@ export interface SessionOptions {
    * back into a single-sided flashcard deck.
    */
   newSkills?: number;
+  /**
+   * Skills to leave out entirely. A speaking card is worthless in a browser
+   * that cannot listen, and dropping it after the session is built would spend
+   * a slot on nothing — so the exclusion happens during selection.
+   */
+  omit?: Skill[];
   now?: Date;
   seed?: number;
 }
@@ -58,10 +64,12 @@ export function buildSession(course: Course, progress: Progress, options: Sessio
     size = 12,
     newWords = 3,
     newSkills = 2,
+    omit = [],
     now = new Date(),
     seed = Math.floor(Math.random() * 2 ** 31)
   } = options;
   const rng = mulberry32(seed);
+  const omitted = new Set<Skill>(omit);
 
   const byId = new Map(course.words.map((w) => [w.id, w]));
   const known = new Set(progress.introduced);
@@ -85,7 +93,7 @@ export function buildSession(course: Course, progress: Progress, options: Sessio
     if (chosen.length >= reviewBudget) break;
     const { wordId, skill } = parseKey(key);
     const word = byId.get(wordId);
-    if (!word) continue;
+    if (!word || omitted.has(skill)) continue;
     const exercise = buildExercise(word, skill, course, pool, known, rng);
     if (exercise) {
       chosen.push(exercise);
@@ -104,6 +112,7 @@ export function buildSession(course: Course, progress: Progress, options: Sessio
   for (const word of ladder) {
     if (chosen.length >= size - newWords) break;
     for (const skill of applicableSkills(word, progress, course, known)) {
+      if (omitted.has(skill)) continue;
       const key = cardKey(word.id, skill);
       if (usedKeys.has(key) || progress.cards[key]) continue;
       const exercise = buildExercise(word, skill, course, pool, known, rng);
@@ -155,7 +164,7 @@ export function buildSession(course: Course, progress: Progress, options: Sessio
       if (chosen.length >= size) break;
       const { wordId, skill } = parseKey(key);
       const word = byId.get(wordId);
-      if (!word) continue;
+      if (!word || omitted.has(skill)) continue;
       const exercise = buildExercise(word, skill, course, pool, known, rng);
       if (exercise) {
         chosen.push(exercise);

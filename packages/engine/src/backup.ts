@@ -20,7 +20,7 @@ export function validateProgress(value: unknown, wordIds: ReadonlySet<string>): 
     if (typeof key !== 'string') return false;
     const parts = key.split('#');
     return parts.length === 2 && introduced.has(parts[0]) &&
-      ['recognise', 'gender', 'listen', 'cloze', 'produce'].includes(parts[1]);
+      ['recognise', 'gender', 'listen', 'speak', 'cloze', 'produce'].includes(parts[1]);
   };
   for (const [key, card] of Object.entries(value.cards)) {
     if (!keyValid(key) || !object(card) || !date(card.due) ||

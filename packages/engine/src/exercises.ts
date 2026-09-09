@@ -84,6 +84,16 @@ export function buildExercise(
       };
     }
 
+    case 'speak': {
+      return {
+        kind: 'speak',
+        key,
+        word,
+        answer: word.gender ? `${word.gender} ${word.lemma}` : word.lemma,
+        prompt: word.en.join(', ')
+      };
+    }
+
     case 'produce': {
       return {
         kind: 'produce',
@@ -120,6 +130,78 @@ export function buildExercise(
   }
 }
 
+const UMLAUT: Record<string, string> = { ä: 'a', ö: 'o', ü: 'u' };
+
+/** "schön" for "schon" is the mistake the exercise exists to catch. */
+const swappedUmlaut = (a: string, b: string) => UMLAUT[a] === b || UMLAUT[b] === a;
+
+/**
+ * Levenshtein distance over short strings, with one weighted substitution:
+ * trading an umlaut for its base vowel costs more than any tolerance allows,
+ * so a length-based slack can never quietly accept it.
+ */
+function distance(a: string, b: string): number {
+  let previous = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i];
+    for (let j = 1; j <= b.length; j++) {
+      const substitution =
+        a[i - 1] === b[j - 1] ? 0 : swappedUmlaut(a[i - 1], b[j - 1]) ? 3 : 1;
+      row[j] = Math.min(previous[j] + 1, row[j - 1] + 1, previous[j - 1] + substitution);
+    }
+    previous = row;
+  }
+  return previous[b.length];
+}
+
+const ARTICLES = new Set(['der', 'die', 'das', 'den', 'dem', 'des']);
+
+function spoken(text: string): string {
+  return text
+    .normalize('NFC')
+    .toLowerCase()
+    .replace(/ß/g, 'ss')
+    .replace(/[.,!?;:„“”"'’()-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Did the microphone hear the target?
+ *
+ * Recognition is not a spelling test taken through a lossy channel. The
+ * transcript comes back with whatever the recogniser thought it heard — an
+ * article it invented, a filler word, a near-miss ending — so a target counts
+ * as said when it turns up anywhere in the transcript, with a tolerance that
+ * grows with the length of the word. Umlauts stay significant: "schon" and
+ * "schön" are different sounds and this is the exercise that trains them.
+ *
+ * The tolerance is deliberately generous. A false failure here punishes a
+ * learner for their microphone, and the FSRS card would carry that lapse for
+ * weeks; a false pass costs one repetition.
+ */
+export function speechMatches(target: string, transcript: string): boolean {
+  const heard = spoken(transcript);
+  if (!heard) return false;
+
+  const wanted = spoken(target);
+  const bare = wanted.split(' ').filter((t) => !ARTICLES.has(t)).join(' ');
+  const tokens = heard.split(' ');
+
+  // The article is a listening detail, not a pronunciation one: a recogniser
+  // drops or invents it freely, so the word itself is what has to be right.
+  const candidates = new Set([heard, heard.split(' ').filter((t) => !ARTICLES.has(t)).join(' ')]);
+  const words = bare.split(' ').length;
+  for (let i = 0; i + words <= tokens.length; i++) candidates.add(tokens.slice(i, i + words).join(' '));
+
+  const tolerance = bare.length >= 8 ? 2 : bare.length >= 5 ? 1 : 0;
+  for (const candidate of candidates) {
+    if (!candidate) continue;
+    if (distance(candidate, bare) <= tolerance || distance(candidate, wanted) <= tolerance) return true;
+  }
+  return false;
+}
+
 export function checkAnswer(exercise: Exercise, given: string): boolean {
   const normalise = (s: string) =>
     s
@@ -127,6 +209,8 @@ export function checkAnswer(exercise: Exercise, given: string): boolean {
       .toLowerCase()
       .replace(/\s+/g, ' ')
       .replace(/[.,!?]/g, '');
+
+  if (exercise.kind === 'speak') return speechMatches(exercise.answer, given);
 
   if (exercise.kind === 'produce') {
     // The article is part of a noun's recall target.

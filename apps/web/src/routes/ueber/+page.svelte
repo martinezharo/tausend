@@ -122,7 +122,8 @@
   const method = [
     ['Retrieval practice', 'Nothing is ever shown to be read. Every contact with a word is an attempt to recall it.'],
     ['Spaced repetition', 'FSRS schedules each skill separately. You never see an interval — the scheduling is the app\'s problem, not yours.'],
-    ['Desirable difficulties', `The same word escalates: recognise it, hear it after ${UNLOCK.listen} day of stability, use it in a sentence after ${UNLOCK.cloze}, produce it cold after ${UNLOCK.produce}.`],
+    ['Desirable difficulties', `The same word escalates: recognise it, hear it after ${UNLOCK.listen} day of stability, say it after ${UNLOCK.speak}, use it in a sentence after ${UNLOCK.cloze}, produce it cold after ${UNLOCK.produce}.`],
+    ['Production out loud', 'Speaking cards ask you to say the word into the microphone and grade what comes back. A course that never hears you teaches reading.'],
     ['Interleaving', 'No two consecutive exercises share a word or a skill. It feels worse and works better.'],
     ['Comprehensible input', 'Sentences are only scheduled once every word in them is known. The build fails otherwise, so the guarantee is structural.'],
     ['Gender from day one', 'A noun is never shown without its article, and gender carries a shape as well as a colour. Wrong articles fossilise; nothing repairs them later.']
@@ -210,6 +211,14 @@
       Example sentences and the texts have no recordings; nobody has read this course's invented
       sentences aloud. Those buttons use your device's speech synthesis and say so.
     </p>
+    <p>
+      Speaking cards work the other way round: they open the microphone and check what you said.
+      That part runs through your browser's speech recognition, which on most browsers means the
+      recording is sent to the browser vendor's service — the one thing here that leaves the
+      device. Where the browser cannot listen at all, speaking cards are left out of the session,
+      and <b>Kann nicht sprechen</b> drops them for the rest of a session without counting as a
+      wrong answer.
+    </p>
 
     <label class="toggle">
       <input type="checkbox" checked={sound} onchange={toggleSound} />
@@ -243,7 +252,9 @@
   <section id="your-data">
     <h2>Your data</h2>
     <p>
-      Progress stays on this device. There is no account, no server and no analytics.
+      Progress stays on this device. There is no account, no application server and no analytics;
+      the only thing that ever leaves is the audio of a speaking card, handled by your browser's
+      own speech recognition.
       Export a backup to keep it safe or move it to another device. Importing replaces the progress
       on this device, so export your current progress first if you want to keep both.
     </p>
